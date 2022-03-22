@@ -1,35 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstmap.c                                        :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mingkim <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/16 20:33:00 by mingkim           #+#    #+#             */
-/*   Updated: 2022/03/20 21:24:58 by mingkim          ###   ########.fr       */
+/*   Created: 2022/03/11 20:07:49 by mingkim           #+#    #+#             */
+/*   Updated: 2022/03/14 19:48:37 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+int	ft_toupper(int c)
 {
-	t_list	*new_lst;
-	t_list	*temp;
-
-	if (!lst || !f || !del)
-		return (NULL);
-	new_lst = NULL;
-	while (lst)
-	{
-		temp = ft_lstnew(f(lst->content));
-		if (!temp)
-		{
-			ft_lstclear(&new_lst, del);
-			return (NULL);
-		}
-		ft_lstadd_back(&new_lst, temp);
-		lst = lst->next;
-	}
-	return (new_lst);
+	if ('a' <= c && c <= 'z')
+		return (c - 32);
+	return (c);
 }

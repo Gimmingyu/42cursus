@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstmap.c                                        :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mingkim <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/16 20:33:00 by mingkim           #+#    #+#             */
-/*   Updated: 2022/03/20 21:24:58 by mingkim          ###   ########.fr       */
+/*   Created: 2022/03/11 16:50:09 by mingkim           #+#    #+#             */
+/*   Updated: 2022/03/11 21:43:22 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+size_t	ft_strlcat(char *dest, const char *src, size_t dstsize)
 {
-	t_list	*new_lst;
-	t_list	*temp;
+	size_t	i;
+	size_t	len_dest;
+	size_t	len_src;
 
-	if (!lst || !f || !del)
-		return (NULL);
-	new_lst = NULL;
-	while (lst)
+	i = 0;
+	len_dest = ft_strlen(dest);
+	len_src = ft_strlen(src);
+	if (dstsize <= len_dest)
+		return (dstsize + len_src);
+	if (dstsize > len_dest)
 	{
-		temp = ft_lstnew(f(lst->content));
-		if (!temp)
+		while ((len_dest + i + 1) < dstsize && src[i])
 		{
-			ft_lstclear(&new_lst, del);
-			return (NULL);
+			dest[len_dest + i] = src[i];
+			i++;
 		}
-		ft_lstadd_back(&new_lst, temp);
-		lst = lst->next;
 	}
-	return (new_lst);
+	dest[len_dest + i] = 0x00;
+	return (len_dest + len_src);
 }

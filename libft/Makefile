@@ -6,7 +6,7 @@
 #    By: mingkim <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/13 19:40:13 by mingkim           #+#    #+#              #
-#    Updated: 2022/03/19 18:18:55 by mingkim          ###   ########.fr        #
+#    Updated: 2022/03/20 21:24:42 by mingkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,7 @@ B_OBJS = $(addprefix $(OBJS_DIR), $(addsuffix .o, $(BONUS)))
 		$(CC) $(CLFAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
-		$(AR) $@ $^
+		$(AR) $@ $?
 
 bonus:
 	@make WITH_BONUS=1 $(NAME)

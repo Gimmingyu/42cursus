@@ -1,35 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstmap.c                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mingkim <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/16 20:33:00 by mingkim           #+#    #+#             */
-/*   Updated: 2022/03/20 21:24:58 by mingkim          ###   ########.fr       */
+/*   Created: 2022/03/09 21:33:25 by mingkim           #+#    #+#             */
+/*   Updated: 2022/03/14 16:21:27 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+void	*ft_memmove(void *dest, const void *src, size_t num)
 {
-	t_list	*new_lst;
-	t_list	*temp;
+	unsigned char		*dest_temp;
+	unsigned const char	*src_temp;
 
-	if (!lst || !f || !del)
-		return (NULL);
-	new_lst = NULL;
-	while (lst)
+	if (dest == src || num == 0)
+		return (dest);
+	if (dest < src)
 	{
-		temp = ft_lstnew(f(lst->content));
-		if (!temp)
-		{
-			ft_lstclear(&new_lst, del);
-			return (NULL);
-		}
-		ft_lstadd_back(&new_lst, temp);
-		lst = lst->next;
+		dest_temp = dest;
+		src_temp = src;
+		while (num--)
+			*dest_temp++ = *src_temp++;
 	}
-	return (new_lst);
+	else
+	{
+		dest_temp = dest;
+		src_temp = src;
+		dest_temp += num;
+		src_temp += num;
+		while (num--)
+			*--dest_temp = *--src_temp;
+	}
+	return (dest);
 }
