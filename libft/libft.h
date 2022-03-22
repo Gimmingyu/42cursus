@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:38:22 by mingkim           #+#    #+#             */
-/*   Updated: 2022/03/20 19:38:23 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/03/22 16:37:31 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include	<unistd.h>
 # include	<stdlib.h>
-# include	<string.h>
 
 typedef struct s_list
 {
