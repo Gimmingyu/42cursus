@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/13 14:56:17 by mingkim           #+#    #+#             */
-/*   Updated: 2022/03/17 16:11:35 by mingkim          ###   ########.fr       */
+/*   Created: 2022/03/20 19:37:13 by mingkim           #+#    #+#             */
+/*   Updated: 2022/03/20 19:53:58 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*ptr;
 
 	if (!s1 && !s2)
-	{
-		ptr = ft_strdup("");
-		return (ptr);
-	}
+		return (NULL);
 	else if (!s1 && s2)
 	{
 		ptr = ft_strdup(s2);
