@@ -6,13 +6,13 @@
 /*   By: mingkim <mingkim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 21:41:24 by mingkim           #+#    #+#             */
-/*   Updated: 2022/03/21 19:29:24 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/03/22 21:08:06 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *format, ...)
+int	ft_printf(void)
 {
 	return (0);
 }

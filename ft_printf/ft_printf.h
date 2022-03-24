@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 19:06:29 by mingkim           #+#    #+#             */
-/*   Updated: 2022/03/21 19:08:17 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/03/22 21:08:34 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@
 # include <stdlib.h>
 # include "./libft/libft.h"
 
-int	ft_printf(const char *format, ...);
+int	ft_printf(void);
 
 #endif

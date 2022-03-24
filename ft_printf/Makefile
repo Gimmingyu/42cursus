@@ -6,7 +6,7 @@
 #    By: mingkim <mingkim@student.42seoul.k>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 21:28:02 by mingkim           #+#    #+#              #
-#    Updated: 2022/03/21 19:06:04 by mingkim          ###   ########.fr        #
+#    Updated: 2022/03/22 21:08:52 by mingkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ rm = rm -f
 
 INCS = ./
 
-SRCS = ./ft_printf.c
+SRCS = ./ft_printf
 
 OBJS = $(SRCS:.c=.o)
 

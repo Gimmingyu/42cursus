@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mingkim <mingkim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/20 19:37:35 by mingkim           #+#    #+#             */
-/*   Updated: 2022/03/23 19:59:49 by mingkim          ###   ########.fr       */
+/*   Created: 2022/03/24 15:37:53 by mingkim           #+#    #+#             */
+/*   Updated: 2022/03/24 21:32:41 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "get_next_line.h"
 
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+char	*get_next_line(int fd)
 {
-	char	*ptr;
-	size_t	idx;
+	char	*buf;
 
-	if (!s || !f)
+	buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buf)
 		return (NULL);
-	ptr = (char *)malloc(sizeof(char) * ft_strlen(s) + 1);
-	if (!ptr)
+	if (fd < 0)
 		return (NULL);
-	idx = 0;
-	while (s[idx])
-	{
-		ptr[idx] = f(idx, s[idx]);
-		idx++;
-	}
-	ptr[idx] = 0x00;
-	return (ptr);
+	read(fd, buf, BUFFER_SIZE);
+	free(buf);
+	return (NULL);
 }

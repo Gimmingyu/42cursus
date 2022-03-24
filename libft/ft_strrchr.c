@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:37:54 by mingkim           #+#    #+#             */
-/*   Updated: 2022/03/20 19:37:55 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/03/23 19:56:44 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	char		tofind;
-	char		*temp;
+	unsigned char	tofind;
+	char			*temp;
 
 	temp = (char *)s;
 	tofind = (unsigned char)c;

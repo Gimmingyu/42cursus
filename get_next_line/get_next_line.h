@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mingkim <mingkim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/20 19:37:35 by mingkim           #+#    #+#             */
-/*   Updated: 2022/03/23 19:59:49 by mingkim          ###   ########.fr       */
+/*   Created: 2022/03/24 15:39:18 by mingkim           #+#    #+#             */
+/*   Updated: 2022/03/24 20:42:21 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
-{
-	char	*ptr;
-	size_t	idx;
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-	if (!s || !f)
-		return (NULL);
-	ptr = (char *)malloc(sizeof(char) * ft_strlen(s) + 1);
-	if (!ptr)
-		return (NULL);
-	idx = 0;
-	while (s[idx])
-	{
-		ptr[idx] = f(idx, s[idx]);
-		idx++;
-	}
-	ptr[idx] = 0x00;
-	return (ptr);
-}
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 10
+#endif
+
+char	*get_next_line(int fd);
+
+#endif

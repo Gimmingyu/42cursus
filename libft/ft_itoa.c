@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 19:34:09 by mingkim           #+#    #+#             */
-/*   Updated: 2022/03/20 19:34:10 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/03/23 19:58:59 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static size_t	ft_sizechk(int n)
 {
-	size_t		cnt;
+	size_t	cnt;
 
 	if (n <= 0)
 		cnt = 1;
@@ -36,7 +36,7 @@ char	*ft_itoa(int n)
 
 	len = ft_sizechk(n);
 	nb = n;
-	ptr = (char *)malloc(sizeof(char) * len + 1);
+	ptr = (char *)malloc(sizeof(char) * (len + 1));
 	if (!ptr)
 		return (NULL);
 	if (nb < 0)
