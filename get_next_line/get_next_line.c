@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:37:53 by mingkim           #+#    #+#             */
-/*   Updated: 2022/03/25 15:03:04 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/03/25 21:42:16 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,22 @@
 
 char	*get_next_line(int fd)
 {
-	char	*buf;
-	int		length;
+	char	*temp;
+	char	buf[BUFFER_SIZE];
+	size_t	idx;
+	size_t	length;
 
-	buf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buf)
-		return (NULL);
 	if (fd < 0)
 		return (NULL);
 	length = read(fd, buf, BUFFER_SIZE);
-	write(1, buf, length);
-	free(buf);
+	if (length == -1)
+		return (NULL);
+	idx = ft_find_newline(buf);
+	if (idx == -1)
+	{
+		temp = ft_strdup(buf, length);
+		if (!temp)
+			return (NULL);
+	}
 	return (NULL);
 }
