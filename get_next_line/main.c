@@ -1,14 +1,15 @@
 #include "get_next_line.h"
+#include <sys/fcntl.h>
 
-int	main(int argc, char **argv)
+int	main(void)
 {
 	int	fd;
 	int	idx;
 
 	idx = 0;
-	fd = 0;
-	while (argv[idx] && idx < argc)
-		printf("argv[idx] = %s\n", argv[idx++]);
-	get_next_line(0);
+	fd = open("test.txt", O_RDONLY);
+	if (fd == -1)
+		return (0);
+	get_next_line(fd);
 	return (0);
 }
