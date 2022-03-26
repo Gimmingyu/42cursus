@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:39:18 by mingkim           #+#    #+#             */
-/*   Updated: 2022/03/25 21:42:24 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/03/26 18:31:18 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,21 @@
 # define BUFFER_SIZE 8000
 #endif
 
+typedef struct s_file
+{
+	int		fd;
+	char	*next;
+}	t_file;
+
+typedef	struct	s_flist
+{
+	int	fd;
+	t_file	*f;
+}	t_flist;
+
 char	*get_next_line(int fd);
 size_t	ft_find_newline(char *buf);
 char	*ft_strdup(char *buf, size_t length);
 
-typedef	struct	s_fd
-{
-	int		fd;
-	char	*next;
-}	t_fd;
 
 #endif
