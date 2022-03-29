@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:37:53 by mingkim           #+#    #+#             */
-/*   Updated: 2022/03/25 21:42:16 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/03/29 21:46:17 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,20 @@
 
 char	*get_next_line(int fd)
 {
-	char	*temp;
-	char	buf[BUFFER_SIZE];
-	size_t	idx;
-	size_t	length;
+	static t_file	*flist[OPEN_MAX];
+	t_file			*file;
+	t_file			*next_file;
+	size_t			idx;
 
-	if (fd < 0)
-		return (NULL);
-	length = read(fd, buf, BUFFER_SIZE);
-	if (length == -1)
-		return (NULL);
-	idx = ft_find_newline(buf);
-	if (idx == -1)
+	idx = 0;
+	while (flist[idx])
 	{
-		temp = ft_strdup(buf, length);
-		if (!temp)
-			return (NULL);
+		if (flist[idx]->fd == fd)
+		{
+			read_join(fd, flist, flist[idx]);
+			break ;
+		}
+		idx++;
 	}
 	return (NULL);
 }
