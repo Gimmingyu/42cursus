@@ -6,31 +6,34 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 21:16:23 by mingkim           #+#    #+#             */
-/*   Updated: 2022/03/29 21:57:14 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/03/30 20:45:07 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	get_size(char *str)
+int	get_size_or_newline(char *buf, int usage)
 {
-	size_t	i;
+	int	i;
 
-	i = 0;
-	while (*str)
-		i++;
-	return (i);
-}
-
-int	find_newline(char *buf)
-{
-	size_t	i;
-
-	i = 0;
-	while (*(buf + i))
-		if (*(buf + i++) == '\n')
-			return (1);
-	return (0);
+	if (usage == -1)
+	{
+		i = 0;
+		while (*(buf + i))
+			i++;
+		return (i);
+	}
+	else
+	{
+		i = 0;
+		while (*(buf + i))
+		{
+			if (*(buf + i) == '\n')
+				return (i);
+			i++;
+		}
+		return (-1);
+	}
 }
 
 char	*concat(char *content, char *buf)
@@ -39,7 +42,9 @@ char	*concat(char *content, char *buf)
 	size_t	i;
 	size_t	j;
 
-	ptr = (char *)malloc(sizeof(char) * (get_size(content) + get_size(buf) + 1));
+	i = get_size_or_newline(content, -1);
+	j = get_size_or_newline(buf, -1);
+	ptr = (char *)malloc(sizeof(char) * (i + j + 1));
 	if (!ptr)
 		return (NULL);
 	i = 0;
@@ -49,22 +54,20 @@ char	*concat(char *content, char *buf)
 		i++;
 	}
 	j = 0;
-	while (*(buf + j))
-		*(ptr + i++) = *(buf + j++);
-	*(ptr + i) = 0x00;
-	free(content);
+	while (buf[j])
+		ptr[i++] = buf[j++];
+	ptr[i] = 0x00;
 	return (ptr);
 }
 
-char	*read_join(int fd, t_file **flist, t_file *file)
+char	*read_join(int fd, t_file *file)
 {
 	char	buf[BUFFER_SIZE + 1];
 	char	*temp;
-	size_t	len;
+	int		len;
 
-	buf[BUFFER_SIZE] = 0x00;
 	len = read(fd, buf, BUFFER_SIZE);
-	while (len != -1 && !find_newline(buf))
+	while (len && get_size_or_newline(buf, 1) == -1)
 	{
 		temp = concat(file->content, buf);
 		if (!temp)
@@ -72,5 +75,40 @@ char	*read_join(int fd, t_file **flist, t_file *file)
 		file->content = temp;
 		len = read(fd, buf, BUFFER_SIZE);
 	}
+	temp = concat(file->content, buf);
+	if (file->content)
+		free(file->content);
+	if (!temp)
+		return (NULL);
+	file->content = temp;
+	return (split_ret(file, temp));
+}
 
+char	*split_ret(t_file *file, char *buf)
+{
+	size_t	idx;
+	size_t	j;
+	size_t	buf_size;
+	char	*ret;
+	char	*next_content;
+
+	j = 0;
+	idx = get_size_or_newline(buf, 1);
+	buf_size = get_size_or_newline(buf, -1);
+	ret = (char *)malloc(sizeof(char) * (idx + 1));
+	next_content = (char *)malloc(sizeof(char) * (buf_size - idx + 1));
+	if (!ret || !next_content)
+		return (NULL);
+	while (j <= idx && *buf)
+		ret[j++] = *buf++;
+	ret[j] = 0x00;
+	buf_size -= j;
+	j = 0;
+	while (j < buf_size && *buf)
+		next_content[j++] = *buf++;
+	next_content[j] = 0x00;
+	if (file->content)
+		free(file->content);
+	file->content = next_content;
+	return (ret);
 }

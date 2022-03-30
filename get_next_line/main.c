@@ -2,19 +2,17 @@
 
 int	main(void)
 {
-	char	ptr[10];
 	int		fd;
-	size_t	length;
+	char	*result;
 
-	fd = open("test.txt", O_WRONLY);
-	length = read(fd, ptr, 10);
-	size_t	idx = 0;
-	while (idx < length)
-		printf("%c", ptr[idx++]);
-	length = read(fd, ptr, 10);
-	idx = 0;
-	printf("\n");
-	while (idx < length)
-		printf("%c", ptr[idx++]);
+	fd = open("test.txt", O_RDWR);
+	result = get_next_line(fd);
+	while (get_size_or_newline(result, 1) != -1)
+	{
+		printf("result = %s\n", result);
+		result = get_next_line(fd);
+		printf("result = %s\n", result);
+	}
+	free(result);
 	return (0);
 }
