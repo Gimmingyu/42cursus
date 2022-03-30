@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 21:16:23 by mingkim           #+#    #+#             */
-/*   Updated: 2022/03/30 20:45:07 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/03/30 21:33:50 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ char	*concat(char *content, char *buf)
 	if (!ptr)
 		return (NULL);
 	i = 0;
-	while (*(content + i))
+	while (content[i])
 	{
-		*(ptr + i) = *(content + i);
+		ptr[i] = content[i];
 		i++;
 	}
 	j = 0;
@@ -67,7 +67,7 @@ char	*read_join(int fd, t_file *file)
 	int		len;
 
 	len = read(fd, buf, BUFFER_SIZE);
-	while (len && get_size_or_newline(buf, 1) == -1)
+	while (len && get_size_or_newline(buf, 1) == -1 && *buf)
 	{
 		temp = concat(file->content, buf);
 		if (!temp)
@@ -78,7 +78,7 @@ char	*read_join(int fd, t_file *file)
 	temp = concat(file->content, buf);
 	if (file->content)
 		free(file->content);
-	if (!temp)
+	if (!temp || !*temp)
 		return (NULL);
 	file->content = temp;
 	return (split_ret(file, temp));
