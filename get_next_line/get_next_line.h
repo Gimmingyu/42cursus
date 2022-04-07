@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:39:18 by mingkim           #+#    #+#             */
-/*   Updated: 2022/03/30 19:05:49 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/07 20:37:24 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,14 @@ typedef struct s_file
 }	t_file;
 
 char	*get_next_line(int fd);
-char	*read_join(int fd, t_file *file);
-char	*concat(char *content, char *buf);
-char	*split_ret(t_file *file, char *buf);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*read_line(t_file *file);
+char	*ft_strdup(const char *s1);
 
-int	get_size_or_newline(char *buf, int usage);
-size_t	find_fd_exist(t_file **flist, int fd);
+int		find_newline(char *buf);
+
+size_t	ft_strlen(char const *s);
+size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize);
+size_t	ft_strlcat(char *dest, const char *src, size_t dstsize);
+
 #endif
