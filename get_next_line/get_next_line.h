@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:39:18 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/07 20:37:24 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/08 17:57:07 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,10 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include <limits.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 100
-# endif
-
-# ifndef OPEN_MAX
-#  define OPEN_MAX 256
 # endif
 
 typedef struct s_file
@@ -34,14 +31,11 @@ typedef struct s_file
 }	t_file;
 
 char	*get_next_line(int fd);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*read_line(t_file *file);
-char	*ft_strdup(const char *s1);
+char	*free_fdfile(t_file **file);
 
 int		find_newline(char *buf);
 
 size_t	ft_strlen(char const *s);
 size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize);
 size_t	ft_strlcat(char *dest, const char *src, size_t dstsize);
-
 #endif

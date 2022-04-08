@@ -6,107 +6,108 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 21:37:53 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/07 21:03:39 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/08 21:30:25 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	find_newline(char *buf)
+t_file	*t_malloc(int fd)
 {
-	size_t	i;
+	t_file	*file;
 
-	i = 0;
-	while (buf[i])
-	{
-		if (buf[i] == '\n')
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-t_file	*tmalloc(t_file *file, char *buf)
-{
-	t_file	*temp;
-
-	temp = (t_file *)malloc(sizeof(t_file));
-	if (!temp)
+	file = (t_file *)malloc(sizeof(t_file));
+	if (!file)
 		return (NULL);
-	temp->fd = file->fd;
-	temp->next = NULL;
-	file->content = buf;
-	file->next = temp;
-	return (temp);
+	file->fd = fd;
+	file->next = NULL;
+	file->content = (char *)malloc(sizeof(char));
+	if (!(file->content))
+	{
+		free(file);
+		return (NULL);
+	}
+	return (file);
 }
 
-char	*parse_fdfile(t_file *file, size_t idx)
+static char	*save_next(int fd, t_file **file)
 {
-	size_t	i;
-	size_t	len;
-	char	*ptr;
 	t_file	*nxt;
+	char	*remain;
 
-	ptr = (char *)malloc(sizeof(char) * (ft_strlen(file->content) + 1));
+	remain = (*file)->content;
+	nxt = (*file);
+	while (find_newline(remain))
+	{
+		nxt = t_malloc(fd);
+		if (!nxt)
+			return (NULL);
+		nxt = nxt->next;
+	}
+	return (NULL);
+}
+
+static char	*concatenate(const char *buf, t_file **file)
+{
+	char	*ptr;
+	size_t	size;
+
+	buf[len] = 0x00;
+	size = ft_strlen((*file)->content) + ft_strlen(buf);
+	ptr = (char *)malloc(sizeof(char) * (size + 1));
 	if (!ptr)
 		return (NULL);
-	ft_strlcpy(ptr, file->content, ft_strlen(file->content) + 1);
-	i = 0;
-	while (i < idx)
-	{
-		nxt = file->next;
-		len = ft_strlen(nxt->content) + ft_strlen(ptr) + 1;
-		ptr = (char *)malloc(sizeof(char) * (len));
-		if (!ptr)
-			return (NULL);
-		ft_strlcat(ptr, nxt->content, len);
-	}
+	ft_strlcpy(ptr, (*file)->content, size);
+	ft_strlcat(ptr, buf, size);
+	if ((*file)->content)
+		free((*file)->content);
+	(*file)->content = ptr;
 	return (ptr);
 }
 
-char	*read_line(t_file *file)
+static void	parse_fdfile(int fd, t_file **file)
 {
-	t_file	*temp;
-	size_t	len;
-	size_t	idx;
+	ssize_t	len;
 	char	buf[BUFFER_SIZE + 1];
-	char	*ret;
 
-	len = read(file->fd, buf, BUFFER_SIZE);
-	temp = tmalloc(file, buf);
-	ret = NULL;
-	idx = 0;
-	if (!temp)
-		return (0);
-	while (len && find_newline(buf) == -1)
+	len = 1;
+	while (len > 0)
 	{
-		idx++;
-		len = read(file->fd, buf, BUFFER_SIZE);
-		temp->next = tmalloc(temp, buf);
-		temp = temp->next;
+		len = read(fd, buf, BUFFER_SIZE);
+		if (find_newline((*file)->content) >= 0 || len < BUFFER_SIZE)
+			break ;
+		concatenate(buf, file);
+		if (!(*file)->content)
+			return (NULL);
 	}
-	if (len != -1 && find_newline(temp->content))
-		ret = parse_fdfile(file, idx);
-	return (ret);
+	if (len == -1)
+		return (NULL);
+	concatenate(buf, file);
+	if (!(*file)->content)
+		return (NULL);
+	save_next(fd, file);
 }
 
 char	*get_next_line(int fd)
 {
 	static t_file	*flist[OPEN_MAX];
 	t_file			*file;
+	t_file			*nxt;
 	char			*ret;
 
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= OPEN_MAX)
+		return (NULL);
 	if (flist[fd])
 		file = flist[fd];
 	else
-	{
-		file = (t_file *)malloc(sizeof(t_file));
-		if (!file)
-			return (NULL);
-		file->fd = fd;
-		file->content = NULL;
-		flist[fd] = file;
-	}
-	ret = read_line(file);
-	return (NULL);
+		file = t_malloc(fd);
+	if (!file)
+		return (NULL);
+	parse_fdfile(fd, &file);
+	if (!(file->content))
+		return (free_fdfile(&file));
+	nxt = file->next;
+	free(file);
+	flist[fd] = nxt;
+	return (file->content);
 }
