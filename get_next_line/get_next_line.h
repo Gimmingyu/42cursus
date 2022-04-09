@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:39:18 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/09 18:45:30 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/09 21:44:31 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 #  define BUFFER_SIZE 100
 # endif
 
+# ifndef NEWLINE
+#  define NEWLINE 0x0A
+# endif
+
 typedef struct s_file
 {
 	int				fd;
@@ -35,9 +39,13 @@ typedef struct s_file
 
 char	*get_next_line(int fd);
 char	*read_buffer(t_file **file);
+char	*concatenate(const char *buf, t_file **file);
 
 ssize_t	find_newline(t_file **file);
-
+ssize_t	fnew(char *temp);
 t_file	*t_malloc(int fd);
+
 void	*free_fdfile(t_file **file);
+
+void	clear_buffer(char *buf);
 #endif
