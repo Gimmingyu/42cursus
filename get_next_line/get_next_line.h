@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:39:18 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/07 20:37:24 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/09 21:44:31 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,35 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include <limits.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 100
 # endif
 
-# ifndef OPEN_MAX
-#  define OPEN_MAX 256
+# ifndef NEWLINE
+#  define NEWLINE 10
 # endif
 
 typedef struct s_file
 {
 	int				fd;
+	int				newline;
+	int				eof;
+	ssize_t			len;
 	char			*content;
 	struct s_file	*next;
 }	t_file;
 
 char	*get_next_line(int fd);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*read_line(t_file *file);
-char	*ft_strdup(const char *s1);
+char	*read_buffer(t_file **file);
+char	*concatenate(const char *buf, t_file **file);
 
-int		find_newline(char *buf);
+ssize_t	find_newline(t_file **file);
+ssize_t	fnew(char *temp);
+t_file	*t_malloc(int fd);
 
-size_t	ft_strlen(char const *s);
-size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize);
-size_t	ft_strlcat(char *dest, const char *src, size_t dstsize);
+void	*free_fdfile(t_file **file);
 
+void	clear_buffer(char *buf);
 #endif
