@@ -19,6 +19,8 @@ ssize_t	fnew(char *temp)
 	ssize_t	i;
 
 	i = 0;
+	if (!temp)
+		return (0;
 	while (temp[i])
 	{
 		if (temp[i] == '\n')
@@ -32,7 +34,7 @@ int	main(void)
 {
 	char	*temp;
 	int		fd1;
-	int		fd2;
+	// int		fd2;
 	int		fd3;
 
 	fd1 = open("test.txt", O_RDWR);
@@ -42,30 +44,70 @@ int	main(void)
 	temp = get_next_line(fd1);
 	printf("temp is %s\n", temp);
 	printf("new line is in temp[%zd]\n", fnew(temp));
+	temp = get_next_line(fd1);
+	printf("temp is %s\n", temp);
+	printf("new line is in temp[%zd]\n", fnew(temp));
+	printf("gnl success\n");
+	temp = get_next_line(fd1);
+	printf("temp is %s\n", temp);
+	printf("new line is in temp[%zd]\n", fnew(temp));
+	printf("gnl success\n");
+	temp = get_next_line(fd1);
+	printf("temp is %s\n", temp);
+	printf("new line is in temp[%zd]\n", fnew(temp));
+	temp = get_next_line(fd1);
+	printf("temp is %s\n", temp);
+	printf("new line is in temp[%zd]\n", fnew(temp));
 	printf("gnl success\n");
 	free(temp);
-	fd2 = open("41_no_nl", O_RDWR);
-	temp = get_next_line(fd2);
-	printf("temp is %s\n", temp);
-	printf("new line is in temp[%zd]\n", fnew(temp));
-	temp = get_next_line(fd2);
-	printf("temp is %s\n", temp);
-	printf("new line is in temp[%zd]\n", fnew(temp));
-	temp = get_next_line(fd2);
-	printf("temp is %s\n", temp);
-	printf("new line is in temp[%zd]\n", fnew(temp));
-	printf("gnl success\n");
+	// fd2 = open("41_no_nl", O_RDWR);
+	// temp = get_next_line(fd2);
+	// printf("temp is %s\n", temp);
+	// printf("new line is in temp[%zd]\n", fnew(temp));
+	// temp = get_next_line(fd2);
+	// printf("temp is %s\n", temp);
+	// printf("new line is in temp[%zd]\n", fnew(temp));
+	// temp = get_next_line(fd2);
+	// printf("temp is %s\n", temp);
+	// printf("new line is in temp[%zd]\n", fnew(temp));
+	// printf("gnl success\n");
 	fd3 = 2;
 	temp = get_next_line(fd3);
-	while (temp && *temp)
-	{
-		printf("temp is %s\n", temp);
-		printf("new line is in temp[%zd]\n", fnew(temp));
-		temp = get_next_line(fd3);
-	}
+	printf("temp is %s\n", temp);
+	printf("new line is in temp[%zd]\n", fnew(temp));
+	temp = get_next_line(fd3);
+	printf("temp is %s\n", temp);
+	printf("new line is in temp[%zd]\n", fnew(temp));
+	temp = get_next_line(fd3);
+	printf("temp is %s\n", temp);
+	printf("new line is in temp[%zd]\n", fnew(temp));
+	temp = get_next_line(fd3);
+	printf("temp is %s\n", temp);
+	printf("new line is in temp[%zd]\n", fnew(temp));
+	temp = get_next_line(fd3);
+	printf("temp is %s\n", temp);
+	printf("new line is in temp[%zd]\n", fnew(temp));
+	temp = get_next_line(fd3);
+	printf("temp is %s\n", temp);
+	printf("new line is in temp[%zd]\n", fnew(temp));
+	temp = get_next_line(fd3);
+	printf("temp is %s\n", temp);
+	printf("new line is in temp[%zd]\n", fnew(temp));
+	temp = get_next_line(fd3);
+	printf("temp is %s\n", temp);
+	printf("new line is in temp[%zd]\n", fnew(temp));
+	temp = get_next_line(fd3);
+	printf("temp is %s\n", temp);
+	printf("new line is in temp[%zd]\n", fnew(temp));
+	temp = get_next_line(fd3);
+	printf("temp is %s\n", temp);
+	printf("new line is in temp[%zd]\n", fnew(temp));
+	temp = get_next_line(fd3);
+	printf("temp is %s\n", temp);
+	printf("new line is in temp[%zd]\n", fnew(temp));
 	printf("gnl success\n");
 	close(fd1);
-	close(fd2);
+	// close(fd2);
 	close(fd3);
 	free(temp);
 	return (0);

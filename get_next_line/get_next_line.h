@@ -24,7 +24,7 @@
 # endif
 
 # ifndef NEWLINE
-#  define NEWLINE 0x0A
+#  define NEWLINE 10
 # endif
 
 typedef struct s_file

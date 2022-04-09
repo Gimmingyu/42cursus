@@ -70,12 +70,12 @@ char	*read_buffer(t_file **file)
 	if (*buf)
 		clear_buffer(buf);
 	len = read((*file)->fd, buf, BUFFER_SIZE);
-	if (len >= 0)
+	if (len > 0)
 	{
 		buf[len] = 0x00;
-		if (len < BUFFER_SIZE)
+		if (len <= BUFFER_SIZE)
 			(*file)->eof = (*file)->len + len;
-		printf("file->eof = %d\n", (*file)->eof);
+		// printf("in read buffer, file->eof = %d\n", (*file)->eof);
 		(*file)->len += len;
 		line = concatenate(buf, file);
 		if (!line)
@@ -91,7 +91,7 @@ void	*free_fdfile(t_file **file)
 	t_file		*current;
 	t_file		*nxt;
 
-	printf("in free fdfile\n");
+	// printf("in free fdfile\n");
 	if (!(*file))
 		return (NULL);
 	current = *file;

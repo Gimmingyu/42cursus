@@ -41,8 +41,8 @@ static char	*split_newline(t_file **file)
 		size++;
 	}
 	content[size] = 0x00;
-	(*file)->eof -= size;
-	printf("file->eof = %d\n", (*file)->eof);
+	if ((*file)->eof)
+		(*file)->eof -= size;
 	return (content);
 }
 
@@ -69,6 +69,8 @@ char	*concatenate(const char *buf, t_file **file)
 		full_sentence[i++] = buf[j++];
 	full_sentence[i] = 0x00;
 	(*file)->content = full_sentence;
+	(*file)->len = i;
+	// printf("in concat, full sentence is %s\nfile->len is %zd\n", full_sentence, (*file)->len);
 	return (full_sentence);
 }
 
@@ -82,16 +84,20 @@ char	*save_remain(t_file**file, t_file **nxt, char *line)
 	idx = 0;
 	j = 0;
 	len = (*file)->len;
-	while (line[idx] && line[idx++] != '\n')
+	// printf("in save remain, len is %zd\n", len);
+	while (line[idx] && line[idx++] != NEWLINE)
 		;
 	remain = (char *)malloc(sizeof(char) * (len - idx + 1));
 	if (!remain)
 		return (free_fdfile(file));
+	// printf("idx is now %zd\n", idx);
 	while (line[idx] && idx < len)
 		remain[j++] = line[idx++];
 	remain[j] = 0x00;
 	free(((*nxt)->content));
 	(*nxt)->content = remain;
+	(*nxt)->len = j;
+	// printf("remain is %s\n", remain);
 	return (remain);
 }
 
@@ -103,15 +109,15 @@ char	*controller(t_file **file, int fd)
 	t_file	*nxt;
 
 	line = (*file)->content;
-	while (find_newline(file) == -1 && !((*file)->eof))
+	(*file)->newline = find_newline(file);
+	// printf("file status:\nfile->content : %s\nfile->newline : %d\nfile->eof : %d\nfile->len : %zd\n", (*file)->content, (*file)->newline, (*file)->eof, (*file)->len);
+	while (line && find_newline(file) == -1 && !((*file)->eof))
 		line = read_buffer(file);
 	if (!line)
 		return (free_fdfile(file));
 	res = split_newline(file);
 	if (!res)
 		return (free_fdfile(file));
-	if ((*file)->content)
-		free(((*file)->content));
 	(*file)->content = res;
 	nxt = t_malloc(fd);
 	if (!nxt)
@@ -120,7 +126,6 @@ char	*controller(t_file **file, int fd)
 	remain = save_remain(file, &nxt, line);
 	if (!remain)
 		return (free_fdfile(file));
-	nxt->content = remain;
 	return (((*file)->content));
 }
 
@@ -139,13 +144,10 @@ char	*get_next_line(int fd)
 	if (!file)
 		return (NULL);
 	result = controller(&file, fd);
-	if (!result)
+	if (!result || !(file->next))
 		return (free_fdfile(&file));
-	if (file->next)
-		flist[fd] = file->next;
-	if (file->content)
-		free(file->content);
-	if (file)
-		free(file);
+	flist[fd] = file->next;
+	free(file);
+	// printf("flist[fd]->content is %s\n", flist[fd]->content);
 	return (result);
 }
