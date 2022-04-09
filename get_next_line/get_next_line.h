@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:39:18 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/08 17:57:07 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/09 18:45:30 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,18 @@
 typedef struct s_file
 {
 	int				fd;
-    int             newline;
-    int             eof;
+	int				newline;
+	int				eof;
+	ssize_t			len;
 	char			*content;
 	struct s_file	*next;
-    struct s_file   *prev;
 }	t_file;
 
 char	*get_next_line(int fd);
-char	*free_fdfile(t_file **file);
+char	*read_buffer(t_file **file);
 
-int		find_newline(char *buf);
+ssize_t	find_newline(t_file **file);
 
-size_t	ft_strlen(char const *s);
-size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize);
-size_t	ft_strlcat(char *dest, const char *src, size_t dstsize);
+t_file	*t_malloc(int fd);
+void	*free_fdfile(t_file **file);
 #endif

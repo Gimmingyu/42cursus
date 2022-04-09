@@ -6,93 +6,96 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 18:47:52 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/08 19:12:50 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/09 18:55:21 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(char const *s)
+ssize_t	find_newline(t_file **file)
 {
-	size_t	i;
+	char	*line;
+	ssize_t	idx;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize)
-{
-	size_t			i;
-	unsigned int	len;
-
-	i = 0;
-	len = ft_strlen(src);
-	if (dstsize == 0)
-		return (len);
-	while (i < (dstsize - 1) && src[i])
+	idx = 0;
+	line = (*file)->content;
+	while (line[idx])
 	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = 0x00;
-	return (len);
-}
-
-size_t	ft_strlcat(char *dest, const char *src, size_t dstsize)
-{
-	size_t	i;
-	size_t	len_dest;
-	size_t	len_src;
-
-	i = 0;
-	len_dest = ft_strlen(dest);
-	len_src = ft_strlen(src);
-	if (dstsize <= len_dest)
-		return (dstsize + len_src);
-	if (dstsize > len_dest)
-	{
-		while ((len_dest + i + 1) < dstsize && src[i])
+		if (line[idx] == '\n')
 		{
-			dest[len_dest + i] = src[i];
-			i++;
+			(*file)->newline = idx;
+			return (idx);
 		}
+		idx++;
 	}
-	dest[len_dest + i] = 0x00;
-	return (len_dest + len_src);
-}
-
-int	find_newline(char *buf)
-{
-	size_t	i;
-
-	i = 0;
-	while (buf[i])
-	{
-		if (buf[i] == '\n')
-			return (i);
-		i++;
-	}
+	(*file)->len = idx;
 	return (-1);
 }
 
-char	*free_fdfile(t_file **file)
+t_file	*t_malloc(int fd)
 {
-	t_file	*temp;
-	t_file	*nxt;
+	t_file	*new_file;
+	char	*new_content;
 
-	if (!(*file))
+	new_file = (t_file *)malloc(sizeof(t_file));
+	if (!new_file)
 		return (NULL);
-	temp = (*file);
-	while (temp)
+	new_file->content = (char *)malloc(sizeof(char));
+	if (!(new_file->content))
+		return (free_fdfile(&new_file));
+	new_file->fd = fd;
+	new_file->eof = 0;
+	new_file->len = 1;
+	new_file->newline = 0;
+	new_file->next = NULL;
+	return (new_file);
+}
+
+void	*clear_buffer(const char *buf)
+{
+	size_t	idx;
+	char	*temp;
+
+	temp = buf;
+	idx = 0;
+	while (idx < BUFFER_SIZE + 1)
+		temp[idx++] = 0x00;
+}
+
+char	*read_buffer(t_file **file)
+{
+	char	buf[BUFFER_SIZE + 1];
+	char	*line;
+	ssize_t	len;
+
+	clear_buffer(buf);
+	len = read((*file)->fd, buf, BUFFER_SIZE);
+	if (len <= 0)
+		return (NULL);
+	buf[len] = 0x00;
+	if (len < BUFFER_SIZE)
+		(*file)->eof = 1;
+	(*file)->len += len;
+	line = concatenate(buf, file);
+	if (!line)
+		return (free_fdfile(file));
+	return ((*file)->content);
+}
+
+void	*free_fdfile(t_file **file)
+{
+	t_file		*current;
+	t_file		*nxt;
+
+	current = *file;
+	while (current)
 	{
-		nxt = temp->next;
-		if (temp->content)
-			free(temp->content);
-		free(temp);
-		temp = nxt;
+		nxt = current->next;
+		free(current);
+		if (current->content)
+			free(current->content);
+		current = nxt;
 	}
-	(*file) = NULL;
+	*file = NULL;
 	return (NULL);
 }
