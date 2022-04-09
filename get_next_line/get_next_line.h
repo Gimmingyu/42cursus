@@ -38,7 +38,7 @@ typedef struct s_file
 }	t_file;
 
 char	*get_next_line(int fd);
-char	*read_buffer(t_file **file);
+char	*read_buffer(t_file **file, ssize_t *len);
 char	*concatenate(const char *buf, t_file **file);
 
 ssize_t	find_newline(t_file **file);

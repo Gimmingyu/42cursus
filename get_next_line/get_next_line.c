@@ -33,13 +33,9 @@ static char	*split_newline(t_file **file)
 	while (size <= ((*file)->newline) && ((*file)->content)[size])
 	{
 		content[size] = ((*file)->content)[size];
-		if (((*file)->eof) && ((*file)->eof) == size)
-		{
-			size++;
-			break ;
-		}
 		size++;
 	}
+	// printf("size is %zd\n", size);
 	content[size] = 0x00;
 	if ((*file)->eof)
 		(*file)->eof -= size;
@@ -107,12 +103,14 @@ char	*controller(t_file **file, int fd)
 	char	*line;
 	char	*remain;
 	t_file	*nxt;
+	ssize_t	len;
 
 	line = (*file)->content;
 	(*file)->newline = find_newline(file);
-	// printf("file status:\nfile->content : %s\nfile->newline : %d\nfile->eof : %d\nfile->len : %zd\n", (*file)->content, (*file)->newline, (*file)->eof, (*file)->len);
-	while (line && find_newline(file) == -1 && !((*file)->eof))
-		line = read_buffer(file);
+	len = 1;
+	// printf("file status\nfile->content : %s\nfile->newline : %d\nfile->eof : %d\nfile->len : %zd\n", (*file)->content, (*file)->newline, (*file)->eof, (*file)->len);
+	while (line && find_newline(file) == -1 && !((*file)->eof) && len)
+		line = read_buffer(file, &len);
 	if (!line)
 		return (free_fdfile(file));
 	res = split_newline(file);
@@ -148,6 +146,6 @@ char	*get_next_line(int fd)
 		return (free_fdfile(&file));
 	flist[fd] = file->next;
 	free(file);
-	// printf("flist[fd]->content is %s\n", flist[fd]->content);
+	printf("flist[fd]->content is %s\n", flist[fd]->content);
 	return (result);
 }

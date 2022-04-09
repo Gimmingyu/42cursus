@@ -29,6 +29,8 @@ ssize_t	find_newline(t_file **file)
 		idx++;
 	}
 	(*file)->len = idx;
+	if ((*file)->eof && (*file)->eof == idx)
+		return (idx);
 	return (-1);
 }
 
@@ -61,22 +63,21 @@ void	clear_buffer(char *buf)
 		temp[idx++] = 0x00;
 }
 
-char	*read_buffer(t_file **file)
+char	*read_buffer(t_file **file, ssize_t *len)
 {
 	char	buf[BUFFER_SIZE + 1];
 	char	*line;
-	ssize_t	len;
 
 	if (*buf)
 		clear_buffer(buf);
-	len = read((*file)->fd, buf, BUFFER_SIZE);
-	if (len > 0)
+	*len = read((*file)->fd, buf, BUFFER_SIZE);
+	if (*len >= 0)
 	{
-		buf[len] = 0x00;
-		if (len <= BUFFER_SIZE)
-			(*file)->eof = (*file)->len + len;
+		buf[*len] = 0x00;
+		if (*len < BUFFER_SIZE)
+			(*file)->eof = (*file)->len + *len;
 		// printf("in read buffer, file->eof = %d\n", (*file)->eof);
-		(*file)->len += len;
+		(*file)->len += *len;
 		line = concatenate(buf, file);
 		if (!line)
 			return (free_fdfile(file));
