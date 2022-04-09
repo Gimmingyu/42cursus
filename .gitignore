@@ -2,3 +2,10 @@
 */*.*.swp
 */a.out
 */*.*.gch
+
+../.idea/
+../CMakeLists.txt
+../cmake-build-debug/
+CMakeLists.txt
+cmake-build-debug/
+.idea/
