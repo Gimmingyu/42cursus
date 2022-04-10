@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:39:18 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/09 21:44:31 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/10 15:36:31 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ ssize_t	find_newline(t_file **file);
 ssize_t	fnew(char *temp);
 t_file	*t_malloc(int fd);
 
-void	*free_fdfile(t_file **file);
+char	*free_fdfile(t_file **file);
 
 void	clear_buffer(char *buf);
 #endif

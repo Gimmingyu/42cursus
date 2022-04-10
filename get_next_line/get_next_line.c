@@ -6,15 +6,9 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 21:37:53 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/09 22:11:56 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/10 19:12:28 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// gnl에서 controller를 호출한다.
-// controller는 현재 content에 줄바꿈이 있는지 검사를한다.
-// 만약 줄바꿈이 있다면 t_malloc과 split_newline을 이용해서 next 구조체를 만들고,
-// 줄바꿈 뒷 부분을 next->content에 넣어둔다.
-// 줄바꿈이 없다면
 
 #include "get_next_line.h"
 
@@ -35,7 +29,6 @@ static char	*split_newline(t_file **file)
 		content[size] = ((*file)->content)[size];
 		size++;
 	}
-	// printf("size is %zd\n", size);
 	content[size] = 0x00;
 	if ((*file)->eof)
 		(*file)->eof -= size;
@@ -59,72 +52,64 @@ char	*concatenate(const char *buf, t_file **file)
 		full_sentence[i] = ((*file)->content)[i];
 		i++;
 	}
-	free(((*file)->content));
+	if ((*file)->content)
+		free(((*file)->content));
 	j = 0;
 	while (buf[j] && i < size)
 		full_sentence[i++] = buf[j++];
 	full_sentence[i] = 0x00;
-	(*file)->content = full_sentence;
 	(*file)->len = i;
-	// printf("in concat, full sentence is %s\nfile->len is %zd\n", full_sentence, (*file)->len);
 	return (full_sentence);
 }
 
-char	*save_remain(t_file**file, t_file **nxt, char *line)
+char	*save_remain(t_file**file, t_file **nxt)
 {
 	ssize_t	idx;
 	ssize_t	j;
 	ssize_t	len;
-	char	*remain;
 
 	idx = 0;
 	j = 0;
-	len = (*file)->len;
-	// printf("in save remain, len is %zd\n", len);
-	while (line[idx] && line[idx++] != NEWLINE)
-		;
-	remain = (char *)malloc(sizeof(char) * (len - idx + 1));
-	if (!remain)
+	len = (*file)->newline;
+	while (idx < len)
+		idx++;
+	if ((*nxt)->content)
+		free(((*nxt)->content));
+	(*nxt)->content = (char *)malloc(sizeof(char) * (len - idx + 1));
+	if (!(*nxt)->content)
 		return (free_fdfile(file));
-	// printf("idx is now %zd\n", idx);
-	while (line[idx] && idx < len)
-		remain[j++] = line[idx++];
-	remain[j] = 0x00;
-	free(((*nxt)->content));
-	(*nxt)->content = remain;
+	while (((*file)->content)[idx] && idx < len)
+		((*nxt)->content)[j++] = ((*file)->content)[idx++];
+	((*nxt)->content)[j] = 0x00;
 	(*nxt)->len = j;
-	// printf("remain is %s\n", remain);
-	return (remain);
+	return ((*nxt)->content);
 }
 
 char	*controller(t_file **file, int fd)
 {
 	char	*res;
-	char	*line;
 	char	*remain;
 	t_file	*nxt;
 	ssize_t	len;
 
-	line = (*file)->content;
 	(*file)->newline = find_newline(file);
 	len = 1;
-	// printf("file status\nfile->content : %s\nfile->newline : %d\nfile->eof : %d\nfile->len : %zd\n", (*file)->content, (*file)->newline, (*file)->eof, (*file)->len);
-	while (line && find_newline(file) == -1 && !((*file)->eof) && len)
-		line = read_buffer(file, &len);
-	if (!line)
+	while ((*file)->content && find_newline(file) == -1 && ((*file)->eof) >= 0 \
+	&& len)
+		(*file)->content = read_buffer(file, &len);
+	if (!((*file)->content) || !(*(*file)->content))
 		return (free_fdfile(file));
 	res = split_newline(file);
 	if (!res)
 		return (free_fdfile(file));
-	(*file)->content = res;
 	nxt = t_malloc(fd);
 	if (!nxt)
 		return (free_fdfile(file));
 	(*file)->next = nxt;
-	remain = save_remain(file, &nxt, line);
+	remain = save_remain(file, &nxt);
 	if (!remain)
-		return (free_fdfile(file));
-	return (((*file)->content));
+		free_fdfile(&nxt);
+	return (res);
 }
 
 char	*get_next_line(int fd)
@@ -133,7 +118,7 @@ char	*get_next_line(int fd)
 	t_file			*file;
 	char			*result;
 
-	if (fd < 0 || BUFFER_SIZE < 0 || fd >= OPEN_MAX)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= OPEN_MAX)
 		return (NULL);
 	if (!flist[fd])
 		file = t_malloc(fd);
@@ -142,10 +127,12 @@ char	*get_next_line(int fd)
 	if (!file)
 		return (NULL);
 	result = controller(&file, fd);
-	if (!result || !(file->next))
+	if (!result)
 		return (free_fdfile(&file));
 	flist[fd] = file->next;
-	free(file);
-	printf("flist[fd]->content is %s\n", flist[fd]->content);
+	if (!(file->next))
+		flist[fd] = NULL;
+	if (file)
+		free(file);
 	return (result);
 }

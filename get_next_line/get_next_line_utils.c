@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 18:47:52 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/09 22:05:34 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/10 19:11:53 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ ssize_t	find_newline(t_file **file)
 	ssize_t	idx;
 
 	idx = 0;
+	if (!((*file)->content))
+	{
+		(*file)->len = 0;
+		return (-1);
+	}
 	line = (*file)->content;
 	while (line[idx])
 	{
@@ -43,7 +48,11 @@ t_file	*t_malloc(int fd)
 		return (NULL);
 	new_file->content = (char *)malloc(sizeof(char));
 	if (!(new_file->content))
-		return (free_fdfile(&new_file));
+	{
+		free_fdfile(&new_file);
+		return (NULL);
+	}
+	new_file->content[0] = 0x00;
 	new_file->fd = fd;
 	new_file->eof = 0;
 	new_file->len = 0;
@@ -66,7 +75,6 @@ void	clear_buffer(char *buf)
 char	*read_buffer(t_file **file, ssize_t *len)
 {
 	char	buf[BUFFER_SIZE + 1];
-	char	*line;
 
 	if (*buf)
 		clear_buffer(buf);
@@ -76,23 +84,27 @@ char	*read_buffer(t_file **file, ssize_t *len)
 		buf[*len] = 0x00;
 		if (*len < BUFFER_SIZE)
 			(*file)->eof = (*file)->len + *len;
-		// printf("in read buffer, file->eof = %d\n", (*file)->eof);
 		(*file)->len += *len;
-		line = concatenate(buf, file);
-		if (!line)
+		(*file)->content = concatenate(buf, file);
+		if (!((*file)->content))
 			return (free_fdfile(file));
-		(*file)->content = line;
 		return ((*file)->content);
+	}
+	if ((*file)->content)
+		free((*file)->content);
+	if (*len == -1)
+	{
+		(*file)->eof = -1;
+		return (NULL);
 	}
 	return (NULL);
 }
 
-void	*free_fdfile(t_file **file)
+char	*free_fdfile(t_file **file)
 {
 	t_file		*current;
 	t_file		*nxt;
 
-	// printf("in free fdfile\n");
 	if (!(*file))
 		return (NULL);
 	current = *file;
@@ -100,10 +112,15 @@ void	*free_fdfile(t_file **file)
 	{
 		nxt = current->next;
 		if (current->content)
+		{
 			free(current->content);
+			current->content = NULL;
+		}
 		free(current);
+		current = NULL;
 		current = nxt;
 	}
+	current = NULL;
 	*file = NULL;
 	return (NULL);
 }
