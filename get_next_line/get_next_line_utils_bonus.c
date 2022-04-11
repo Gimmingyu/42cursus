@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 18:47:52 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/11 21:43:31 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/11 20:20:44 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ char	*free_fdfile(t_file **flist, t_file *file, int fd)
 	t_file	*f_temp;
 	t_file	*nxt;
 
-	if (!file)
-		return (NULL);
 	f_temp = file;
 	while (f_temp)
 	{
@@ -76,11 +74,8 @@ char	*free_fdfile(t_file **flist, t_file *file, int fd)
 
 ssize_t	get_next_content(t_file **temp, char **content)
 {
-	t_file	*prev;
-
-	prev = (*temp);
+	free(*temp);
 	(*temp) = (*temp)->next;
 	(*content) = (*temp)->content;
-	free(prev);
 	return ((*temp)->start);
 }
