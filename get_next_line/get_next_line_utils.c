@@ -12,115 +12,88 @@
 
 #include "get_next_line.h"
 
-ssize_t	find_newline(t_file **file)
+t_file	*allocate_file(int fd)
 {
-	char	*line;
-	ssize_t	idx;
+	t_file	*file;
 
-	idx = 0;
-	if (!((*file)->content))
-	{
-		(*file)->len = 0;
+	file = (t_file *)malloc(sizeof(t_file));
+	if (!file)
+		return (NULL);
+	file->next = NULL;
+	file->fd = fd;
+	file->len = 0;
+	file->nl_idx = 0;
+	return (file);
+}
+
+ssize_t	get_next_file(t_file *file, int fd)
+{
+	t_file	*nxt;
+	ssize_t	size;
+
+	nxt = allocate_file(fd);
+	if (!nxt)
 		return (-1);
-	}
-	line = (*file)->content;
-	while (line[idx])
-	{
-		if (line[idx] == NEWLINE)
-		{
-			(*file)->newline = idx;
-			return (idx);
-		}
-		idx++;
-	}
-	(*file)->len = idx;
-	if ((*file)->eof && (*file)->eof == idx)
-		return (idx);
-	return (-1);
+	size = read_buffer(fd, nxt);
+	if (size <= 0)
+		free(nxt);
+	else
+		file->next = nxt;
+	// printf("file->content = %s\n", file->content);
+	// printf("nxt->content = %s\n", nxt->content);
+	return (size);
 }
 
-t_file	*t_malloc(int fd)
+t_file	*get_exist_fdfile(t_file **flist, int fd)
 {
-	t_file	*new_file;
+	t_file	*file;
+	t_file	*temp;
 
-	new_file = (t_file *)malloc(sizeof(t_file));
-	if (!new_file)
-		return (NULL);
-	new_file->content = (char *)malloc(sizeof(char));
-	if (!(new_file->content))
+	file = flist[fd];
+	temp = NULL;
+	while (file)
 	{
-		free_fdfile(&new_file);
-		return (NULL);
+		if (file->fd == fd)
+			return (file);
+		temp = file;
+		file = file->next;
 	}
-	new_file->content[0] = 0x00;
-	new_file->fd = fd;
-	new_file->eof = 0;
-	new_file->len = 0;
-	new_file->newline = 0;
-	new_file->next = NULL;
-	return (new_file);
+	file = allocate_file(fd);
+	if (!file)
+		return (NULL);
+	if (!temp)
+		flist[fd] = file;
+	else
+		temp->next = file;
+	return (file);
 }
 
-void	clear_buffer(char *buf)
+ssize_t read_buffer(int fd, t_file *file)
 {
-	size_t			idx;
-	unsigned char	*temp;
+	ssize_t	len;
 
-	temp = (unsigned char *)buf;
-	idx = 0;
-	while (idx < BUFFER_SIZE + 1)
-		temp[idx++] = 0x00;
+	len = read(fd, file->content, BUFFER_SIZE);
+	if (len <= 0)
+		return (len);
+	file->len = len;
+	(file->content)[len] = 0x00;
+	return (len);
 }
 
-char	*read_buffer(t_file **file, ssize_t *len)
+char	*free_fdfile(t_file **flist, t_file *file, int fd)
 {
-	char	buf[BUFFER_SIZE + 1];
+	t_file		*f_temp;
 
-	if (*buf)
-		clear_buffer(buf);
-	*len = read((*file)->fd, buf, BUFFER_SIZE);
-	if (*len >= 0)
+	f_temp = flist[fd];
+	if (file != f_temp)
 	{
-		buf[*len] = 0x00;
-		if (*len < BUFFER_SIZE)
-			(*file)->eof = (*file)->len + *len;
-		(*file)->len += *len;
-		(*file)->content = concatenate(buf, file);
-		if (!((*file)->content))
-			return (free_fdfile(file));
-		return ((*file)->content);
+		while (f_temp->next != file)
+			f_temp = f_temp->next;
+		f_temp->next = file->next;
 	}
-	if ((*file)->content)
-		free((*file)->content);
-	if (*len == -1)
-	{
-		(*file)->eof = -1;
-		return (NULL);
-	}
-	return (NULL);
-}
-
-char	*free_fdfile(t_file **file)
-{
-	t_file		*current;
-	t_file		*nxt;
-
-	if (!(*file))
-		return (NULL);
-	current = *file;
-	while (current)
-	{
-		nxt = current->next;
-		if (current->content)
-		{
-			free(current->content);
-			current->content = NULL;
-		}
-		free(current);
-		current = NULL;
-		current = nxt;
-	}
-	current = NULL;
-	*file = NULL;
+	else
+		flist[fd] = file->next;
+	free(file);
+	file = NULL;
 	return (NULL);
 }

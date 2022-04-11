@@ -12,127 +12,94 @@
 
 #include "get_next_line.h"
 
-static char	*split_newline(t_file **file)
+ssize_t	get_newline_idx(t_file **flist, t_file *file, int fd)
 {
+	ssize_t	bufsize;
+	ssize_t	nl_idx;
+	ssize_t idx;
 	char	*content;
-	ssize_t	size;
+	t_file	*temp;
 
-	if (!file)
-		return (NULL);
-	size = 0;
-	(*file)->newline = find_newline(file);
-	content = (char *)malloc(sizeof(char) * (((*file)->newline) + 1));
-	if (!content)
-		return (free_fdfile(file));
-	while (size <= ((*file)->newline) && ((*file)->content)[size])
+	content = file->content;
+	nl_idx = 0;
+	idx = file->nl_idx;
+	temp = file;
+	while (idx <= file->len)
 	{
-		content[size] = ((*file)->content)[size];
-		size++;
+		if (idx == file->len)
+		{
+			idx = 0;
+			bufsize = get_next_file(temp, fd);
+			if (!bufsize)
+				break ;
+			else if (bufsize == -1)
+				return ((ssize_t)free_fdfile(flist, file, fd));
+			temp = temp->next;
+			content = temp->content;
+			continue ;
+		}
+		if (content[idx++] == NEWLINE)
+			break ;
+		nl_idx++;
 	}
-	content[size] = 0x00;
-	if ((*file)->eof)
-		(*file)->eof -= size;
-	return (content);
+	return (nl_idx);
 }
 
-char	*concatenate(const char *buf, t_file **file)
+char	*get_result_line(t_file **flist, t_file *file, ssize_t nl_idx, int fd)
 {
-	char	*full_sentence;
-	ssize_t	size;
+	char	*result;
+	char	*now;
 	ssize_t	i;
 	ssize_t	j;
 
-	size = (*file)->len;
-	full_sentence = (char *)malloc(sizeof(char) * (size + 1));
-	if (!full_sentence)
-		return (NULL);
+	result = (char *)malloc(sizeof(char) * (nl_idx + 1));
+	if (!result)
+		return (free_fdfile(flist, file, fd));
+	result[nl_idx] = 0x00;
 	i = 0;
-	while (((*file)->content)[i] && i < size)
+	now = file->content;
+	j = file->nl_idx;
+	while (now && j <= file->len)
 	{
-		full_sentence[i] = ((*file)->content)[i];
-		i++;
+		if (i == nl_idx)
+			break ;
+		if (j == file->len)
+		{
+			free(file);
+			file = file->next;
+			now = file->content;
+			// printf("now is now %s\n", now);
+			j = 0;
+		}
+		else
+			result[i++] = now[j++];
+		// printf("i = %zd, j = %zd\n", i, j);
+		// printf("result = %s\n", result);
 	}
-	if ((*file)->content)
-		free(((*file)->content));
-	j = 0;
-	while (buf[j] && i < size)
-		full_sentence[i++] = buf[j++];
-	full_sentence[i] = 0x00;
-	(*file)->len = i;
-	return (full_sentence);
-}
-
-char	*save_remain(t_file**file, t_file **nxt)
-{
-	ssize_t	idx;
-	ssize_t	j;
-	ssize_t	len;
-
-	idx = 0;
-	j = 0;
-	len = (*file)->newline;
-	while (idx < len)
-		idx++;
-	if ((*nxt)->content)
-		free(((*nxt)->content));
-	(*nxt)->content = (char *)malloc(sizeof(char) * (len - idx + 1));
-	if (!(*nxt)->content)
-		return (free_fdfile(file));
-	while (((*file)->content)[idx] && idx < len)
-		((*nxt)->content)[j++] = ((*file)->content)[idx++];
-	((*nxt)->content)[j] = 0x00;
-	(*nxt)->len = j;
-	return ((*nxt)->content);
-}
-
-char	*controller(t_file **file, int fd)
-{
-	char	*res;
-	char	*remain;
-	t_file	*nxt;
-	ssize_t	len;
-
-	(*file)->newline = find_newline(file);
-	len = 1;
-	while ((*file)->content && find_newline(file) == -1 && ((*file)->eof) >= 0 \
-	&& len)
-		(*file)->content = read_buffer(file, &len);
-	if (!((*file)->content) || !(*(*file)->content))
-		return (free_fdfile(file));
-	res = split_newline(file);
-	if (!res)
-		return (free_fdfile(file));
-	nxt = t_malloc(fd);
-	if (!nxt)
-		return (free_fdfile(file));
-	(*file)->next = nxt;
-	remain = save_remain(file, &nxt);
-	if (!remain)
-		free_fdfile(&nxt);
-	return (res);
+	file->nl_idx = j;
+	return (result);
 }
 
 char	*get_next_line(int fd)
 {
 	static t_file	*flist[OPEN_MAX];
 	t_file			*file;
-	char			*result;
+	ssize_t			len;
+	ssize_t			nl_idx;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= OPEN_MAX)
 		return (NULL);
-	if (!flist[fd])
-		file = t_malloc(fd);
-	else
-		file = flist[fd];
+	file = get_exist_fdfile(flist, fd);
 	if (!file)
 		return (NULL);
-	result = controller(&file, fd);
-	if (!result)
-		return (free_fdfile(&file));
-	flist[fd] = file->next;
-	if (!(file->next))
-		flist[fd] = NULL;
-	if (file)
-		free(file);
-	return (result);
+	if (!(file->len))
+	{
+		len = read_buffer(fd, file);
+		if (len <= 0)
+			return (free_fdfile(flist, file, fd));
+	}
+	nl_idx = get_newline_idx(flist, file, fd);
+	if (nl_idx)
+		return (get_result_line(flist, file, nl_idx, fd));
+	return (free_fdfile(flist, file, fd));
 }

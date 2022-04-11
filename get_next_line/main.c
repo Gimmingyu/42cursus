@@ -36,7 +36,7 @@ int	main(void)
 	int		fd1;
 	// int		fd2;
 	// int		fd3;
-	fd1 = open("multiple_line_no_nl", O_RDWR);
+	fd1 = open("test.txt", O_RDWR);
 	temp = get_next_line(fd1);
 	printf("temp is %s\n", temp);
 	printf("new line is in temp[%zd]\n", fnew(temp));

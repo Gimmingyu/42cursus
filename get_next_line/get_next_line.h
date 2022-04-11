@@ -30,22 +30,23 @@
 typedef struct s_file
 {
 	int				fd;
-	int				newline;
-	int				eof;
 	ssize_t			len;
-	char			*content;
+	ssize_t			nl_idx;
+	char			content[BUFFER_SIZE + 1];
 	struct s_file	*next;
 }	t_file;
 
 char	*get_next_line(int fd);
-char	*read_buffer(t_file **file, ssize_t *len);
-char	*concatenate(const char *buf, t_file **file);
+char	*free_fdfile(t_file **flist, t_file *file, int fd);
+char	*get_result_line(t_file **flist, t_file *file, ssize_t nl_idx, int fd);
 
-ssize_t	find_newline(t_file **file);
+ssize_t read_buffer(int fd, t_file *file);
+ssize_t	get_until_newline(t_file **flist, t_file *file, int fd);
+ssize_t	get_next_file(t_file *file, int fd);
 ssize_t	fnew(char *temp);
-t_file	*t_malloc(int fd);
 
-char	*free_fdfile(t_file **file);
+ssize_t	get_next_content(char **now, t_file *file);
 
-void	clear_buffer(char *buf);
+t_file	*get_exist_fdfile(t_file **flist, int fd);
+t_file	*allocate_file(int fd);
 #endif
