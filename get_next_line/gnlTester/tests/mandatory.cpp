@@ -67,7 +67,10 @@ int main(void)
 	fd = open("files/43_no_nl", O_RDWR);
 	TEST(/* 1 */ gnl(fd, "0123456789012345678901234567890123456789012");
 		/* 2 */ gnl(fd, NULL);) cout << ENDL; close(fd);
-
+	title("files/oln.txt: ")
+	fd = open("files/oln.txt", O_RDWR);
+	TEST(/* 1 */ gnl(fd, "abcdefghijklmnopqrstuvwxyz");
+		/* 2 */ gnl(fd, NULL);) cout << ENDL; close(fd);
 	title("files/43_with_nl: ")
 	fd = open("files/43_with_nl", O_RDWR);
 	TEST(/* 1 */ gnl(fd, "012345678901234567890123456789012345678901\n");

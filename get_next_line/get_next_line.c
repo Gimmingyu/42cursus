@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 21:37:53 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/11 20:31:17 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/12 20:41:14 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ ssize_t	get_next_size(ssize_t *size, t_file *file, int fd, t_file **flist)
 	return (*size);
 }
 
-ssize_t	get_result_size(t_file **flist, t_file *file, int fd)
+ssize_t	controll_size(t_file **flist, t_file *file, int fd)
 {
 	ssize_t	size;
 
@@ -52,7 +52,7 @@ ssize_t	get_result_size(t_file **flist, t_file *file, int fd)
 	return (size);
 }
 
-void	make_result_line(t_file **flist, char **result, ssize_t size, \
+void	get_result_line(t_file **flist, char **result, ssize_t size, \
 t_file *file)
 {
 	t_file	*temp;
@@ -77,7 +77,7 @@ t_file *file)
 	flist[temp->fd] = temp;
 }
 
-char	*get_result_line(t_file **flist, t_file *file, ssize_t size, int fd)
+char	*controll_result(t_file **flist, t_file *file, ssize_t size, int fd)
 {
 	char	*result;
 
@@ -85,7 +85,7 @@ char	*get_result_line(t_file **flist, t_file *file, ssize_t size, int fd)
 	if (!result)
 		return (free_fdfile(flist, file, fd));
 	result[size] = 0x00;
-	make_result_line(flist, &result, size, file);
+	get_result_line(flist, &result, size, file);
 	return (result);
 }
 
@@ -110,8 +110,8 @@ char	*get_next_line(int fd)
 		if (len <= 0)
 			return (free_fdfile(flist, file, fd));
 	}
-	size = get_result_size(flist, file, fd);
+	size = controll_size(flist, file, fd);
 	if (size)
-		return (get_result_line(flist, file, size, fd));
+		return (controll_result(flist, file, size, fd));
 	return (free_fdfile(flist, file, fd));
 }

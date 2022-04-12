@@ -1,5 +1,0 @@
-mingkim make this text file
-dddddddddddddddddddddddddddd
-dddd test\n test\n test
-
-next line is end of this file
