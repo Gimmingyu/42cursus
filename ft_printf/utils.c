@@ -6,44 +6,55 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 19:42:33 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/13 21:40:22 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/14 16:44:27 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	write_output(size_t len, const char *str)
-{
-	write(1, str, len);
-}
-
 size_t	get_strlen(const char *str)
 {
 	size_t	i;
+	char	*tmp;
 
 	if (!str)
 		return (ERR);
+	tmp = (char *)str;
 	i = 0;
-	while (str[i])
+	while (*tmp)
+	{
+		tmp++;
 		i++;
+	}
 	return (i);
 }
 
-void	type_check(char type)
+size_t	get_ui_malloc_size(unsigned int num)
 {
+	size_t	size;
 
-	void (*fp)(char);
+	size = 0;
+	if (num == 0)
+		return (1);
+	while (num)
+	{
+		num /= 10;
+		size++;
+	}
+	return (size);
+}
 
-	if (type == INT || type == DIGIT)
-		fp = write_integer(type);
-	else if (type == UNSIGNED_INT)
-		return ;
-	else if (type == CHAR)
-		return ;
-	else if (type == STRING)
-		return ;
-	else if (type == POINTER)
-		return ;
-	else if (type == LOWER_HEXA || type == UPPER_HEXA)
-		return ;
+size_t	get_hexa_malloc_size(unsigned long long num)
+{
+	size_t	size;
+
+	size = 0;
+	if (num == 0)
+		return (1);
+	while (num)
+	{
+		num /= 10;
+		size++;
+	}
+	return (size);
 }
