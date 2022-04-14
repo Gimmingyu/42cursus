@@ -14,23 +14,34 @@
 
 void	write_pointer(char *ret)
 {
-	ret = NULL;
+	if (ret)
+		ret = NULL;
 }
 
 void	write_lower_hexa(char *ret)
 {
-	ret = NULL;
+	if (ret)
+		ret = NULL;
 	return ;
 }
 
 void	write_upper_hexa(char *ret)
 {
-	ret = NULL;
+	if (ret)
+		ret = NULL;
 	return ;
 }
 
 void	write_unsigned_int(char *ret)
 {
-	ret = NULL;
+	if (ret)
+		ret = NULL;
 	return ;
+}
+
+void	write_percent(char *ret)
+{
+	if (ret)
+		ret = NULL;
+	write(1, "%", 1);
 }

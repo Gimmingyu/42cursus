@@ -58,3 +58,10 @@ size_t	get_hexa_malloc_size(unsigned long long num)
 	}
 	return (size);
 }
+
+void	free_return_line(char **ret_ptr)
+{
+	if (*ret_ptr)
+		free(*ret_ptr);
+	*ret_ptr = NULL;
+}

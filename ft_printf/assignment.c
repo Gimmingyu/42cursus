@@ -28,6 +28,8 @@ t_type	assign_func(void **fp_ptr, char type)
 		*fp_ptr = (t_func)write_lower_hexa;
 	else if (type == UPPER_HEXA)
 		*fp_ptr = (t_func)write_upper_hexa;
+	else if (type == PERCENT)
+		*fp_ptr = (t_func)write_percent;
 	else
 	{
 		*fp_ptr = NULL;
@@ -36,22 +38,22 @@ t_type	assign_func(void **fp_ptr, char type)
 	return ((t_type)type);
 }
 
-const char	*assign_result(char type, va_list ap)
+char	*assign_result(char type, va_list *ap_ptr)
 {
 	if (type == INT || type == DIGIT)
-		return (int_conversion(ap));
+		return (int_conversion(ap_ptr));
 	else if (type == UNSIGNED_INT)
-		return (ui_conversion(ap));
+		return (ui_conversion(ap_ptr));
 	else if (type == CHAR)
-		return (char_conversion(ap));
+		return (char_conversion(ap_ptr));
 	else if (type == STRING)
-		return (string_conversion(ap));
+		return (string_conversion(ap_ptr));
 	else if (type == POINTER)
-		return (ptr_conversion(ap));
+		return (ptr_conversion(ap_ptr));
 	else if (type == LOWER_HEXA)
-		return (lhexa_conversion(ap));
+		return (lhexa_conversion(ap_ptr));
 	else if (type == UPPER_HEXA)
-		return (uhexa_conversion(ap));
+		return (uhexa_conversion(ap_ptr));
 	else
 		return (NULL);
 }

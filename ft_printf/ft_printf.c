@@ -15,9 +15,8 @@
 int	ft_printf(const char *format, ...)
 {
 	va_list	ap;
-	t_type	type;
 	void	*fp;
-	const char	*ret;
+	char	*ret;
 
 	if (!format)
 		return (0);
@@ -26,15 +25,15 @@ int	ft_printf(const char *format, ...)
 	{
 		if (*format == '%')
 		{
-			type = assign_func(&fp, *++format);
-			ret = assign_result(type, ap);
+			ret = assign_result(assign_func(&fp, *++format), &ap);
 			if (!ret)
 				return (0);
-			(*(t_func)fp)(ap, ret);
+			(*(t_func)fp)(ret);
+			free_return_line(&ret);
 		}
 		else
-			format++;
-			// write(1, format++, 1);
+			write(1, format, 1);
+		format++;
 	}
 	va_end(ap);
 	return (0);

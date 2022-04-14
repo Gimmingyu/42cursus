@@ -22,9 +22,7 @@ void	write_char(char *ret)
 	write(1, ret, 1);
 }
 
-void	write_string(const char *ret)
+void	write_string(char *ret)
 {
-	printf("ret = %s\n", ret);
-	printf("size = %td\n", get_strlen(ret));
 	write(1, ret, get_strlen(ret));
 }
