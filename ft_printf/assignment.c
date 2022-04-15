@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 15:01:48 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/14 16:45:08 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/15 11:45:39 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ char	*assign_result(char type, va_list *ap_ptr)
 		return (lhexa_conversion(ap_ptr));
 	else if (type == UPPER_HEXA)
 		return (uhexa_conversion(ap_ptr));
+	else if (type == PERCENT)
+		return (percent_conversion());
 	else
 		return (NULL);
 }

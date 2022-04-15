@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 19:42:33 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/14 16:44:27 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/15 14:49:50 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ size_t	get_strlen(const char *str)
 	char	*tmp;
 
 	if (!str)
-		return (ERR);
+		return (6);
 	tmp = (char *)str;
 	i = 0;
 	while (*tmp)
@@ -44,7 +44,7 @@ size_t	get_ui_malloc_size(unsigned int num)
 	return (size);
 }
 
-size_t	get_hexa_malloc_size(unsigned long long num)
+size_t	get_hexa_malloc_size(unsigned int num)
 {
 	size_t	size;
 
@@ -53,7 +53,22 @@ size_t	get_hexa_malloc_size(unsigned long long num)
 		return (1);
 	while (num)
 	{
-		num /= 10;
+		num /= 16;
+		size++;
+	}
+	return (size);
+}
+
+size_t	get_ptr_malloc_size(unsigned long long nbr_temp)
+{
+	size_t				size;
+
+	size = 2;
+	if (nbr_temp == 0)
+		return (3);
+	while (nbr_temp)
+	{
+		nbr_temp /= 16;
 		size++;
 	}
 	return (size);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mingkim <mingkim@student.42seoul.k>        +#+  +:+       +#+         #
+#    By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 21:28:02 by mingkim           #+#    #+#              #
-#    Updated: 2022/03/22 21:08:52 by mingkim          ###   ########.fr        #
+#    Updated: 2022/04/15 14:14:29 by mingkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,34 +18,39 @@ CC = gcc
 
 CFLAGS = -Wall -Werror -Wextra
 
-AR = ar -rcs
+LIBFT_C = ar rc
 
 rm = rm -f
 
-INCS = ./
+INCS = .
 
-SRCS = ./ft_printf
+SRCS = ./ft_printf.c \
+		./assignment.c \
+		./conversion_ixup.c \
+		./conversion_scp.c \
+		./utils.c \
+		./write_csdi.c \
+		./write_xput.c \
+		
 
 OBJS = $(SRCS:.c=.o)
 
-%.o : %.c
+.c.o :
 	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o) -I$(INCS)
 
 $(NAME): $(OBJS)
-	make all -C $(LIBFT)/
-	cp $(LIBFT)/$(LIBFT_LIB)/ $(NAME)
-	$(AR) $@ $?
+	@make all -C $(LIBFT)/
+	@cp $(LIBFT)/$(LIBFT_LIB) $(NAME)
+	$(LIBFT_C) $(NAME) $(OBJS)
 
 all: $(NAME)
 
 clean:
-	$(RM) $(OBJS) $(B_OBJS)
-	make clean -C $(LIBFT)
+	$(RM) $(OBJS)
+	@make clean -C $(LIBFT)
 
 fclean: clean
 	$(RM) $(NAME)
-	make fclean -C $(LIBFT)
+	@make fclean -C $(LIBFT)
 
 re: clean all
-
-.PHONY: all clean fclean re libft

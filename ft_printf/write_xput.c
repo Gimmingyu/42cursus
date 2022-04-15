@@ -1,47 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   write_xpu.c                                        :+:      :+:    :+:   */
+/*   write_xput.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 13:29:46 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/14 15:48:25 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/15 14:35:52 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	write_pointer(char *ret)
+ssize_t	write_pointer(char *ret)
 {
-	if (ret)
-		ret = NULL;
+	return (write(1, ret, get_strlen(ret)));
 }
 
-void	write_lower_hexa(char *ret)
+ssize_t	write_lower_hexa(char *ret)
 {
-	if (ret)
-		ret = NULL;
-	return ;
+	return (write(1, ret, get_strlen(ret)));
 }
 
-void	write_upper_hexa(char *ret)
+ssize_t	write_upper_hexa(char *ret)
 {
-	if (ret)
-		ret = NULL;
-	return ;
+	return (write(1, ret, get_strlen(ret)));
 }
 
-void	write_unsigned_int(char *ret)
+ssize_t	write_unsigned_int(char *ret)
 {
-	if (ret)
-		ret = NULL;
-	return ;
+	return (write(1, ret, get_strlen(ret)));
 }
 
-void	write_percent(char *ret)
+ssize_t	write_percent(char *ret)
 {
-	if (ret)
-		ret = NULL;
-	write(1, "%", 1);
+	return (write(1, ret, get_strlen(ret)));
 }

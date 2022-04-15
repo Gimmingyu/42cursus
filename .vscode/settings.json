@@ -14,6 +14,14 @@
 		"memory": "c",
 		"ratio": "c",
 		"tuple": "c",
-		"utility": "c"
+		"utility": "c",
+		"__bit_reference": "c",
+		"__split_buffer": "c",
+		"__tree": "c",
+		"set": "c",
+		"string": "c",
+		"string_view": "c",
+		"unordered_map": "c",
+		"vector": "c"
 	}
 }

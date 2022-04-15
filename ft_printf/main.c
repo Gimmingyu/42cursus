@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 19:40:02 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/14 13:53:14 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/15 14:44:44 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,17 @@
 
 int	main(void)
 {
-	char	input[100] = "temp is %s, number is %d, char is %c, next is newline\n";
 	char	temp1[50] = "yeblee 101호";
-	int		num = 42;
-	char	c = 'q';
+	int		num = 2147483648;
+	char	c = '\0';
+	int		lhexa = 42;
+	int		uhexa = 42;
 
-	ft_printf(input, temp1, num, c);
-	// printf("hexa x = %x, hexa X = %X\n");
+	printf("in printff\ntemp is %s\n, number is %d\n, char is %c\n, percent is %%\n, lhexa = %x\n, uhexa = %X\n, pointer = %p, %p\n, next is newline\n" , temp1, num, c, lhexa, uhexa, NULL, 0);
+	ft_printf("in ft_printf\ntemp is %s\n, number is %d\n, char is %c\n, percent is %%\n, lhexa = %x\n, uhexa = %X\n, pointer = %p, %p\n, next is newline\n" , temp1, num, c, lhexa, uhexa, NULL, 0);
+	printf("printf: %c%c%c*", '\0', '1', 1);
+	ft_printf("ft_printf: %c%c%c*", '\0', '1', 1);
+	system("leaks a.out > leaks_result; cat leaks_result | \
+	grep leaked && rm -rf leaks_result");
 	return (0);
 }

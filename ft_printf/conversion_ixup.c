@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   conversion_ixu.c                                   :+:      :+:    :+:   */
+/*   conversion_ixup.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 15:12:01 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/14 16:32:34 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/15 12:04:11 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ char	*uhexa_conversion(va_list *ap_ptr)
 	if (!ret)
 		return (NULL);
 	ret[size--] = NUL;
+	while (num)
+	{
+		ret[size--] = UHEXA_BASE[num % 16];
+		num /= 16;
+	}
 	return (ret);
 }
 
@@ -67,5 +72,22 @@ char	*lhexa_conversion(va_list *ap_ptr)
 	if (!ret)
 		return (NULL);
 	ret[size--] = NUL;
+	while (num)
+	{
+		ret[size--] = LHEXA_BASE[num % 16];
+		num /= 16;
+	}
+	return (ret);
+}
+
+char	*percent_conversion(void)
+{
+	char	*ret;
+
+	ret = malloc(sizeof(char) * 2);
+	if (!ret)
+		return (NULL);
+	ret[0] = '%';
+	ret[1] = NUL;
 	return (ret);
 }
