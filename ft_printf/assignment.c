@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 13:11:58 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/18 14:12:00 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/18 19:21:42 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int	assign_func(void **fp_ptr, char type)
 		*fp_ptr = (t_func)conversion_uhexa;
 	else if (type == UNSIGNED_INT)
 		*fp_ptr = (t_func)conversion_uint;
-	else if (type == PERCENT)
-		*fp_ptr = conversion_percent;
 	else
 		return (ERR);
 	return (OK);

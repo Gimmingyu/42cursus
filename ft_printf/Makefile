@@ -6,7 +6,7 @@
 #    By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 21:28:02 by mingkim           #+#    #+#              #
-#    Updated: 2022/04/18 14:04:42 by mingkim          ###   ########.fr        #
+#    Updated: 2022/04/18 19:34:23 by mingkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,6 @@ SRCS = ./ft_printf.c \
 		./conversion_percent.c \
 		./conversion_ptr.c \
 		./conversion_hexa.c \
-		./utils.c \
 		
 
 OBJS = $(SRCS:.c=.o)

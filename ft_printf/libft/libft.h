@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 16:17:48 by mingkim           #+#    #+#             */
-/*   Updated: 2022/03/20 21:42:18 by mingkim          ###   ########.fr       */
+/*   Created: 2022/03/20 19:38:22 by mingkim           #+#    #+#             */
+/*   Updated: 2022/03/21 20:59:45 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include	<unistd.h>
 # include	<stdlib.h>
-# include	<string.h>
-# include	<stdarg.h>
 
 typedef struct s_list
 {
@@ -35,7 +33,6 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 int		ft_atoi(const char *str);
 int		ft_lstsize(t_list *lst);
-int		ft_printf(const char *, ...);
 
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 void	ft_putchar_fd(char c, int fd);

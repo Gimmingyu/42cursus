@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/13 18:59:57 by mingkim           #+#    #+#             */
-/*   Updated: 2022/03/14 19:38:42 by mingkim          ###   ########.fr       */
+/*   Created: 2022/03/20 19:37:35 by mingkim           #+#    #+#             */
+/*   Updated: 2022/03/23 19:59:49 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char			*ptr;
-	size_t			idx;
+	char	*ptr;
+	size_t	idx;
 
 	if (!s || !f)
 		return (NULL);

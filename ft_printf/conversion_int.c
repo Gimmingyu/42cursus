@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 13:22:02 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/18 14:24:20 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/18 20:12:02 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	conversion_int(va_list *ap_ptr)
 	char	*result;
 
 	result = ft_itoa(va_arg(*ap_ptr, int));
-	res = get_strlen(result);
+	res = ft_strlen(result);
 	write(1, result, res);
 	free(result);
 	result = NULL;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/12 19:23:39 by mingkim           #+#    #+#             */
-/*   Updated: 2022/03/14 19:48:08 by mingkim          ###   ########.fr       */
+/*   Created: 2022/03/20 19:37:49 by mingkim           #+#    #+#             */
+/*   Updated: 2022/03/23 19:58:19 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	size_t			h_len;
-	size_t			n_len;
-	size_t			size;
+	size_t	h_len;
+	size_t	n_len;
+	size_t	size;
 
 	if (!*needle)
 		return ((char *)haystack);
