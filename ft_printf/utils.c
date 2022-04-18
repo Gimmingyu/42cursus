@@ -6,13 +6,13 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 19:42:33 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/15 14:49:50 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/18 13:33:32 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-size_t	get_strlen(const char *str)
+int	get_strlen(const char *str)
 {
 	size_t	i;
 	char	*tmp;

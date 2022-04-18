@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 21:41:24 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/15 14:48:56 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/18 14:03:20 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ int	ft_printf(const char *format, ...)
 {
 	va_list	ap;
 	void	*fp;
-	char	*ret;
-	size_t	ret_size;
+	int		ret_size;
 
 	ret_size = 0;
 	if (!format)
@@ -27,16 +26,14 @@ int	ft_printf(const char *format, ...)
 	{
 		if (*format == '%')
 		{
-			ret = assign_result(assign_func(&fp, *++format), &ap);
-			ret_size += (*(t_func)fp)(ret);
-			free_return_line(&ret);
 			format++;
+			if (*format == PERCENT)
+				ret_size += conversion_percent();
+			else if (assign_func(&fp, *format))
+				ret_size += (*(t_func)fp)(&ap);
 		}
 		else
-		{
-			write(1, format, 1);
-			ret_size++;
-		}
+			ret_size += write(1, format, 1);
 		format++;
 	}
 	va_end(ap);
