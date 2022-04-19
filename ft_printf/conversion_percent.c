@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 13:36:34 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/18 20:19:30 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/04/19 12:13:28 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	conversion_percent(void)
 {
-	int	res;
-
-	res = write(1, "%", 1);
-	return (res);
+	write(1, "%", 1);
+	return (1);
 }
