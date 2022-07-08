@@ -6,7 +6,7 @@
 #    By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/06 13:55:14 by mingkim           #+#    #+#              #
-#    Updated: 2022/07/07 15:54:10 by mingkim          ###   ########.fr        #
+#    Updated: 2022/07/08 13:30:04 by mingkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ INC = include/push_swap.h
 SRC_DIR = src/
 SRCS = src/push_swap.c \
 		src/utils.c \
-		src/handle_exceptions.c \
+		src/exception_handler.c \
+		src/validator.c \
 		src/commands/push.c \
 		src/commands/swap.c \
 		

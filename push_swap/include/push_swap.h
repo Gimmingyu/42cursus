@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 13:26:11 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/07 19:42:36 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/08 17:22:23 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,8 @@ typedef struct s_res_list
 	struct s_res_list	*next;
 }	t_res_list;
 
-
 int				is_linked_stack_empty(t_linked_stack *stack);
-int				create_stacks(t_linked_stack **a_ptr, t_linked_stack **b_ptr);
+void			create_stacks(t_linked_stack **a_ptr, t_linked_stack **b_ptr);
 t_stack_node	*create_node(int value);
 
 int				push_bottom(t_linked_stack *stack, int value);
@@ -60,8 +59,17 @@ int				is_swap_exception(t_linked_stack *a_stack);
 int				single_rotate(t_linked_stack *stack);
 int				both_rotate(t_linked_stack *a_stack, t_linked_stack *b_stack);
 
-void			delete_stack(t_linked_stack *stack);
+int				delete_stack(t_linked_stack *a_stack, t_linked_stack *b_stack);
 void			display_stack(t_linked_stack *stack);
+long long		a_to_longlong(const char *str);
+int				is_greater(int a, int b);
+int				is_sorted(t_linked_stack *stack);
 
 int				response_error(void);
+
+void			check_is_integer(int ac, char **av);
+void			check_is_duplicate(int ac, char **av);
+void			validator(int ac, char **av);
+
+int				solution(t_linked_stack *a_stack, t_linked_stack *b_stack);
 #endif

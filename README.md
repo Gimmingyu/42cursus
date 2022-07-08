@@ -68,4 +68,4 @@ push_swap 프로그램은 스택 A에 들어갈 값들을 정수 리스트의 �
 
 에러의 경우 Error와 줄바꿈을 표준 에러로 출력.
 
-@FIXME: ft_atoi를 custom... atoi에서 잘못된 값인 경우 stack을 지우면서 에러 출력해야한다. 현재는 leak 발생 예상.
+@FIXME: ft_atoi를 custom... atoi에서 잘못된 값인 경우 stack을 지우면서 에러 출력해야한다. 현재는 leak 발생 예상. --> validator를 이용해 원소들을 먼저 검사... 잘못된 경우 바로 exit.

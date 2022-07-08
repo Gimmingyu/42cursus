@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 13:20:19 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/07 19:42:25 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/08 16:11:16 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,5 @@
 int	response_error(void)
 {
 	write(2, "Error\n", 6);
-	return (0);
+	exit(1);
 }
-

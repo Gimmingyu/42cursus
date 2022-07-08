@@ -6,57 +6,72 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 13:27:25 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/07 19:35:47 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/08 17:18:29 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/push_swap.h"
 
-int	is_linked_stack_empty(t_linked_stack *stack)
+static int	ft_isspace(char c)
 {
-	if (stack->element_count == 0)
+	if (c == 32 || (9 <= c && 13 >= c))
 		return (1);
 	return (0);
 }
 
-void	delete_stack(t_linked_stack *stack)
+long long	a_to_longlong(const char *str)
 {
-	size_t			idx;
-	t_stack_node	*node;
-	t_stack_node	*next_node;
+	long long	nbr;
+	int			sign;
+	size_t		i;
 
-	if (!stack)
-		return ;
-	idx = 0;
-	node = stack->top_node.next;
-	while (idx < stack->element_count)
+	nbr = 0;
+	sign = 1;
+	i = 0;
+	while (str[i] && ft_isspace(str[i]) == 1)
+		i++;
+	if (str[i] == '-')
+		sign = -1;
+	if (str[i] == '+' || str[i] == '-')
+		i++;
+	while (str[i] && '0' <= str[i] && str[i] <= '9')
 	{
-		next_node = node->next;
-		free(node);
-		node->next = NULL;
-		node->prev = NULL;
-		node = next_node;
-		idx++;
+		nbr = (nbr * 10) + (str[i] - '0');
+		if (nbr > 2147483647 && sign == 1)
+			response_error();
+		else if (nbr > 2147483648 && sign == -1)
+			response_error();
+		i++;
 	}
-	next_node = NULL;
-	node = NULL;
+	return (sign * nbr);
 }
 
-void	display_stack(t_linked_stack *stack)
+int	is_greater(int a, int b)
+{
+	if (a < b)
+		return (FALSE);
+	return (OK);
+}
+
+int	is_sorted(t_linked_stack *stack)
 {
 	size_t			idx;
 	t_stack_node	*node;
 	t_stack_node	*next_node;
 
 	if (!stack)
-		return ;
+		return (ERROR);
+	if (stack->element_count == 1)
+		return (OK);
 	idx = 0;
 	node = stack->top_node.next;
 	while (idx < stack->element_count)
 	{
 		next_node = node->next;
-		printf("%zu번째 value는 %d 입니다.\n", idx, node->value);
+		if (is_greater(node->value, next_node->value) == FALSE)
+			return (FALSE);
 		node = next_node;
 		idx++;
 	}
+	return (OK);
 }
