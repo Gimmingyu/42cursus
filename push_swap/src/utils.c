@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 13:27:25 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/08 17:18:29 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/09 18:46:33 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,23 @@ int	is_sorted(t_linked_stack *stack)
 		idx++;
 	}
 	return (OK);
+}
+
+void	display_stack(t_linked_stack *stack)
+{
+	size_t			idx;
+	t_stack_node	*node;
+	t_stack_node	*next_node;
+
+	if (!stack)
+		return ;
+	idx = 0;
+	node = stack->top_node.next;
+	while (idx < stack->element_count)
+	{
+		next_node = node->next;
+		printf("%zu번째 value는 %d 입니다.\n", idx, node->value);
+		node = next_node;
+		idx++;
+	}
 }

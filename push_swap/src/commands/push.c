@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:03:10 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/07 19:41:10 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/09 13:38:37 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,19 @@ int	push_bottom(t_linked_stack *stack, int value)
 	node = create_node(value);
 	if (!node)
 		return (ERROR);
-	if (is_linked_stack_empty(stack))
+	if (is_linked_stack_empty(stack) == OK)
 	{
-		stack->top_node.next = node;
 		stack->top_node.prev = node;
+		stack->top_node.next = node;
 	}
 	else
 	{
 		stack->top_node.prev->next = node;
-		stack->top_node.prev = node;
+		stack->top_node.next->prev = node;
 	}
-	node->next = stack->top_node.next;
 	node->prev = stack->top_node.prev;
+	node->next = stack->top_node.next;
+	stack->top_node.prev = node;
 	stack->element_count++;
 	return (OK);
 }

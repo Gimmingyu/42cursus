@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 16:07:17 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/08 17:25:49 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/09 18:49:53 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,21 +76,27 @@ t_stack_node	*create_node(int value)
 	return (new_node);
 }
 
-void	display_stack(t_linked_stack *stack)
+int	copy_stack(t_linked_stack *stack, t_linked_stack **copy_stack_ptr)
 {
 	size_t			idx;
 	t_stack_node	*node;
-	t_stack_node	*next_node;
+	t_stack_node	*temp;
 
-	if (!stack)
-		return ;
+	if (!stack || is_linked_stack_empty(stack))
+		return (ERROR);
 	idx = 0;
 	node = stack->top_node.next;
+	(*copy_stack_ptr) = malloc(sizeof(t_linked_stack));
+	if (!*copy_stack_ptr)
+		return (ERROR);
+	(*copy_stack_ptr)->element_count = 0;
+	(*copy_stack_ptr)->top_node.next = NULL;
+	(*copy_stack_ptr)->top_node.prev = NULL;
 	while (idx < stack->element_count)
 	{
-		next_node = node->next;
-		printf("%zu번째 value는 %d 입니다.\n", idx, node->value);
-		node = next_node;
+		push_bottom(*copy_stack_ptr, node->value);
+		node = node->next;
 		idx++;
 	}
+	return (OK);
 }

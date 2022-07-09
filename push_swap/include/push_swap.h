@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 13:26:11 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/08 17:22:23 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/09 19:10:52 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct s_res_list
 int				is_linked_stack_empty(t_linked_stack *stack);
 void			create_stacks(t_linked_stack **a_ptr, t_linked_stack **b_ptr);
 t_stack_node	*create_node(int value);
+int				copy_stack(t_linked_stack *stack, \
+t_linked_stack **copy_stack_ptr);
 
 int				push_bottom(t_linked_stack *stack, int value);
 int				push_top(t_linked_stack *stack, t_stack_node node);
@@ -72,4 +74,6 @@ void			check_is_duplicate(int ac, char **av);
 void			validator(int ac, char **av);
 
 int				solution(t_linked_stack *a_stack, t_linked_stack *b_stack);
+
+int				get_sum_of_stack(t_linked_stack *stack);
 #endif
