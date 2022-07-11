@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 13:28:57 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/08 16:09:18 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/10 23:07:52 by kimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	is_integer(char *str)
 		response_error();
 	idx = 0;
 	len = ft_strlen(str);
-	if ((str[0] != '-' && str[0] != '+') && (str[0] <= '0' || str[0] > '9'))
+	if ((str[0] != '-' && str[0] != '+') && (str[0] < '0' || str[0] > '9'))
 		response_error();
 	if (str[0] == '-' || str[0] == '+')
 		idx++;

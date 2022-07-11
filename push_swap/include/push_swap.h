@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 13:26:11 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/09 19:10:52 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/10 23:03:06 by kimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include "../libft/libft.h"
+// # include "../libft/libft.h"
 # include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
 
 typedef enum e_type
 {
@@ -42,6 +44,13 @@ typedef struct s_res_list
 	char				*res;
 	struct s_res_list	*next;
 }	t_res_list;
+
+typedef struct s_information
+{
+	int	pivot_a;
+	int	pivot_b;
+}	t_info;
+
 
 int				is_linked_stack_empty(t_linked_stack *stack);
 void			create_stacks(t_linked_stack **a_ptr, t_linked_stack **b_ptr);
@@ -73,7 +82,13 @@ void			check_is_integer(int ac, char **av);
 void			check_is_duplicate(int ac, char **av);
 void			validator(int ac, char **av);
 
-int				solution(t_linked_stack *a_stack, t_linked_stack *b_stack);
+t_info			*create_info(int pivot_a, int pivot_b);
+
+int				solution(t_linked_stack *a_stack, t_linked_stack *b_stack, t_linked_stack *copy_stack);
 
 int				get_sum_of_stack(t_linked_stack *stack);
+int				select_pivot(t_linked_stack *stack, int *pivot_a_ptr, int *pivot_b_ptr);
+void			bubble_sort(t_linked_stack *stack);
+long long		a_to_longlong(const char *str);
+size_t			ft_strlen(const char *str);
 #endif

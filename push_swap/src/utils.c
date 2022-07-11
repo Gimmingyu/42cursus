@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 13:27:25 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/09 18:46:33 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/10 23:06:40 by kimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	display_stack(t_linked_stack *stack)
 		return ;
 	idx = 0;
 	node = stack->top_node.next;
+	printf("here\n");
 	while (idx < stack->element_count)
 	{
 		next_node = node->next;
@@ -93,4 +94,14 @@ void	display_stack(t_linked_stack *stack)
 		node = next_node;
 		idx++;
 	}
+}
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	idx;
+
+	idx = 0;
+	while (str[idx])
+		idx++;
+	return (idx);
 }
