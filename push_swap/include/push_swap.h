@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 13:26:11 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/11 16:25:05 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/11 23:53:50 by kimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include "../libft/libft.h"
+// # include "../libft/libft.h"
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -100,6 +100,7 @@ Function : Function for utility
 long long		a_to_longlong(const char *str);
 int				is_greater(int a, int b);
 int				get_sum_of_stack(t_linked_stack *stack);
+size_t			ft_strlen(const char *str);
 /* 
 Function : Function for response
 */
@@ -123,4 +124,7 @@ int				select_pivot(t_linked_stack *stack, \
 void			bubble_sort(t_linked_stack *stack);
 int				set_index(t_linked_stack *stack, t_linked_stack *copied);
 int				is_sorted(t_linked_stack *stack);
+int				step_one(t_linked_stack *a_stack, t_linked_stack *b_stack, \
+				t_info *info);
+int				find_min_value(t_linked_stack *stack, int key);
 #endif

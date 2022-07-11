@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:03:10 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/11 13:56:32 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/11 23:57:41 by kimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_stack_node	*pop_on_top(t_linked_stack *stack)
 	top_node = stack->top_node.next;
 	stack->top_node.next = top_node->next;
 	top_node->next->prev = stack->top_node.prev;
-	stack->top_node.prev->next = stack->top_node.next;
+	top_node->prev->next = stack->top_node.next;
 	stack->element_count--;
 	return (top_node);
 }
@@ -97,10 +97,10 @@ int	push(t_linked_stack *push_stack, t_linked_stack *pop_stack)
 	t_type			result;
 
 	if (!push_stack || !pop_stack || is_linked_stack_empty(pop_stack))
-		return (FALSE);
+		return (ERROR);
 	pop_node = pop_on_top(pop_stack);
 	if (!pop_node)
-		return (FALSE);
+		return (ERROR);
 	result = OK;
 	if (push_top(push_stack, pop_node->value) == ERROR)
 		result = ERROR;

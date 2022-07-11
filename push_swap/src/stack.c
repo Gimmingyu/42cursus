@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 16:07:17 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/11 16:03:38 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/11 23:38:33 by kimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,5 @@ int	delete_single_stack(t_linked_stack *stack)
 		node = next_node;
 	}
 	free(stack);
-	return (OK);
+	return (ERROR);
 }
