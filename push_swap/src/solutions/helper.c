@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:51:46 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/10 23:39:36 by kimmingyu        ###   ########.fr       */
+/*   Updated: 2022/07/11 16:10:43 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int	select_pivot(t_linked_stack *stack, int *pivot_a_ptr, int *pivot_b_ptr)
 		array[idx++] = node->value;
 		node = node->next;
 	}
-	*pivot_a_ptr = array[idx / 3];
-	*pivot_b_ptr = array[(idx / 3) * 2];
+	*pivot_b_ptr = array[idx / 3];
+	*pivot_a_ptr = array[(idx / 3) * 2];
 	free(array);
 	return (OK);
 }
@@ -73,4 +73,28 @@ void	bubble_sort(t_linked_stack *stack)
 			temp = temp->next;
 		}
 	}
+}
+
+int	set_index(t_linked_stack *stack, t_linked_stack *copied)
+{
+	size_t			i;
+	size_t			j;
+	size_t			idx;
+	t_stack_node	*node;
+	t_stack_node	*copied_node;
+
+	idx = 0;
+	copied_node = copied->top_node.next;
+	node = stack->top_node.next;
+	while (idx < stack->element_count)
+	{
+		if (node->value == copied_node->value)
+		{
+			copied_node = copied_node->next;
+			node->target_idx = idx;
+			idx++;
+		}
+		node = node->next;
+	}
+	return (OK);
 }

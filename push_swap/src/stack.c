@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   stack.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 16:07:17 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/10 23:07:00 by kimmingyu        ###   ########.fr       */
+/*   Updated: 2022/07/11 16:03:38 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/push_swap.h"
 
-int	delete_stack(t_linked_stack *a_stack, t_linked_stack *b_stack)
+int	delete_all_stack(t_linked_stack *a_stack, t_linked_stack *b_stack)
 {
 	size_t			idx;
 	t_stack_node	*node;
@@ -36,13 +36,6 @@ int	delete_stack(t_linked_stack *a_stack, t_linked_stack *b_stack)
 	}
 	free(a_stack);
 	free(b_stack);
-	return (0);
-}
-
-int	is_linked_stack_empty(t_linked_stack *stack)
-{
-	if (stack->element_count == 0)
-		return (1);
 	return (0);
 }
 
@@ -73,30 +66,24 @@ t_stack_node	*create_node(int value)
 	if (!new_node)
 		return (NULL);
 	new_node->value = value;
+	new_node->target_idx = 0;
 	return (new_node);
 }
 
-int	copy_stack(t_linked_stack *stack, t_linked_stack **copy_stack_ptr)
+int	delete_single_stack(t_linked_stack *stack)
 {
 	size_t			idx;
 	t_stack_node	*node;
-	t_stack_node	*temp;
+	t_stack_node	*next_node;
 
-	if (!stack || is_linked_stack_empty(stack))
-		return (ERROR);
 	idx = 0;
 	node = stack->top_node.next;
-	(*copy_stack_ptr) = malloc(sizeof(t_linked_stack));
-	if (!*copy_stack_ptr)
-		return (ERROR);
-	(*copy_stack_ptr)->element_count = 0;
-	(*copy_stack_ptr)->top_node.next = NULL;
-	(*copy_stack_ptr)->top_node.prev = NULL;
-	while (idx < stack->element_count)
+	while (idx++ < stack->element_count)
 	{
-		push_bottom(*copy_stack_ptr, node->value);
-		node = node->next;
-		idx++;
+		next_node = node->next;
+		free(node);
+		node = next_node;
 	}
+	free(stack);
 	return (OK);
 }

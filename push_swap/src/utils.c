@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 13:27:25 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/10 23:06:40 by kimmingyu        ###   ########.fr       */
+/*   Updated: 2022/07/11 16:25:13 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,29 +53,6 @@ int	is_greater(int a, int b)
 	return (OK);
 }
 
-int	is_sorted(t_linked_stack *stack)
-{
-	size_t			idx;
-	t_stack_node	*node;
-	t_stack_node	*next_node;
-
-	if (!stack)
-		return (ERROR);
-	if (stack->element_count == 1)
-		return (OK);
-	idx = 0;
-	node = stack->top_node.next;
-	while (idx < stack->element_count)
-	{
-		next_node = node->next;
-		if (is_greater(node->value, next_node->value) == FALSE)
-			return (FALSE);
-		node = next_node;
-		idx++;
-	}
-	return (OK);
-}
-
 void	display_stack(t_linked_stack *stack)
 {
 	size_t			idx;
@@ -86,7 +63,6 @@ void	display_stack(t_linked_stack *stack)
 		return ;
 	idx = 0;
 	node = stack->top_node.next;
-	printf("here\n");
 	while (idx < stack->element_count)
 	{
 		next_node = node->next;
@@ -94,14 +70,4 @@ void	display_stack(t_linked_stack *stack)
 		node = next_node;
 		idx++;
 	}
-}
-
-size_t	ft_strlen(const char *str)
-{
-	size_t	idx;
-
-	idx = 0;
-	while (str[idx])
-		idx++;
-	return (idx);
 }
