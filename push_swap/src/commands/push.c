@@ -3,62 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   push.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:03:10 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/11 23:57:41 by kimmingyu        ###   ########.fr       */
+/*   Updated: 2022/07/12 16:09:22 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/push_swap.h"
 
-int	push_bottom(t_linked_stack *stack, int value)
+int	push_bottom(t_linked_stack *stack, int value, size_t idx)
 {
 	t_stack_node	*node;
 
 	if (!stack)
 		return (FALSE);
-	node = create_node(value);
+	node = create_node(value, idx);
 	if (!node)
 		return (ERROR);
 	if (is_linked_stack_empty(stack) == OK)
 	{
-		stack->top_node.prev = node;
+		node->prev = node;
+		node->next = node;
 		stack->top_node.next = node;
 	}
 	else
 	{
+		node->next = stack->top_node.next;
+		node->prev = stack->top_node.prev;
 		stack->top_node.prev->next = node;
 		stack->top_node.next->prev = node;
 	}
-	node->prev = stack->top_node.prev;
-	node->next = stack->top_node.next;
 	stack->top_node.prev = node;
 	stack->element_count++;
 	return (OK);
 }
 
-int	push_top(t_linked_stack *stack, int value)
+int	push_top(t_linked_stack *stack, int value, size_t idx)
 {
 	t_stack_node	*node;
 
 	if (!stack)
 		return (FALSE);
-	node = create_node(value);
+	node = create_node(value, idx);
 	if (!node)
 		return (ERROR);
 	if (is_linked_stack_empty(stack))
 	{
-		stack->top_node.next = node;
+		node->next = node;
+		node->prev = node;
 		stack->top_node.prev = node;
 	}
 	else
 	{
+		node->next = stack->top_node.next;
+		node->prev = stack->top_node.prev;
 		stack->top_node.next->prev = node;
 		stack->top_node.prev->next = node;
 	}
-	node->next = stack->top_node.next;
-	node->prev = stack->top_node.prev;
+	stack->top_node.next = node;
 	stack->element_count++;
 	return (OK);
 }
@@ -71,7 +74,7 @@ t_stack_node	*pop_on_top(t_linked_stack *stack)
 		return (NULL);
 	top_node = stack->top_node.next;
 	stack->top_node.next = top_node->next;
-	top_node->next->prev = stack->top_node.prev;
+	top_node->next->prev = top_node->prev;
 	top_node->prev->next = stack->top_node.next;
 	stack->element_count--;
 	return (top_node);
@@ -102,7 +105,7 @@ int	push(t_linked_stack *push_stack, t_linked_stack *pop_stack)
 	if (!pop_node)
 		return (ERROR);
 	result = OK;
-	if (push_top(push_stack, pop_node->value) == ERROR)
+	if (push_top(push_stack, pop_node->value, pop_node->target_idx) == ERROR)
 		result = ERROR;
 	free(pop_node);
 	return (result);

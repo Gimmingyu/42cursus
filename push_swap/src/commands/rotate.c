@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:16:58 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/11 23:58:05 by kimmingyu        ###   ########.fr       */
+/*   Updated: 2022/07/12 16:11:46 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	single_rotate(t_linked_stack *stack)
 {
 	t_stack_node	*top_node;
 	t_stack_node	*bottom_node;
-	t_type			result;
+	int				result;
 
 	if (!stack || is_linked_stack_empty(stack))
 		return (ERROR);
@@ -26,7 +26,7 @@ int	single_rotate(t_linked_stack *stack)
 	if (!top_node)
 		return (ERROR);
 	result = OK;
-	if (!push_bottom(stack, top_node->value))
+	if (!push_bottom(stack, top_node->value, top_node->target_idx))
 		result = ERROR;
 	free(top_node);
 	return (result);

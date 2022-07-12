@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 15:21:52 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/11 16:24:47 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/12 16:10:15 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,25 @@ int	copy_stack(t_linked_stack *stack, t_linked_stack **stack_ptr)
 	(*stack_ptr)->top_node.prev = NULL;
 	while (idx < stack->element_count)
 	{
-		push_bottom(*stack_ptr, node->value);
+		push_bottom(*stack_ptr, node->value, node->target_idx);
 		node = node->next;
 		idx++;
 	}
 	return (OK);
+}
+
+t_stack_node	*copy_node(t_stack_node *node)
+{
+	t_stack_node	*new_node;
+
+	if (!node)
+		return (NULL);
+	new_node = malloc(sizeof(t_stack_node));
+	if (!new_node)
+		return (NULL);
+	new_node->target_idx = node->target_idx;
+	new_node->value = node->value;
+	return (new_node);
 }
 
 int	is_sorted(t_linked_stack *stack)

@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:51:46 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/11 23:53:24 by kimmingyu        ###   ########.fr       */
+/*   Updated: 2022/07/12 16:44:18 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/push_swap.h"
-
-int	get_sum_of_stack(t_linked_stack *stack)
-{
-	size_t			idx;
-	int				ret;
-	t_stack_node	*node;
-
-	ret = 0;
-	node = stack->top_node.next;
-	while (idx < stack->element_count - 1)
-	{
-		ret += node->value;
-		node = node->next;
-	}
-	return (ret);
-}
 
 int	select_pivot(t_linked_stack *stack, int *pivot_a_ptr, int *pivot_b_ptr)
 {
@@ -114,4 +98,25 @@ int	find_min_value(t_linked_stack *stack, int key)
 		idx++;
 	}
 	return (FALSE);
+}
+
+size_t	get_max_value_index(t_linked_stack *stack)
+{
+	size_t			idx;
+	size_t			len;
+	int				max_value;
+	t_stack_node	*node;
+
+	len = 0;
+	idx = 0;
+	node = stack->top_node.next;
+	max_value = -2147483648;
+	while (len < stack->element_count - 1)
+	{
+		if (node->value > max_value)
+			idx = len;
+		node = node->next;
+		len++;
+	}
+	return (idx);
 }
