@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   step3.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:44:41 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/13 20:33:01 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/14 01:11:14 by kimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	step_three(t_linked_stack *a_stack, t_linked_stack *b_stack, t_info *info)
 {
 	t_command	a_cmd;
 	t_command	b_cmd;
+	ssize_t		max_index;
 
 	if (!a_stack || !b_stack || !info)
 		response_error();
@@ -32,9 +33,19 @@ int	step_three(t_linked_stack *a_stack, t_linked_stack *b_stack, t_info *info)
 	b_cmd = INIT;
 	while (is_linked_stack_empty(b_stack) == FALSE)
 	{
-		a_cmd = def_command_a(a_stack, find_max_index(b_stack));
-		b_cmd = def_command_b(b_stack, find_max_index(b_stack));
-		roll_stacks(a_stack, b_stack, a_cmd, b_cmd);
+		max_index = find_max_index(b_stack);
+		a_cmd = def_command_a(a_stack, max_index);
+		b_cmd = def_command_b(b_stack, max_index);
+		while (a_cmd != NONE || b_cmd != NONE)
+		{
+			roll_stacks(a_stack, b_stack, a_cmd, b_cmd);
+			if (b_stack->top_node.next->target_idx == max_index)
+				b_cmd = NONE;
+			if (check_top(a_stack, max_index) == OK)
+				a_cmd = NONE;
+		}
+		if (a_cmd == NONE && b_cmd == NONE)
+			push(a_stack, b_stack, PA);
 	}
 	return (OK);
 }
@@ -46,8 +57,6 @@ int	roll_stacks(t_linked_stack *as, t_linked_stack *bs, \
 		return (both_rotate(as, bs));
 	if (a_cmd == RRA && b_cmd == RRB)
 		return (both_reverse_rotate(as, bs));
-	if (a_cmd == NONE && b_cmd == NONE)
-		return (push(as, bs, PA));
 	if ((a_cmd == RA || a_cmd == NONE) && (b_cmd == NONE || b_cmd == RRB))
 	{
 		single_rotate(as, a_cmd);
@@ -74,7 +83,7 @@ t_command	def_command_a(t_linked_stack *stack, int index)
 	node = stack->top_node.next;
 	while (++idx < stack->element_count)
 	{
-		if (node->target_idx <= min && node->target_idx > index)
+		if (node->target_idx < min && node->target_idx > index)
 		{
 			min = node->target_idx;
 			target_idx = idx;
@@ -83,7 +92,7 @@ t_command	def_command_a(t_linked_stack *stack, int index)
 	}
 	if (target_idx == 0)
 		return (NONE);
-	if (target_idx >= stack->element_count / 2)
+	if (target_idx > stack->element_count / 2)
 		return (RRA);
 	return (RA);
 }
@@ -115,7 +124,7 @@ ssize_t	find_max_index(t_linked_stack *stack)
 	while (++idx < stack->element_count)
 	{
 		if (target < top->target_idx)
-			target = idx;
+			target = top->target_idx;
 		top = top->next;
 	}
 	return (target);

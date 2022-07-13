@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solution.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 16:37:10 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/13 19:14:59 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/14 00:58:14 by kimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,5 @@ int	solution(t_linked_stack *a_stack, t_linked_stack *b_stack)
 	step_one(a_stack, b_stack, info);
 	step_two(a_stack, b_stack, info);
 	step_three(a_stack, b_stack, info);
-	display_stack(a_stack);
 	return (free_struct_helper(info, OK));
 }

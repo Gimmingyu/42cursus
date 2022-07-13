@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 13:26:11 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/13 20:33:16 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/14 01:02:42 by kimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ ssize_t			find_max_index(t_linked_stack *stack);
 int				find_min_value(t_linked_stack *stack, int key);
 int				roll_stacks(t_linked_stack *as, t_linked_stack *bs, \
 					t_command a_cmd, t_command b_cmd);
+int				check_top(t_linked_stack *stack, ssize_t idx);
 /*
 Function: Function for free
 */

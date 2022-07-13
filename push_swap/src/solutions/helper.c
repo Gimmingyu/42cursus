@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:51:46 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/13 19:14:59 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/14 01:04:34 by kimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,27 @@ int	find_min_value(t_linked_stack *stack, int key)
 		head = head->next;
 		idx++;
 	}
+	return (FALSE);
+}
+
+int	check_top(t_linked_stack *stack, ssize_t max_index)
+{
+	t_stack_node	*node;
+	ssize_t			target_idx;
+	ssize_t			len;
+
+	if (!stack || is_linked_stack_empty(stack))
+		response_error();
+	target_idx = 2147483647;
+	len = -1;
+	node = stack->top_node.next;
+	while (++len <= stack->element_count)
+	{
+		if (node->target_idx > max_index && node->target_idx <= target_idx)
+			target_idx = len;
+		node = node->next;
+	}
+	if (target_idx == 0)
+		return (OK);
 	return (FALSE);
 }
