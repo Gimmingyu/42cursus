@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 16:07:17 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/12 17:27:18 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/13 11:53:30 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,7 @@ void	create_stacks(t_linked_stack **a_ptr, t_linked_stack **b_ptr)
 		response_error();
 	*b_ptr = (t_linked_stack *)malloc(sizeof(t_linked_stack));
 	if (!*b_ptr)
-	{
-		free(a_ptr);
 		response_error();
-	}
 	(*a_ptr)->element_count = 0;
 	(*b_ptr)->element_count = 0;
 	(*a_ptr)->top_node.prev = NULL;

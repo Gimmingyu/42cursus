@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 13:27:25 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/12 13:03:58 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/13 16:28:38 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,3 @@ void	display_stack(t_linked_stack *stack)
 	}
 	printf("==============================================================\n");
 }
-
-// size_t	ft_strlen(const char *str)
-// {
-// 	size_t	idx;
-
-// 	idx = 0;
-// 	while (str&& str[idx])
-// 		idx++;
-// 	return (idx);
-// }

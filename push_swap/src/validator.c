@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 13:28:57 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/12 17:36:49 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/13 11:55:19 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ static int	is_integer(char *str)
 	size_t	len;
 
 	if (!str)
-		return (ERROR);
+		response_error();
 	idx = 0;
 	len = ft_strlen(str);
 	if ((str[0] != '-' && str[0] != '+') && (str[0] < '0' || str[0] > '9'))
-		return (ERROR);
+		response_error();
 	if (str[0] == '-' || str[0] == '+')
 		idx++;
 	while (str[idx] && idx < len)
 	{
 		if (str[idx] && (str[idx] < '0' || str[idx] > '9'))
-			return (ERROR);
+			response_error();
 		idx++;
 	}
 	return (OK);
@@ -40,14 +40,14 @@ int	check_duplicate(char **str)
 	size_t	sub_idx;
 
 	if (!str)
-		return (ERROR);
+		response_error();
 	idx = 0;
 	while (str[++idx])
 	{
 		sub_idx = -1;
 		while (++sub_idx < idx)
 			if (str[sub_idx] == str[idx])
-				return (ERROR);
+				response_error();
 	}
 	return (OK);
 }
@@ -60,7 +60,7 @@ void	validator(int ac, char **av, \
 	size_t	temp_idx;
 	int		sign;
 
-	if (ac == 1)
+	if (ac == 1 || !av || !a_stack || !b_stack)
 		response_error();
 	idx = 0;
 	while (++idx < ac)
@@ -71,10 +71,9 @@ void	validator(int ac, char **av, \
 			response_error();
 		while (temp[++temp_idx])
 		{
-			printf("temp[%zu] = %s\n", temp_idx, temp[temp_idx]);
 			if (is_integer(temp[temp_idx]) == ERROR || \
-					check_duplicate(temp) == ERROR)
-				sign = response_error() * delete_all_stack(a_stack, b_stack);
+				check_duplicate(temp) == ERROR)
+				response_error();
 			push_bottom(a_stack, a_to_longlong(temp[temp_idx]), 0);
 		}
 		ft_malloc_error(temp);

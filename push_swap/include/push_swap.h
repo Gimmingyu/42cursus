@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 13:26:11 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/12 22:40:25 by kimmingyu        ###   ########.fr       */
+/*   Updated: 2022/07/13 16:45:18 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ t_stack_node	*pop_on_top(t_linked_stack *stack);
 t_stack_node	*pop_on_bottom(t_linked_stack *stack);
 int				push_top(t_linked_stack *stack, int value, size_t idx);
 int				push_bottom(t_linked_stack *stack, int value, size_t idx);
-int				push(t_linked_stack *push_stack, t_linked_stack *pop_stack, t_command command);
+int				push(t_linked_stack *push_stack, t_linked_stack *pop_stack, \
+						t_command command);
 
 /* 
 Function : Function for stack action, swap
@@ -129,19 +130,18 @@ t_info			*create_info(int pivot_a, int pivot_b);
 Function: Function for sort
 */
 int				solution(t_linked_stack *a_stack, t_linked_stack *b_stack);
-int				select_pivot(t_linked_stack *stack, \
-								int *pivot_a_ptr, int *pivot_b_ptr);
-void			bubble_sort(t_linked_stack *stack);
-int				set_index(t_linked_stack *stack, t_linked_stack *copied);
-int				is_sorted(t_linked_stack *stack);
-int				find_min_value(t_linked_stack *stack, int key);
 int				step_one(t_linked_stack *a_stack, t_linked_stack *b_stack, \
 							t_info *info);
 int				step_two(t_linked_stack *a_stack, t_linked_stack *b_stack, \
 							t_info *info);
 int				step_three(t_linked_stack *a_stack, t_linked_stack *b_stack, \
 							t_info *info);
-size_t			get_max_value_index(t_linked_stack *stack);
+int				select_pivot(t_linked_stack *stack, \
+								int *pivot_a_ptr, int *pivot_b_ptr);
+void			bubble_sort(t_linked_stack *stack);
+int				set_index(t_linked_stack *stack, t_linked_stack *copied);
+int				is_sorted(t_linked_stack *stack);
+int				is_reverse_sorted(t_linked_stack *stack);
 /*
 Function: Function for free
 */

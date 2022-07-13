@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 16:37:10 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/12 17:37:10 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/13 16:24:30 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,9 @@ int	solution(t_linked_stack *a_stack, t_linked_stack *b_stack)
 	set_index(a_stack, copied);
 	if (divide_groups(a_stack, b_stack, copied, &info) == ERROR)
 		return (ERROR);
-	if (step_one(a_stack, b_stack, info) == ERROR)
-		return (free_struct_helper(info, ERROR));
-	if (step_two(a_stack, b_stack, info) == ERROR)
-		return (free_struct_helper(info, ERROR));
-	if (step_three(a_stack, b_stack, info) == ERROR)
-		return (free_struct_helper(info, ERROR));
+	step_one(a_stack, b_stack, info);
+	step_two(a_stack, b_stack, info);
+	step_three(a_stack, b_stack, info);
+	display_stack(a_stack);
 	return (free_struct_helper(info, OK));
 }

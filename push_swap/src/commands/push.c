@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:03:10 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/12 22:41:15 by kimmingyu        ###   ########.fr       */
+/*   Updated: 2022/07/13 13:28:29 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ int	push_bottom(t_linked_stack *stack, int value, size_t idx)
 {
 	t_stack_node	*node;
 
-	if (!stack)
-		return (FALSE);
 	node = create_node(value, idx);
-	if (!node)
-		return (ERROR);
+	if (!stack || !node)
+		response_error();
 	if (is_linked_stack_empty(stack) == OK)
 	{
 		node->prev = node;
@@ -43,11 +41,9 @@ int	push_top(t_linked_stack *stack, int value, size_t idx)
 {
 	t_stack_node	*node;
 
-	if (!stack)
-		return (FALSE);
 	node = create_node(value, idx);
-	if (!node)
-		return (ERROR);
+	if (!node || !stack)
+		response_error();
 	if (is_linked_stack_empty(stack))
 	{
 		node->next = node;
@@ -70,7 +66,9 @@ t_stack_node	*pop_on_top(t_linked_stack *stack)
 {
 	t_stack_node	*top_node;
 
-	if (!stack || is_linked_stack_empty(stack))
+	if (!stack)
+		response_error();
+	if (is_linked_stack_empty(stack))
 		return (NULL);
 	top_node = stack->top_node.next;
 	stack->top_node.next = top_node->next;
@@ -84,7 +82,9 @@ t_stack_node	*pop_on_bottom(t_linked_stack *stack)
 {
 	t_stack_node	*bottom_node;
 
-	if (!stack || is_linked_stack_empty(stack))
+	if (!stack)
+		response_error();
+	if (is_linked_stack_empty(stack))
 		return (NULL);
 	bottom_node = stack->top_node.prev;
 	stack->top_node.prev = bottom_node->prev;
@@ -94,23 +94,24 @@ t_stack_node	*pop_on_bottom(t_linked_stack *stack)
 	return (bottom_node);
 }
 
-int	push(t_linked_stack *push_stack, t_linked_stack *pop_stack, t_command command)
+int	push(t_linked_stack *push_stack, t_linked_stack *pop_stack, \
+			t_command command)
 {
 	t_stack_node	*pop_node;
 	t_type			result;
 
-	if (!push_stack || !pop_stack || is_linked_stack_empty(pop_stack))
-		return (ERROR);
+	if (!push_stack || !pop_stack)
+		response_error();
+	if (is_linked_stack_empty(pop_stack))
+		return (FALSE);
 	pop_node = pop_on_top(pop_stack);
 	if (!pop_node)
-		return (ERROR);
-	result = OK;
-	if (push_top(push_stack, pop_node->value, pop_node->target_idx) == ERROR)
-		result = ERROR;
+		return (FALSE);
+	push_top(push_stack, pop_node->value, pop_node->target_idx);
 	free(pop_node);
 	if (command == PA)
-		write(1, "pa ", 3);
+		write(1, "pa\n", 3);
 	else if (command == PB)
-		write(1, "pb ", 3);
-	return (result);
+		write(1, "pb\n", 3);
+	return (OK);
 }

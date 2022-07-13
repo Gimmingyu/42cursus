@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 15:21:52 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/12 16:10:15 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/13 15:52:21 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	is_sorted(t_linked_stack *stack)
 	t_stack_node	*node;
 
 	if (!stack)
-		return (ERROR);
+		response_error();
 	if (stack->element_count == 1)
 		return (OK);
 	idx = -1;

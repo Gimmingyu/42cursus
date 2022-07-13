@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:51:46 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/12 16:44:18 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/13 11:45:26 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,25 +98,4 @@ int	find_min_value(t_linked_stack *stack, int key)
 		idx++;
 	}
 	return (FALSE);
-}
-
-size_t	get_max_value_index(t_linked_stack *stack)
-{
-	size_t			idx;
-	size_t			len;
-	int				max_value;
-	t_stack_node	*node;
-
-	len = 0;
-	idx = 0;
-	node = stack->top_node.next;
-	max_value = -2147483648;
-	while (len < stack->element_count - 1)
-	{
-		if (node->value > max_value)
-			idx = len;
-		node = node->next;
-		len++;
-	}
-	return (idx);
 }
