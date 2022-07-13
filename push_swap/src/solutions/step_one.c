@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   step_one.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:31:43 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/12 16:44:00 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/12 22:41:58 by kimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ int	step_one(t_linked_stack *a_stack, t_linked_stack *b_stack, t_info *info)
 	{
 		a_top = a_stack->top_node.next;
 		if (info->pivot_b <= a_top->value && a_top->value < info->pivot_a)
-			temp *= push(b_stack, a_stack) * single_rotate(b_stack);
+			temp *= push(b_stack, a_stack, PB) * single_rotate(b_stack, RB);
 		else if (a_top->value < info->pivot_b)
-			temp *= push(b_stack, a_stack);
+			temp *= push(b_stack, a_stack, PB);
 		else
-			temp *= single_rotate(a_stack);
+			temp *= single_rotate(a_stack, RA);
 	}
 	if (temp != OK)
 		return (ERROR);
@@ -41,7 +41,7 @@ int	step_two(t_linked_stack *a_stack, t_linked_stack *b_stack, t_info *info)
 	if (is_sorted(a_stack))
 		return (OK);
 	while (a_stack->element_count > 3)
-		push(b_stack, a_stack);
+		push(b_stack, a_stack, PB);
 	if (a_stack->element_count == 2)
 		return (opt_two(a_stack));
 	if (a_stack->element_count == 3)
@@ -62,15 +62,13 @@ int	step_three(t_linked_stack *a_stack, t_linked_stack *b_stack, t_info *info)
 		while (a_stack->top_node.next->target_idx < \
 				b_stack->top_node.next->target_idx)
 		{
-			if (single_rotate(a_stack) == ERROR || write(1, "ra ", 3) != 3)
+			if (single_rotate(a_stack, RA) == ERROR)
 				return (ERROR);
 			ra_count++;
 		}
-		push(a_stack, b_stack);
-		write(1, "pa ", 3);
+		push(a_stack, b_stack, PA);
 		while (ra_count--)
-			if (single_reverse_rotate(a_stack) == ERROR || \
-					write(1, "rra ", 4) != 4)
+			if (single_reverse_rotate(a_stack, RA) == ERROR)
 				return (ERROR);
 		ra_count = 0;
 	}

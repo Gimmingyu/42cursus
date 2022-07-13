@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 13:26:11 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/12 17:27:10 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/12 22:40:25 by kimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@ typedef enum e_command
 	PB = 2,
 	RA = 3,
 	RB = 4,
-	RRA = 5,
-	RRB = 6,
-	SA = 7,
-	SB = 8,
+	RR = 5,
+	RRA = 6,
+	RRB = 7,
+	RRR = 8,
+	SA = 9,
+	SB = 10,
+	SS = 11,
 }	t_command;
 
 typedef struct s_stack_node
@@ -76,24 +79,24 @@ t_stack_node	*pop_on_top(t_linked_stack *stack);
 t_stack_node	*pop_on_bottom(t_linked_stack *stack);
 int				push_top(t_linked_stack *stack, int value, size_t idx);
 int				push_bottom(t_linked_stack *stack, int value, size_t idx);
-int				push(t_linked_stack *push_stack, t_linked_stack *pop_stack);
+int				push(t_linked_stack *push_stack, t_linked_stack *pop_stack, t_command command);
 
 /* 
 Function : Function for stack action, swap
 */
-int				single_swap(t_linked_stack *stack);
+int				single_swap(t_linked_stack *stack, t_command command);
 int				both_swap(t_linked_stack *a_stack, t_linked_stack *b_stack);
 int				is_swap_exception(t_linked_stack *a_stack);
 /* 
 Function : Function for stack actiom, reverse rotate
 */
-int				single_reverse_rotate(t_linked_stack *stack);
+int				single_reverse_rotate(t_linked_stack *stack, t_command command);
 int				both_reverse_rotate(t_linked_stack *a_stack, \
 										t_linked_stack *b_stack);
 /* 
 Function : Function for stack action, rotate
 */
-int				single_rotate(t_linked_stack *stack);
+int				single_rotate(t_linked_stack *stack, t_command command);
 int				both_rotate(t_linked_stack *a_stack, t_linked_stack *b_stack);
 /* 
 Function : Function for optimazation

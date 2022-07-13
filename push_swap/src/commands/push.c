@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:03:10 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/12 16:09:22 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/12 22:41:15 by kimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_stack_node	*pop_on_bottom(t_linked_stack *stack)
 	return (bottom_node);
 }
 
-int	push(t_linked_stack *push_stack, t_linked_stack *pop_stack)
+int	push(t_linked_stack *push_stack, t_linked_stack *pop_stack, t_command command)
 {
 	t_stack_node	*pop_node;
 	t_type			result;
@@ -108,5 +108,9 @@ int	push(t_linked_stack *push_stack, t_linked_stack *pop_stack)
 	if (push_top(push_stack, pop_node->value, pop_node->target_idx) == ERROR)
 		result = ERROR;
 	free(pop_node);
+	if (command == PA)
+		write(1, "pa ", 3);
+	else if (command == PB)
+		write(1, "pb ", 3);
 	return (result);
 }
