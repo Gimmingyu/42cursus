@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:51:46 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/13 11:45:26 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/13 19:14:59 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	select_pivot(t_linked_stack *stack, int *pivot_a_ptr, int *pivot_b_ptr)
 {
 	int				*array;
-	size_t			idx;
+	ssize_t			idx;
 	t_stack_node	*node;
 
 	array = malloc(sizeof(int) * stack->element_count);
@@ -36,8 +36,8 @@ int	select_pivot(t_linked_stack *stack, int *pivot_a_ptr, int *pivot_b_ptr)
 
 void	bubble_sort(t_linked_stack *stack)
 {
-	size_t			idx;
-	size_t			idx_temp;
+	ssize_t			idx;
+	ssize_t			idx_temp;
 	t_stack_node	*temp;
 	int				i;
 
@@ -61,9 +61,9 @@ void	bubble_sort(t_linked_stack *stack)
 
 int	set_index(t_linked_stack *stack, t_linked_stack *copied)
 {
-	size_t			i;
-	size_t			j;
-	size_t			idx;
+	ssize_t			i;
+	ssize_t			j;
+	ssize_t			idx;
 	t_stack_node	*node;
 	t_stack_node	*copied_node;
 
@@ -86,7 +86,7 @@ int	set_index(t_linked_stack *stack, t_linked_stack *copied)
 int	find_min_value(t_linked_stack *stack, int key)
 {
 	t_stack_node	*head;
-	size_t			idx;
+	ssize_t			idx;
 
 	head = stack->top_node.next;
 	idx = 0;

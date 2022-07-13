@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 15:21:52 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/13 15:52:21 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/13 19:44:25 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 int	is_linked_stack_empty(t_linked_stack *stack)
 {
 	if (stack->element_count == 0)
-		return (1);
-	return (0);
+		return (OK);
+	return (FALSE);
 }
 
 int	copy_stack(t_linked_stack *stack, t_linked_stack **stack_ptr)
 {
-	size_t			idx;
+	ssize_t			idx;
 	t_stack_node	*node;
 	t_stack_node	*temp;
 
@@ -60,7 +60,7 @@ t_stack_node	*copy_node(t_stack_node *node)
 
 int	is_sorted(t_linked_stack *stack)
 {
-	size_t			idx;
+	ssize_t			idx;
 	t_stack_node	*node;
 
 	if (!stack)

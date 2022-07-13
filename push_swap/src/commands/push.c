@@ -6,13 +6,13 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:03:10 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/13 13:28:29 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/13 19:14:59 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/push_swap.h"
 
-int	push_bottom(t_linked_stack *stack, int value, size_t idx)
+int	push_bottom(t_linked_stack *stack, int value, ssize_t idx)
 {
 	t_stack_node	*node;
 
@@ -37,7 +37,7 @@ int	push_bottom(t_linked_stack *stack, int value, size_t idx)
 	return (OK);
 }
 
-int	push_top(t_linked_stack *stack, int value, size_t idx)
+int	push_top(t_linked_stack *stack, int value, ssize_t idx)
 {
 	t_stack_node	*node;
 
@@ -82,10 +82,8 @@ t_stack_node	*pop_on_bottom(t_linked_stack *stack)
 {
 	t_stack_node	*bottom_node;
 
-	if (!stack)
+	if (!stack || is_linked_stack_empty(stack))
 		response_error();
-	if (is_linked_stack_empty(stack))
-		return (NULL);
 	bottom_node = stack->top_node.prev;
 	stack->top_node.prev = bottom_node->prev;
 	stack->top_node.next->prev = bottom_node->prev;
@@ -102,11 +100,11 @@ int	push(t_linked_stack *push_stack, t_linked_stack *pop_stack, \
 
 	if (!push_stack || !pop_stack)
 		response_error();
-	if (is_linked_stack_empty(pop_stack))
-		return (FALSE);
+	if (is_linked_stack_empty(pop_stack) || command == NONE)
+		return (OK);
 	pop_node = pop_on_top(pop_stack);
 	if (!pop_node)
-		return (FALSE);
+		response_error();
 	push_top(push_stack, pop_node->value, pop_node->target_idx);
 	free(pop_node);
 	if (command == PA)

@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 16:07:17 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/13 11:53:30 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/13 19:14:59 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	delete_all_stack(t_linked_stack *a_stack, t_linked_stack *b_stack)
 {
-	size_t			idx;
+	ssize_t			idx;
 	t_stack_node	*node;
 	t_stack_node	*next_node;
 
@@ -55,7 +55,7 @@ void	create_stacks(t_linked_stack **a_ptr, t_linked_stack **b_ptr)
 	(*b_ptr)->top_node.next = NULL;
 }
 
-t_stack_node	*create_node(int value, size_t idx)
+t_stack_node	*create_node(int value, ssize_t idx)
 {
 	t_stack_node	*new_node;
 
@@ -69,7 +69,7 @@ t_stack_node	*create_node(int value, size_t idx)
 
 int	delete_single_stack(t_linked_stack *stack)
 {
-	size_t			idx;
+	ssize_t			idx;
 	t_stack_node	*node;
 	t_stack_node	*next_node;
 

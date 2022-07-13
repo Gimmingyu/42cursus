@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 16:31:43 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/13 16:38:43 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/13 19:14:59 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	step_one(t_linked_stack *a_stack, t_linked_stack *b_stack, t_info *info)
 
 int	is_reverse_sorted(t_linked_stack *stack)
 {
-	size_t			idx;
+	ssize_t			idx;
 	t_stack_node	*node;
 
 	if (!stack)

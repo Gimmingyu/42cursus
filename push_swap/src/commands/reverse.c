@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:16:54 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/13 12:09:10 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/13 19:00:18 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	single_reverse_rotate(t_linked_stack *stack, t_command command)
 
 	if (!stack)
 		response_error();
-	if (is_linked_stack_empty(stack))
-		return (FALSE);
+	if (is_linked_stack_empty(stack) || command == NONE)
+		return (OK);
 	bottom_node = pop_on_bottom(stack);
 	if (!bottom_node)
 		response_error();

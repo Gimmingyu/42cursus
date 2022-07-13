@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 13:28:57 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/13 11:55:19 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/13 19:14:59 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	is_integer(char *str)
 {
-	size_t	idx;
-	size_t	len;
+	ssize_t	idx;
+	ssize_t	len;
 
 	if (!str)
 		response_error();
@@ -36,8 +36,8 @@ static int	is_integer(char *str)
 
 int	check_duplicate(char **str)
 {
-	size_t	idx;
-	size_t	sub_idx;
+	ssize_t	idx;
+	ssize_t	sub_idx;
 
 	if (!str)
 		response_error();
@@ -56,8 +56,8 @@ void	validator(int ac, char **av, \
 					t_linked_stack *a_stack, t_linked_stack *b_stack)
 {
 	char	**temp;
-	size_t	idx;
-	size_t	temp_idx;
+	ssize_t	idx;
+	ssize_t	temp_idx;
 	int		sign;
 
 	if (ac == 1 || !av || !a_stack || !b_stack)

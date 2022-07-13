@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:44:12 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/13 11:44:23 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/13 19:14:59 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	step_two(t_linked_stack *a_stack, t_linked_stack *b_stack, t_info *info)
 {
 	t_stack_node	*a_top;
-	size_t			idx;
+	ssize_t			idx;
 
 	if (is_sorted(a_stack))
 		return (OK);

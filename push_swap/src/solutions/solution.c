@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 16:37:10 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/13 16:24:30 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/13 19:14:59 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	divide_groups(t_linked_stack *stack, t_linked_stack *b_stack, \
 					t_linked_stack *copied, t_info **info_ptr)
 {
 	t_stack_node	*node;
-	size_t			idx;
+	ssize_t			idx;
 	int				pivot_a;
 	int				pivot_b;
 

@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:17:01 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/13 12:13:30 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/13 19:00:34 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	single_swap(t_linked_stack *stack, t_command command)
 
 	if (!stack)
 		response_error();
-	if (is_swap_exception(stack))
+	if (is_swap_exception(stack) || command == NONE)
 		return (OK);
 	first_node = stack->top_node.next;
 	second_node = first_node->next;

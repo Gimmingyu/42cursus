@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 13:26:11 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/13 16:45:18 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/13 20:33:16 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef enum e_type
 
 typedef enum e_command
 {
+	INIT = -1,
+	NONE = 0,
 	PA = 1,
 	PB = 2,
 	RA = 3,
@@ -43,14 +45,14 @@ typedef enum e_command
 typedef struct s_stack_node
 {
 	int					value;
-	size_t				target_idx;
+	ssize_t				target_idx;
 	struct s_stack_node	*next;
 	struct s_stack_node	*prev;
 }	t_stack_node;
 
 typedef struct s_linked_stack
 {
-	size_t			element_count;
+	ssize_t			element_count;
 	t_stack_node	top_node;
 }	t_linked_stack;
 
@@ -63,7 +65,7 @@ typedef struct s_information
 /* 
 Function : Function for stack
 */
-t_stack_node	*create_node(int value, size_t idx);
+t_stack_node	*create_node(int value, ssize_t idx);
 void			create_stacks(t_linked_stack **a_ptr, t_linked_stack **b_ptr);
 void			display_stack(t_linked_stack *stack);
 int				copy_stack(t_linked_stack *stack, t_linked_stack **stack_ptr);
@@ -77,8 +79,8 @@ Function : Function for stack action, push
 */
 t_stack_node	*pop_on_top(t_linked_stack *stack);
 t_stack_node	*pop_on_bottom(t_linked_stack *stack);
-int				push_top(t_linked_stack *stack, int value, size_t idx);
-int				push_bottom(t_linked_stack *stack, int value, size_t idx);
+int				push_top(t_linked_stack *stack, int value, ssize_t idx);
+int				push_bottom(t_linked_stack *stack, int value, ssize_t idx);
 int				push(t_linked_stack *push_stack, t_linked_stack *pop_stack, \
 						t_command command);
 
@@ -110,7 +112,6 @@ Function : Function for utility
 long long		a_to_longlong(const char *str);
 int				is_greater(int a, int b);
 int				get_sum_of_stack(t_linked_stack *stack);
-// size_t			ft_strlen(const char *str);
 /* 
 Function : Function for response
 */
@@ -142,6 +143,12 @@ void			bubble_sort(t_linked_stack *stack);
 int				set_index(t_linked_stack *stack, t_linked_stack *copied);
 int				is_sorted(t_linked_stack *stack);
 int				is_reverse_sorted(t_linked_stack *stack);
+t_command		def_command_a(t_linked_stack *stack, int index);
+t_command		def_command_b(t_linked_stack *stack, int index);
+ssize_t			find_max_index(t_linked_stack *stack);
+int				find_min_value(t_linked_stack *stack, int key);
+int				roll_stacks(t_linked_stack *as, t_linked_stack *bs, \
+					t_command a_cmd, t_command b_cmd);
 /*
 Function: Function for free
 */
