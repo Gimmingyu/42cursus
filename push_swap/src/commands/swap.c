@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:17:01 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/13 19:00:34 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/14 15:48:27 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,6 @@ int	single_swap(t_linked_stack *stack, t_command command)
 
 int	both_swap(t_linked_stack *a_stack, t_linked_stack *b_stack)
 {
-	t_stack_node	*a_first_node;
-	t_stack_node	*a_second_node;
-	t_stack_node	*b_first_node;
-	t_stack_node	*b_second_node;
-	int				temp;
-
 	if (!a_stack || !b_stack)
 		response_error();
 	single_swap(a_stack, SS);

@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 13:28:57 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/13 19:14:59 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/14 16:07:05 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	validator(int ac, char **av, \
 	char	**temp;
 	ssize_t	idx;
 	ssize_t	temp_idx;
-	int		sign;
 
 	if (ac == 1 || !av || !a_stack || !b_stack)
 		response_error();

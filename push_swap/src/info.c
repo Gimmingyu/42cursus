@@ -21,5 +21,9 @@ t_info	*create_info(int pivot_a, int pivot_b)
 		return (NULL);
 	info->pivot_a = pivot_a;
 	info->pivot_b = pivot_b;
+	info->ra_count = 0;
+	info->rb_count = 0;
+	info->pa_count = 0;
+	info->pb_count = 0;
 	return (info);
 }

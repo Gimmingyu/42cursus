@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 13:26:11 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/14 01:02:42 by kimmingyu        ###   ########.fr       */
+/*   Updated: 2022/07/14 18:02:38 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@ typedef struct s_information
 {
 	int			pivot_a;
 	int			pivot_b;
+	ssize_t		pa_count;
+	ssize_t		pb_count;
+	ssize_t		ra_count;
+	ssize_t		rb_count;
 }	t_info;
 
 /* 
@@ -68,12 +72,11 @@ Function : Function for stack
 t_stack_node	*create_node(int value, ssize_t idx);
 void			create_stacks(t_linked_stack **a_ptr, t_linked_stack **b_ptr);
 void			display_stack(t_linked_stack *stack);
-int				copy_stack(t_linked_stack *stack, t_linked_stack **stack_ptr);
 int				is_linked_stack_empty(t_linked_stack *stack);
-int				delete_all_stack(t_linked_stack *a_stack, \
-									t_linked_stack *b_stack);
+int				delete_all_stack(t_linked_stack *as, \
+									t_linked_stack *bs);
 int				delete_single_stack(t_linked_stack *stack);
-t_stack_node	*copy_node(t_stack_node *node);
+int				find_min_value(t_linked_stack *stack);
 /* 
 Function : Function for stack action, push
 */
@@ -88,24 +91,29 @@ int				push(t_linked_stack *push_stack, t_linked_stack *pop_stack, \
 Function : Function for stack action, swap
 */
 int				single_swap(t_linked_stack *stack, t_command command);
-int				both_swap(t_linked_stack *a_stack, t_linked_stack *b_stack);
-int				is_swap_exception(t_linked_stack *a_stack);
+int				both_swap(t_linked_stack *as, t_linked_stack *bs);
+int				is_swap_exception(t_linked_stack *as);
 /* 
 Function : Function for stack actiom, reverse rotate
 */
 int				single_reverse_rotate(t_linked_stack *stack, t_command command);
-int				both_reverse_rotate(t_linked_stack *a_stack, \
-										t_linked_stack *b_stack);
+int				both_reverse_rotate(t_linked_stack *as, t_linked_stack *bs);
 /* 
 Function : Function for stack action, rotate
 */
 int				single_rotate(t_linked_stack *stack, t_command command);
-int				both_rotate(t_linked_stack *a_stack, t_linked_stack *b_stack);
+int				both_rotate(t_linked_stack *as, t_linked_stack *bs);
 /* 
 Function : Function for optimazation
 */
 int				opt_three(t_linked_stack *stack);
 int				opt_two(t_linked_stack *stack);
+int				a_opt_five(t_linked_stack *as, t_linked_stack *bs);
+int				a_optimization(t_linked_stack *as, t_linked_stack *bs);
+int				reversed_opt_three(t_linked_stack *stack);
+int				reversed_opt_two(t_linked_stack *stack);
+int				reversed_opt_five(t_linked_stack *as, t_linked_stack *bs);
+int				b_optimization(t_linked_stack *as, t_linked_stack *bs);
 /* 
 Function : Function for utility
 */
@@ -122,7 +130,7 @@ Function : Function for validation
 void			check_is_integer(int ac, char **av);
 void			check_is_duplicate(int ac, char **av);
 void			validator(int ac, char **av, \
-							t_linked_stack *a_stack, t_linked_stack *b_stack);
+							t_linked_stack *as, t_linked_stack *bs);
 /* 
 Function : Function for mapping information
 */
@@ -130,26 +138,20 @@ t_info			*create_info(int pivot_a, int pivot_b);
 /*
 Function: Function for sort
 */
-int				solution(t_linked_stack *a_stack, t_linked_stack *b_stack);
-int				step_one(t_linked_stack *a_stack, t_linked_stack *b_stack, \
-							t_info *info);
-int				step_two(t_linked_stack *a_stack, t_linked_stack *b_stack, \
-							t_info *info);
-int				step_three(t_linked_stack *a_stack, t_linked_stack *b_stack, \
-							t_info *info);
+int				solution(t_linked_stack *as, t_linked_stack *bs);
+void			divide_groups(t_linked_stack *as, t_info **info_ptr);
 int				select_pivot(t_linked_stack *stack, \
 								int *pivot_a_ptr, int *pivot_b_ptr);
-void			bubble_sort(t_linked_stack *stack);
-int				set_index(t_linked_stack *stack, t_linked_stack *copied);
+void			bubble_sort(int **array_ptr, ssize_t size);
 int				is_sorted(t_linked_stack *stack);
-int				is_reverse_sorted(t_linked_stack *stack);
-t_command		def_command_a(t_linked_stack *stack, int index);
-t_command		def_command_b(t_linked_stack *stack, int index);
-ssize_t			find_max_index(t_linked_stack *stack);
-int				find_min_value(t_linked_stack *stack, int key);
-int				roll_stacks(t_linked_stack *as, t_linked_stack *bs, \
-					t_command a_cmd, t_command b_cmd);
-int				check_top(t_linked_stack *stack, ssize_t idx);
+int				rollback_stacks(t_linked_stack *as, t_linked_stack *bs, \
+								t_info *info);
+int				a_to_b(t_linked_stack *as, t_linked_stack *bs, \
+								ssize_t count);
+int				b_to_a(t_linked_stack *as, t_linked_stack *bs, ssize_t count);
+int				run_rotate(t_linked_stack *stack, t_command cmd, t_info *info);
+int				run_push(t_linked_stack *as, t_linked_stack *bs, \
+							t_command cmd, t_info *info);
 /*
 Function: Function for free
 */

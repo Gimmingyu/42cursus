@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:16:58 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/13 19:02:11 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/14 16:49:59 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 int	single_rotate(t_linked_stack *stack, t_command command)
 {
 	t_stack_node	*top_node;
-	t_stack_node	*bottom_node;
-	int				result;
 
 	if (!stack)
 		response_error();
@@ -26,7 +24,6 @@ int	single_rotate(t_linked_stack *stack, t_command command)
 	top_node = pop_on_top(stack);
 	if (!top_node)
 		response_error();
-	result = OK;
 	push_bottom(stack, top_node->value, top_node->target_idx);
 	free(top_node);
 	if (command == RA)

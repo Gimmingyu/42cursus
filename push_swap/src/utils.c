@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 13:27:25 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/13 19:14:59 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/14 14:08:08 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,13 @@ void	display_stack(t_linked_stack *stack)
 
 	if (!stack)
 		return ;
-	idx = 0;
+	idx = -1;
 	node = stack->top_node.next;
-	while (idx < stack->element_count)
+	while (++idx < stack->element_count)
 	{
 		next_node = node->next;
 		printf("%zu번째 value는 %d 입니다.\n", idx, node->value);
 		node = next_node;
-		idx++;
 	}
 	printf("==============================================================\n");
 }
