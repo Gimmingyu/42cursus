@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 13:26:11 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/15 15:22:49 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/15 21:58:02 by mingkim        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,16 @@ int				both_rotate(t_linked_stack *as, t_linked_stack *bs);
 /* 
 Function : Function for optimazation
 */
+int				opt_actual_three(t_linked_stack *stack);
 int				opt_three(t_linked_stack *stack);
+int				opt3_case1(t_linked_stack *stack);
+int				opt3_case2(t_linked_stack *stack);
+int				reverse_opt3_case1(t_linked_stack *stack, long *tmb);
+int				reverse_opt3_case2(t_linked_stack *stack, long *tmb);
 int				opt_two(t_linked_stack *stack);
 int				opt_five(t_linked_stack *as, t_linked_stack *bs);
-int				reversed_opt_three(t_linked_stack *stack);
-int				reversed_opt_two(t_linked_stack *stack);
+int				reversed_opt_actual_three(t_linked_stack *as, t_linked_stack *bs);
+int				reversed_opt_two(t_linked_stack *as, t_linked_stack *bs);
 int				reversed_opt_five(t_linked_stack *as, t_linked_stack *bs);
 int				a_opt(t_linked_stack *as, t_linked_stack *bs, ssize_t k);
 int				b_opt(t_linked_stack *as, t_linked_stack *bs, ssize_t k);

@@ -3,45 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   reverse_optimization.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 17:54:19 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/15 15:23:23 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/15 21:59:33 by mingkim        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/push_swap.h"
 
-int	reversed_opt_three(t_linked_stack *stack)
+int	reversed_opt_actual_three(t_linked_stack *as, t_linked_stack *bs)
 {
 	int	top;
 	int	mid;
 	int	bottom;
-	int	temp;
 
-	top = stack->top_node.next->value;
-	mid = stack->top_node.next->next->value;
-	bottom = stack->top_node.prev->value;
+	if (!bs || bs->element_count != 3)
+		response_error();
+	top = bs->top_node.next->value;
+	mid = bs->top_node.next->next->value;
+	bottom = bs->top_node.prev->value;
 	if (top < bottom && bottom < mid)
-		temp = single_rotate(stack, RB);
-	else if (mid < bottom && bottom < top)
-		temp = single_swap(stack, SB) * single_rotate(stack, RA);
-	else if (mid < top && top < bottom)
-		temp = single_reverse_rotate(stack, RRB);
+	{
+		single_rotate(bs, RB);
+		push(as, bs, PA);
+		push(as, bs, PA);
+		push(as, bs, PA);
+	}
 	else if (top < mid && mid < bottom)
-		temp = single_swap(stack, SB) * single_reverse_rotate(stack, RRB);
-	else
-		temp = single_swap(stack, SB);
-	return (temp);
+	{
+		single_reverse_rotate(bs, RRB);
+		push(as, bs, PA);
+		single_swap(bs, SB);
+		push(as, bs, PA);
+		push(as, bs, PA);
+	}
+	else if (mid < bottom && bottom < top)
+	{
+		push(as, bs, PA);
+		single_swap(bs, SB);
+		push(as, bs, PA);
+		push(as, bs, PA);
+	}
+	else if (mid < top && top < bottom)
+	{
+		
+	}
+		single_reverse_rotate(bs, RRB);
+	else if (bottom < top && bottom < mid)
+		single_swap(bs, SB);
+	return (TRUE);
 }
 
-int	reversed_opt_two(t_linked_stack *stack)
+int	reversed_opt_three(t_linked_stack *as, t_linked_stack *bs)
 {
-	if (!stack || stack->element_count != 2)
+	long	tmb[3];
+
+	if (!bs)
 		response_error();
-	if (stack->top_node.next->value > stack->top_node.prev->value)
-		return (TRUE);
-	return (single_swap(stack, SB));
+	tmb[0] = bs->top_node.next->value;
+	tmb[1] = bs->top_node.next->next->value;
+	tmb[2] = bs->top_node.prev->value;
+	reverse_opt3_case1(bs, tmb);
+	reverse_opt3_case2(bs, tmb);
+	return (TRUE);
+}
+
+int	reversed_opt_two(t_linked_stack *as, t_linked_stack *bs)
+{
+	if (!bs)
+		response_error();
+	if (bs->top_node.next->value < bs->top_node.prev->value)
+		single_swap(bs, SB);
+	push(as, bs, PA);
+	push(as, bs, PA);
+	return (TRUE);
 }
 
 int	reversed_opt_five(t_linked_stack *a_stack, t_linked_stack *b_stack)
@@ -63,28 +99,28 @@ int	reversed_opt_five(t_linked_stack *a_stack, t_linked_stack *b_stack)
 		single_rotate(b_stack, RB);
 	}
 	if (b_stack->element_count == 3)
-		reversed_opt_three(b_stack);
+		reversed_opt_actual_three(a_stack, b_stack);
 	node = a_stack->top_node.next;
 	if (node->value > node->next->value)
 		single_swap(b_stack, SB);
-	push(b_stack, a_stack, PB);
-	push(b_stack, a_stack, PB);
 	return (TRUE);
 }
 
-int	b_opt(t_linked_stack *as, t_linked_stack *bs)
+int	b_opt(t_linked_stack *as, t_linked_stack *bs, ssize_t k)
 {
-	if (!as || !bs)
+	if (!as || !bs || k < 0)
 		response_error();
-	else if (bs->element_count == 1)
+	else if (bs->element_count > 3 && k == 3)
+		return (reversed_opt_three(as, bs));
+	else if (bs->element_count == 3 && k == 3)
+		return (reversed_opt_actual_three(as, bs));
+	else if (k == 3 && bs->element_count == 2)
+		return (reversed_opt_two(as, bs));
+	else if (k == 3)
 		return (push(as, bs, PA));
-	else if (is_reverse_sorted(bs))
-		return (TRUE);
-	else if (bs->element_count == 2)
-		return (reversed_opt_two(bs));
-	else if (bs->element_count == 3)
-		return (reversed_opt_three(bs));
-	else if (bs->element_count == 5)
-		return (reversed_opt_five(bs, as));
-	return (FALSE);
+	else if (k == 2 && bs->element_count >= 2)
+		return (reversed_opt_two(as, bs));
+	else if (k == 2 || k == 1)
+		return (push(as, bs, PA));
+	return (TRUE);
 }

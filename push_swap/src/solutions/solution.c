@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solution.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 16:37:10 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/15 15:22:50 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/15 22:53:40 by kimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	a_to_b(t_linked_stack *as, t_linked_stack *bs, ssize_t count)
 		else
 		{
 			run_push(as, bs, PB, info);
-			if (bs->top_node.next->value < info->pivot_b)
+			if (bs->top_node.next->value >= info->pivot_b)
 				run_rotate(bs, RB, info);
 		}
 	}
@@ -78,10 +78,11 @@ int	b_to_a(t_linked_stack *as, t_linked_stack *bs, ssize_t count)
 		else
 		{
 			run_push(as, bs, PA, info);
-			if (as->top_node.next->value >= info->pivot_a)
+			if (as->top_node.next->value < info->pivot_a)
 				run_rotate(as, RA, info);
 		}
 	}
+	a_to_b(as, bs, info->pa_count - info->ra_count);
 	rollback_stacks(as, bs, info);
 	a_to_b(as, bs, info->ra_count);
 	b_to_a(as, bs, info->rb_count);

@@ -3,54 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   optimization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 13:26:15 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/15 15:42:37 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/15 21:54:24 by mingkim        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/push_swap.h"
 
-int	opt_three(t_linked_stack *stack)
+int	opt_actual_three(t_linked_stack *stack)
 {
 	int	top;
 	int	mid;
 	int	bottom;
 
+	if (!stack || stack->element_count != 3)
+		response_error();
 	top = stack->top_node.next->value;
 	mid = stack->top_node.next->next->value;
 	bottom = stack->top_node.next->next->next->value;
 	if (top < bottom && bottom < mid)
 	{
-		single_rotate(stack, RA);
-		single_swap(stack, SA);
-		single_reverse_rotate(stack, RRA);
-	}
-	else if (mid < bottom && bottom < top)
-	{
 		single_swap(stack, SA);
 		single_rotate(stack, RA);
-		single_swap(stack, SA);
-		single_reverse_rotate(stack, RRA);
 	}
-	else if (mid < top && top < bottom)
-		single_swap(stack, SA);
 	else if (bottom < mid && mid < top)
 	{
-		single_swap(stack, SA);
 		single_rotate(stack, RA);
 		single_swap(stack, SA);
-		single_reverse_rotate(stack, RRA);
-		single_swap(stack, SA);
 	}
-	else
-	{
+	else if (bottom < top && top < mid)
+		single_reverse_rotate(stack, RRA);
+	else if (mid < top && top < bottom)
+		single_swap(stack, SA);
+	else if (mid < bottom && bottom < top)
 		single_rotate(stack, RA);
-		single_swap(stack, SA);
-		single_reverse_rotate(stack, RRA);
-		single_swap(stack, SA);
-	}
+	return (TRUE);
+}
+
+int	opt_three(t_linked_stack *stack)
+{
+	if (!stack)
+		response_error();
+	opt3_case1(stack);
+	opt3_case2(stack);
 	return (TRUE);
 }
 
@@ -96,10 +93,10 @@ int	a_opt(t_linked_stack *as, t_linked_stack *bs, ssize_t k)
 	else if (is_sorted(as))
 		return (TRUE);
 	else if (k == 3 && as->element_count == 3)
-		return (TRUE);
+		return (opt_actual_three(as));
 	else if (k == 3 && as->element_count > 3)
-		return (TRUE);
+		return (opt_three(as));
 	else if ((k == 3 && as->element_count <= 2) || (0 <= k && k <= 2))
-		return (TRUE);
+		return (opt_two(as));
 	return (FALSE);
 }

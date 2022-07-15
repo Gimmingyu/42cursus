@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:51:46 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/15 15:22:50 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/15 22:44:16 by kimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,3 +62,4 @@ void	bubble_sort(long **array_ptr, ssize_t size)
 		i++;
 	}
 }
+	
