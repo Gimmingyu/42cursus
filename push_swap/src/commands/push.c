@@ -6,20 +6,20 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:03:10 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/14 16:51:14 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/15 15:22:54 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/push_swap.h"
 
-int	push_bottom(t_linked_stack *stack, int value, ssize_t idx)
+int	push_bottom(t_linked_stack *stack, long value)
 {
 	t_stack_node	*node;
 
-	node = create_node(value, idx);
+	node = create_node(value);
 	if (!stack || !node)
 		response_error();
-	if (is_linked_stack_empty(stack) == OK)
+	if (is_linked_stack_empty(stack) == TRUE)
 	{
 		node->prev = node;
 		node->next = node;
@@ -34,14 +34,14 @@ int	push_bottom(t_linked_stack *stack, int value, ssize_t idx)
 	}
 	stack->top_node.prev = node;
 	stack->element_count++;
-	return (OK);
+	return (TRUE);
 }
 
-int	push_top(t_linked_stack *stack, int value, ssize_t idx)
+int	push_top(t_linked_stack *stack, long value)
 {
 	t_stack_node	*node;
 
-	node = create_node(value, idx);
+	node = create_node(value);
 	if (!node || !stack)
 		response_error();
 	if (is_linked_stack_empty(stack))
@@ -59,7 +59,7 @@ int	push_top(t_linked_stack *stack, int value, ssize_t idx)
 	}
 	stack->top_node.next = node;
 	stack->element_count++;
-	return (OK);
+	return (TRUE);
 }
 
 t_stack_node	*pop_on_top(t_linked_stack *stack)
@@ -100,15 +100,15 @@ int	push(t_linked_stack *push_stack, t_linked_stack *pop_stack, \
 	if (!push_stack || !pop_stack)
 		response_error();
 	if (is_linked_stack_empty(pop_stack) || command == NONE)
-		return (OK);
+		return (FALSE);
 	pop_node = pop_on_top(pop_stack);
 	if (!pop_node)
 		response_error();
-	push_top(push_stack, pop_node->value, pop_node->target_idx);
+	push_top(push_stack, pop_node->value);
 	free(pop_node);
 	if (command == PA)
 		write(1, "pa\n", 3);
 	else if (command == PB)
 		write(1, "pb\n", 3);
-	return (OK);
+	return (TRUE);
 }

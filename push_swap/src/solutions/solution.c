@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 16:37:10 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/14 18:05:51 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/15 15:22:50 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	divide_groups(t_linked_stack *stack, t_info **info_ptr)
 {
-	int				pivot_a;
-	int				pivot_b;
+	long	pivot_a;
+	long	pivot_b;
 
 	if (select_pivot(stack, &pivot_a, &pivot_b) == ERROR)
 		response_error();
@@ -30,20 +30,19 @@ int	solution(t_linked_stack *as, t_linked_stack *bs)
 		return (ERROR);
 	a_to_b(as, bs, as->element_count);
 	b_to_a(as, bs, bs->element_count);
-	return (OK);
+	display_stack(as);
+	display_stack(bs);
+	return (TRUE);
 }
 
 int	a_to_b(t_linked_stack *as, t_linked_stack *bs, ssize_t count)
 {
-	t_info			*info;
+	t_info	*info;
 
 	if (!as || !bs || count < 0)
 		response_error();
-	if (count == 1 || count == 0)
-		return (push(bs, as, PB));
-	if (count == 5 || count == 3 || count == 2 || \
-		count == 1 || count == 0)
-		a_optimization(as, bs);
+	if (count <= 3)
+		return (a_opt(as, bs, count));
 	divide_groups(as, &info);
 	while (count--)
 	{
@@ -60,7 +59,7 @@ int	a_to_b(t_linked_stack *as, t_linked_stack *bs, ssize_t count)
 	a_to_b(as, bs, info->ra_count);
 	b_to_a(as, bs, info->rb_count);
 	b_to_a(as, bs, info->pb_count - info->rb_count);
-	return (free_struct_helper(info, OK));
+	return (free_struct_helper(info, TRUE));
 }
 
 int	b_to_a(t_linked_stack *as, t_linked_stack *bs, ssize_t count)
@@ -69,10 +68,8 @@ int	b_to_a(t_linked_stack *as, t_linked_stack *bs, ssize_t count)
 
 	if (!as || !bs || count < 0)
 		response_error();
-	if (count == 1 || count == 0)
-		return (push(as, bs, PA));
-	if (count == 3 || count == 5 || count == 2)
-		b_optimization(as, bs);
+	if (count <= 3)
+		return (b_opt(as, bs, count));
 	divide_groups(bs, &info);
 	while (count--)
 	{
@@ -88,18 +85,28 @@ int	b_to_a(t_linked_stack *as, t_linked_stack *bs, ssize_t count)
 	rollback_stacks(as, bs, info);
 	a_to_b(as, bs, info->ra_count);
 	b_to_a(as, bs, info->rb_count);
-	return (free_struct_helper(info, OK));
+	return (free_struct_helper(info, TRUE));
 }
 
 int	rollback_stacks(t_linked_stack *as, t_linked_stack *bs, t_info *info)
 {
+	ssize_t	ra;
+	ssize_t	rb;
+
 	if (!info || !as || !bs)
 		response_error();
-	while (info->ra_count > 0 && info->rb_count > 0)
+	ra = 0;
+	rb = 0;
+	while (info->ra_count > ra && info->rb_count > rb)
 	{
-		both_reverse_rotate(as, bs);
-		info->ra_count--;
-		info->rb_count--;
+		if (info->ra_count > ra && info->rb_count > rb)
+			both_reverse_rotate(as, bs);
+		else if (info->ra_count > ra)
+			single_reverse_rotate(as, RRA);
+		else if (info->rb_count > rb)
+			single_reverse_rotate(bs, RRB);
+		ra++;
+		rb++;
 	}
-	return (OK);
+	return (TRUE);
 }

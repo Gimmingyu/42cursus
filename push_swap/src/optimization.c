@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 13:26:15 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/14 18:02:55 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/15 15:42:37 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,41 @@ int	opt_three(t_linked_stack *stack)
 	int	top;
 	int	mid;
 	int	bottom;
-	int	temp;
 
 	top = stack->top_node.next->value;
 	mid = stack->top_node.next->next->value;
-	bottom = stack->top_node.prev->value;
+	bottom = stack->top_node.next->next->next->value;
 	if (top < bottom && bottom < mid)
-		temp = single_swap(stack, SA) * single_rotate(stack, RA);
+	{
+		single_rotate(stack, RA);
+		single_swap(stack, SA);
+		single_reverse_rotate(stack, RRA);
+	}
 	else if (mid < bottom && bottom < top)
-		temp = single_rotate(stack, RA);
+	{
+		single_swap(stack, SA);
+		single_rotate(stack, RA);
+		single_swap(stack, SA);
+		single_reverse_rotate(stack, RRA);
+	}
 	else if (mid < top && top < bottom)
-		temp = single_swap(stack, SA);
+		single_swap(stack, SA);
 	else if (bottom < mid && mid < top)
-		temp = single_swap(stack, SA) * single_reverse_rotate(stack, RRA);
+	{
+		single_swap(stack, SA);
+		single_rotate(stack, RA);
+		single_swap(stack, SA);
+		single_reverse_rotate(stack, RRA);
+		single_swap(stack, SA);
+	}
 	else
-		temp = single_reverse_rotate(stack, RRA);
-	return (temp);
+	{
+		single_rotate(stack, RA);
+		single_swap(stack, SA);
+		single_reverse_rotate(stack, RRA);
+		single_swap(stack, SA);
+	}
+	return (TRUE);
 }
 
 int	opt_two(t_linked_stack *stack)
@@ -67,20 +86,20 @@ int	opt_five(t_linked_stack *a_stack, t_linked_stack *b_stack)
 		single_swap(b_stack, SB);
 	push(a_stack, b_stack, PA);
 	push(a_stack, b_stack, PA);
-	return (OK);
+	return (TRUE);
 }
 
-int	a_optimization(t_linked_stack *as, t_linked_stack *bs)
+int	a_opt(t_linked_stack *as, t_linked_stack *bs, ssize_t k)
 {
 	if (!as || !bs)
 		response_error();
 	else if (is_sorted(as))
-		return (OK);
-	else if (as->element_count == 2)
-		return (opt_two(as));
-	else if (as->element_count == 3)
-		return (opt_three(as));
-	else if (as->element_count == 5)
-		return (opt_five(as, bs));
+		return (TRUE);
+	else if (k == 3 && as->element_count == 3)
+		return (TRUE);
+	else if (k == 3 && as->element_count > 3)
+		return (TRUE);
+	else if ((k == 3 && as->element_count <= 2) || (0 <= k && k <= 2))
+		return (TRUE);
 	return (FALSE);
 }

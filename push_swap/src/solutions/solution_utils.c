@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 17:11:19 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/14 17:18:12 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/15 15:22:52 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ int	run_rotate(t_linked_stack *stack, t_command cmd, t_info *info)
 		response_error();
 	if (cmd == RA)
 	{
-		single_rotate(stack, RA);
-		info->ra_count++;
-		return (OK);
+		if (single_rotate(stack, RA) == TRUE)
+			info->ra_count++;
+		return (TRUE);
 	}
 	else if (cmd == RB)
 	{
-		single_rotate(stack, RB);
-		info->rb_count++;
-		return (OK);
+		if (single_rotate(stack, RB) == TRUE)
+			info->rb_count++;
+		return (TRUE);
 	}
 	return (response_error());
 }
@@ -40,13 +40,13 @@ int	run_push(t_linked_stack *as, t_linked_stack *bs, \
 	{
 		push(as, bs, PA);
 		info->pa_count++;
-		return (OK);
+		return (TRUE);
 	}
 	else if (cmd == PB)
 	{
 		push(bs, as, PB);
 		info->pb_count++;
-		return (OK);
+		return (TRUE);
 	}
 	return (response_error());
 }

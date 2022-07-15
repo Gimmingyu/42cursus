@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 13:27:25 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/14 14:08:08 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/15 15:23:32 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	ft_isspace(char c)
 	return (0);
 }
 
-long long	a_to_longlong(const char *str)
+long long	ft_atol(const char *str)
 {
 	long long	nbr;
 	int			sign;
@@ -46,11 +46,11 @@ long long	a_to_longlong(const char *str)
 	return (sign * nbr);
 }
 
-int	is_greater(int a, int b)
+int	is_greater(long a, long b)
 {
 	if (a < b)
 		return (FALSE);
-	return (OK);
+	return (TRUE);
 }
 
 void	display_stack(t_linked_stack *stack)
@@ -66,7 +66,7 @@ void	display_stack(t_linked_stack *stack)
 	while (++idx < stack->element_count)
 	{
 		next_node = node->next;
-		printf("%zu번째 value는 %d 입니다.\n", idx, node->value);
+		printf("%zu번째 value는 %ld 입니다.\n", idx, node->value);
 		node = next_node;
 	}
 	printf("==============================================================\n");

@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:17:01 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/14 15:48:27 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/15 15:22:58 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	single_swap(t_linked_stack *stack, t_command command)
 	if (!stack)
 		response_error();
 	if (is_swap_exception(stack) || command == NONE)
-		return (OK);
+		return (TRUE);
 	first_node = stack->top_node.next;
 	second_node = first_node->next;
 	temp = first_node->value;
@@ -31,7 +31,7 @@ int	single_swap(t_linked_stack *stack, t_command command)
 		write(1, "sa\n", 3);
 	if (command == SB)
 		write(1, "sb\n", 3);
-	return (OK);
+	return (TRUE);
 }
 
 int	both_swap(t_linked_stack *a_stack, t_linked_stack *b_stack)
@@ -41,5 +41,5 @@ int	both_swap(t_linked_stack *a_stack, t_linked_stack *b_stack)
 	single_swap(a_stack, SS);
 	single_swap(b_stack, SS);
 	write(1, "ss\n", 3);
-	return (OK);
+	return (TRUE);
 }

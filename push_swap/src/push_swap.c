@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 13:54:27 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/14 17:46:12 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/15 15:22:49 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,15 @@ int	main(int ac, char **av)
 
 	create_stacks(&a_stack, &b_stack);
 	validator(ac, av, a_stack, b_stack);
-	if (is_sorted(a_stack) == OK || is_sorted(a_stack) == ERROR)
+	if (is_sorted(a_stack) == TRUE || is_sorted(a_stack) == ERROR)
 		return (delete_all_stack(a_stack, b_stack));
-	if (a_optimization(a_stack, b_stack) == FALSE)
+	if (a_opt(a_stack, b_stack, a_stack->element_count) == FALSE)
 		if (solution(a_stack, b_stack) == ERROR)
 			response_error();
 	delete_all_stack(a_stack, b_stack);
+	system("leaks a.out > leaks_result; cat leaks_result | \
+        grep leaked && rm -rf leaks_result && \
+		rm -rf include/push_swap.h.gch && \
+		rm -rf libft/libft.h.gch");
 	return (0);
 }

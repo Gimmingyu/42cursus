@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 13:26:11 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/14 18:02:38 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/15 15:22:49 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 typedef enum e_type
 {
-	OK = 1,
+	TRUE = 1,
 	FALSE = 0,
 	ERROR = -1,
 }	t_type;
@@ -44,8 +44,7 @@ typedef enum e_command
 
 typedef struct s_stack_node
 {
-	int					value;
-	ssize_t				target_idx;
+	long				value;
 	struct s_stack_node	*next;
 	struct s_stack_node	*prev;
 }	t_stack_node;
@@ -58,8 +57,8 @@ typedef struct s_linked_stack
 
 typedef struct s_information
 {
-	int			pivot_a;
-	int			pivot_b;
+	long		pivot_a;
+	long		pivot_b;
 	ssize_t		pa_count;
 	ssize_t		pb_count;
 	ssize_t		ra_count;
@@ -69,7 +68,7 @@ typedef struct s_information
 /* 
 Function : Function for stack
 */
-t_stack_node	*create_node(int value, ssize_t idx);
+t_stack_node	*create_node(long value);
 void			create_stacks(t_linked_stack **a_ptr, t_linked_stack **b_ptr);
 void			display_stack(t_linked_stack *stack);
 int				is_linked_stack_empty(t_linked_stack *stack);
@@ -77,13 +76,15 @@ int				delete_all_stack(t_linked_stack *as, \
 									t_linked_stack *bs);
 int				delete_single_stack(t_linked_stack *stack);
 int				find_min_value(t_linked_stack *stack);
+int				find_max_value(t_linked_stack *stack);
+int				is_reverse_sorted(t_linked_stack *stack);
 /* 
 Function : Function for stack action, push
 */
 t_stack_node	*pop_on_top(t_linked_stack *stack);
 t_stack_node	*pop_on_bottom(t_linked_stack *stack);
-int				push_top(t_linked_stack *stack, int value, ssize_t idx);
-int				push_bottom(t_linked_stack *stack, int value, ssize_t idx);
+int				push_top(t_linked_stack *stack, long value);
+int				push_bottom(t_linked_stack *stack, long value);
 int				push(t_linked_stack *push_stack, t_linked_stack *pop_stack, \
 						t_command command);
 
@@ -108,17 +109,17 @@ Function : Function for optimazation
 */
 int				opt_three(t_linked_stack *stack);
 int				opt_two(t_linked_stack *stack);
-int				a_opt_five(t_linked_stack *as, t_linked_stack *bs);
-int				a_optimization(t_linked_stack *as, t_linked_stack *bs);
+int				opt_five(t_linked_stack *as, t_linked_stack *bs);
 int				reversed_opt_three(t_linked_stack *stack);
 int				reversed_opt_two(t_linked_stack *stack);
 int				reversed_opt_five(t_linked_stack *as, t_linked_stack *bs);
-int				b_optimization(t_linked_stack *as, t_linked_stack *bs);
+int				a_opt(t_linked_stack *as, t_linked_stack *bs, ssize_t k);
+int				b_opt(t_linked_stack *as, t_linked_stack *bs, ssize_t k);
 /* 
 Function : Function for utility
 */
-long long		a_to_longlong(const char *str);
-int				is_greater(int a, int b);
+long long		ft_atol(const char *str);
+int				is_greater(long a, long b);
 int				get_sum_of_stack(t_linked_stack *stack);
 /* 
 Function : Function for response
@@ -141,8 +142,8 @@ Function: Function for sort
 int				solution(t_linked_stack *as, t_linked_stack *bs);
 void			divide_groups(t_linked_stack *as, t_info **info_ptr);
 int				select_pivot(t_linked_stack *stack, \
-								int *pivot_a_ptr, int *pivot_b_ptr);
-void			bubble_sort(int **array_ptr, ssize_t size);
+								long *pivot_a_ptr, long *pivot_b_ptr);
+void			bubble_sort(long **array_ptr, ssize_t size);
 int				is_sorted(t_linked_stack *stack);
 int				rollback_stacks(t_linked_stack *as, t_linked_stack *bs, \
 								t_info *info);

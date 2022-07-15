@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 17:54:19 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/14 18:04:05 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/15 15:23:23 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	reversed_opt_two(t_linked_stack *stack)
 	if (!stack || stack->element_count != 2)
 		response_error();
 	if (stack->top_node.next->value > stack->top_node.prev->value)
-		return (OK);
+		return (TRUE);
 	return (single_swap(stack, SB));
 }
 
@@ -51,14 +51,14 @@ int	reversed_opt_five(t_linked_stack *a_stack, t_linked_stack *b_stack)
 
 	if (!a_stack || !b_stack || b_stack->element_count != 5)
 		response_error();
-	min_value = find_min_value(b_stack);
+	min_value = find_max_value(b_stack);
 	while (b_stack->element_count > 3)
 	{
 		node = a_stack->top_node.next;
 		if (node->value == min_value)
 		{
 			push(a_stack, b_stack, PA);
-			min_value = find_min_value(b_stack);
+			min_value = find_max_value(b_stack);
 		}
 		single_rotate(b_stack, RB);
 	}
@@ -69,20 +69,22 @@ int	reversed_opt_five(t_linked_stack *a_stack, t_linked_stack *b_stack)
 		single_swap(b_stack, SB);
 	push(b_stack, a_stack, PB);
 	push(b_stack, a_stack, PB);
-	return (OK);
+	return (TRUE);
 }
 
-int	b_optimization(t_linked_stack *as, t_linked_stack *bs)
+int	b_opt(t_linked_stack *as, t_linked_stack *bs)
 {
 	if (!as || !bs)
 		response_error();
-	else if (is_sorted(bs))
-		return (OK);
-	else if (as->element_count == 2)
+	else if (bs->element_count == 1)
+		return (push(as, bs, PA));
+	else if (is_reverse_sorted(bs))
+		return (TRUE);
+	else if (bs->element_count == 2)
 		return (reversed_opt_two(bs));
-	else if (as->element_count == 3)
+	else if (bs->element_count == 3)
 		return (reversed_opt_three(bs));
-	else if (as->element_count == 5)
+	else if (bs->element_count == 5)
 		return (reversed_opt_five(bs, as));
 	return (FALSE);
 }

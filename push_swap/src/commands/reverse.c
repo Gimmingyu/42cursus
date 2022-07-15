@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:16:54 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/13 19:00:18 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/15 15:22:54 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,19 @@ int	single_reverse_rotate(t_linked_stack *stack, t_command command)
 
 	if (!stack)
 		response_error();
-	if (is_linked_stack_empty(stack) || command == NONE)
-		return (OK);
+	if (is_linked_stack_empty(stack) || command == NONE || \
+		stack->element_count == 1)
+		return (TRUE);
 	bottom_node = pop_on_bottom(stack);
 	if (!bottom_node)
 		response_error();
-	push_top(stack, bottom_node->value, bottom_node->target_idx);
+	push_top(stack, bottom_node->value);
 	free(bottom_node);
 	if (command == RRA)
 		write(1, "rra\n", 4);
 	else if (command == RRB)
 		write(1, "rrb\n", 4);
-	return (OK);
+	return (TRUE);
 }
 
 int	both_reverse_rotate(t_linked_stack *a_stack, t_linked_stack *b_stack)
@@ -39,5 +40,5 @@ int	both_reverse_rotate(t_linked_stack *a_stack, t_linked_stack *b_stack)
 	single_reverse_rotate(a_stack, RRR);
 	single_reverse_rotate(b_stack, RRR);
 	write(1, "rrr\n", 4);
-	return (OK);
+	return (TRUE);
 }

@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 19:06:29 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/18 20:22:08 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/15 15:23:36 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef ssize_t(*t_func)(va_list *);
 
 typedef enum e_err
 {
-	OK = 1,
+	TRUE = 1,
 	ERR = 0,
 }	t_err;
 

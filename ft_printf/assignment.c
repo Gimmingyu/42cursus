@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 13:11:58 by mingkim           #+#    #+#             */
-/*   Updated: 2022/04/18 19:21:42 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/15 15:23:38 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ int	assign_func(void **fp_ptr, char type)
 		*fp_ptr = (t_func)conversion_uint;
 	else
 		return (ERR);
-	return (OK);
+	return (TRUE);
 }

@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 13:28:57 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/14 16:07:05 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/15 15:22:57 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	is_integer(char *str)
 			response_error();
 		idx++;
 	}
-	return (OK);
+	return (TRUE);
 }
 
 int	check_duplicate(char **str)
@@ -49,7 +49,7 @@ int	check_duplicate(char **str)
 			if (str[sub_idx] == str[idx])
 				response_error();
 	}
-	return (OK);
+	return (TRUE);
 }
 
 void	validator(int ac, char **av, \
@@ -73,7 +73,7 @@ void	validator(int ac, char **av, \
 			if (is_integer(temp[temp_idx]) == ERROR || \
 				check_duplicate(temp) == ERROR)
 				response_error();
-			push_bottom(a_stack, a_to_longlong(temp[temp_idx]), 0);
+			push_bottom(a_stack, ft_atol(temp[temp_idx]));
 		}
 		ft_malloc_error(temp);
 	}
