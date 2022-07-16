@@ -6,30 +6,41 @@
 #    By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/06 13:55:14 by mingkim           #+#    #+#              #
-#    Updated: 2022/07/08 13:30:04 by mingkim          ###   ########.fr        #
+#    Updated: 2022/07/16 15:53:13 by mingkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = push_swap.a
+NAME = push_swap
 LIBFT = libft
 LIBFT_LIB = libft.a
 
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
-AR = ar rcs
 RM = rm -f
 
-INC = include/push_swap.h
+INC = ./push_swap.h
 
-SRC_DIR = src/
-SRCS = src/push_swap.c \
-		src/utils.c \
-		src/exception_handler.c \
-		src/validator.c \
-		src/commands/push.c \
-		src/commands/swap.c \
+SRCS = push_swap.c \
+		exception_handler.c \
+		helper.c \
+		info.c \
+		main.c \
+		opt_case.c \
+		optimization.c \
+		push.c \
+		reverse.c \
+		reversed_opt_case.c \
+		reversed_optimization.c \
+		rotate.c \
+		solution.c \
+		solution_utils.c \
+		stack_utils.c \
+		stack.c \
+		swap.c \
+		utils.c \
+		validator.c \
 		
-OBJ_DIR = ./src/
+OBJ_DIR = ./
 OBJS = $(SRCS:.c=.o)
 
 .c.o : 
@@ -37,8 +48,7 @@ OBJS = $(SRCS:.c=.o)
 
 $(NAME): $(OBJS)
 	@make all -C $(LIBFT)/
-	@cp $(LIBFT)/$(LIBFT_LIB) $(NAME)
-	$(AR) $(NAME) $(OBJS)
+	$(CC) $(CFLAGS) $(LIBFT)/$(LIBFT_LIB) -o $(NAME) $(OBJS)
 
 all: $(NAME)
 
@@ -52,5 +62,4 @@ fclean: clean
 
 re: clean all
 
-
-
+.PHONY: all clean fclean re

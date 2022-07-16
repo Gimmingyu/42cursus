@@ -6,11 +6,11 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:17:01 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/15 15:22:58 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/16 15:04:53 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/push_swap.h"
+#include "push_swap.h"
 
 int	single_swap(t_linked_stack *stack, t_command command)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   solution.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 16:37:10 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/15 22:53:40 by kimmingyu        ###   ########.fr       */
+/*   Updated: 2022/07/16 16:23:56 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/push_swap.h"
+#include "push_swap.h"
 
 void	divide_groups(t_linked_stack *stack, t_info **info_ptr)
 {
@@ -29,9 +29,7 @@ int	solution(t_linked_stack *as, t_linked_stack *bs)
 	if (!as || !bs || is_linked_stack_empty(as))
 		return (ERROR);
 	a_to_b(as, bs, as->element_count);
-	b_to_a(as, bs, bs->element_count);
 	display_stack(as);
-	display_stack(bs);
 	return (TRUE);
 }
 
@@ -41,6 +39,8 @@ int	a_to_b(t_linked_stack *as, t_linked_stack *bs, ssize_t count)
 
 	if (!as || !bs || count < 0)
 		response_error();
+	if (opt5(as, bs) == TRUE)
+		return (TRUE);
 	if (count <= 3)
 		return (a_opt(as, bs, count));
 	divide_groups(as, &info);

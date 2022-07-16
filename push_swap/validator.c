@@ -6,11 +6,11 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 13:28:57 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/15 15:22:57 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/16 16:08:07 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/push_swap.h"
+#include "push_swap.h"
 
 static int	is_integer(char *str)
 {
@@ -34,7 +34,7 @@ static int	is_integer(char *str)
 	return (TRUE);
 }
 
-int	check_duplicate(char **str)
+static int	check_duplicate(char **str)
 {
 	ssize_t	idx;
 	ssize_t	sub_idx;
@@ -50,6 +50,30 @@ int	check_duplicate(char **str)
 				response_error();
 	}
 	return (TRUE);
+}
+
+void	check_duplicate_elem(t_linked_stack *stack)
+{
+	ssize_t			i;
+	ssize_t			j;
+	long			k;
+	t_stack_node	*node;
+
+	if (!stack || is_linked_stack_empty(stack))
+		response_error();
+	i = 0;
+	while (i++ < stack->element_count)
+	{
+		node = stack->top_node.next;
+		k = node->value;
+		j = 0;
+		while (j++ < stack->element_count - 1)
+		{
+			node = node->next;
+			if (node->value == k)
+				response_error();
+		}
+	}
 }
 
 void	validator(int ac, char **av, \

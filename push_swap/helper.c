@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:51:46 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/15 22:44:16 by kimmingyu        ###   ########.fr       */
+/*   Updated: 2022/07/16 15:59:02 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/push_swap.h"
+#include "push_swap.h"
 
 int	select_pivot(t_linked_stack *stack, long *pivot_a_ptr, long *pivot_b_ptr)
 {
@@ -57,6 +57,8 @@ void	bubble_sort(long **array_ptr, ssize_t size)
 				(*array_ptr)[j] = (*array_ptr)[j + 1];
 				(*array_ptr)[j + 1] = temp;
 			}
+			if ((*array_ptr)[j] == (*array_ptr)[j + 1])
+				response_error();
 			j++;
 		}
 		i++;

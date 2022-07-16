@@ -6,11 +6,11 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 15:21:52 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/15 15:22:57 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/16 15:04:31 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/push_swap.h"
+#include "push_swap.h"
 
 int	is_linked_stack_empty(t_linked_stack *stack)
 {

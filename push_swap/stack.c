@@ -6,11 +6,11 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 16:07:17 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/15 15:09:59 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/16 15:04:31 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/push_swap.h"
+#include "push_swap.h"
 
 int	delete_all_stack(t_linked_stack *a_stack, t_linked_stack *b_stack)
 {

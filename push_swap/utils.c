@@ -6,11 +6,12 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 13:27:25 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/15 15:23:32 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/16 16:20:24 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/push_swap.h"
+#include "push_swap.h"
+#include <stdio.h>
 
 static int	ft_isspace(char c)
 {

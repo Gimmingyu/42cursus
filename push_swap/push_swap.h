@@ -13,8 +13,7 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include "../libft/libft.h"
-# include <stdio.h>
+# include "libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
 
@@ -65,6 +64,7 @@ typedef struct s_information
 	ssize_t		rb_count;
 }	t_info;
 
+int				push_swap(int ac, char **av);
 /* 
 Function : Function for stack
 */
@@ -107,17 +107,28 @@ int				both_rotate(t_linked_stack *as, t_linked_stack *bs);
 /* 
 Function : Function for optimazation
 */
-int				opt_actual_three(t_linked_stack *stack);
-int				opt_three(t_linked_stack *stack);
-int				opt3_case1(t_linked_stack *stack);
-int				opt3_case2(t_linked_stack *stack);
-int				reverse_opt3_case1(t_linked_stack *stack, long *tmb);
-int				reverse_opt3_case2(t_linked_stack *stack, long *tmb);
-int				opt_two(t_linked_stack *stack);
-int				opt_five(t_linked_stack *as, t_linked_stack *bs);
-int				reversed_opt_actual_three(t_linked_stack *as, t_linked_stack *bs);
-int				reversed_opt_two(t_linked_stack *as, t_linked_stack *bs);
-int				reversed_opt_five(t_linked_stack *as, t_linked_stack *bs);
+int				opt3(t_linked_stack *as, t_linked_stack *bs);
+void			opt3_case1(t_linked_stack *as, t_linked_stack *bs, long *tmb);
+void			opt3_case2(t_linked_stack *as, t_linked_stack *bs, long *tmb);
+int				opt_actual3(t_linked_stack *as, t_linked_stack *bs);
+void			opt_actual3_case1(t_linked_stack *as, t_linked_stack *bs, \
+									long *tmb);
+void			opt_actual3_case2(t_linked_stack *as, t_linked_stack *bs, \
+									long *tmb);
+int				reversed_opt3(t_linked_stack *as, t_linked_stack *bs);
+void			reversed_opt3_case1(t_linked_stack *as, \
+										t_linked_stack *bs, long *tmb);
+void			reversed_opt3_case2(t_linked_stack *as, \
+										t_linked_stack *bs, long *tmb);
+int				reversed_opt_actual3(t_linked_stack *as, \
+											t_linked_stack *bs);
+void			reversed_actual3_case1(t_linked_stack *as, \
+										t_linked_stack *bs, long *tmb);
+void			reversed_actual3_case2(t_linked_stack *as, \
+										t_linked_stack *bs, long *tmb);
+int				opt2(t_linked_stack *as, t_linked_stack *bs);
+int				reversed_opt2(t_linked_stack *as, t_linked_stack *bs);
+int				opt5(t_linked_stack *as, t_linked_stack *bs);
 int				a_opt(t_linked_stack *as, t_linked_stack *bs, ssize_t k);
 int				b_opt(t_linked_stack *as, t_linked_stack *bs, ssize_t k);
 /* 
@@ -134,9 +145,9 @@ int				response_error(void);
 Function : Function for validation
 */
 void			check_is_integer(int ac, char **av);
-void			check_is_duplicate(int ac, char **av);
 void			validator(int ac, char **av, \
 							t_linked_stack *as, t_linked_stack *bs);
+void			check_duplicate_elem(t_linked_stack *stack);
 /* 
 Function : Function for mapping information
 */
