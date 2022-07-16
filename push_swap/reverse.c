@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reverse.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:16:54 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/16 15:04:53 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/16 23:48:33 by mingkim        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	single_reverse_rotate(t_linked_stack *stack, t_command command)
 		response_error();
 	if (is_linked_stack_empty(stack) || command == NONE || \
 		stack->element_count == 1)
-		return (TRUE);
+		return (FALSE);
 	bottom_node = pop_on_bottom(stack);
 	if (!bottom_node)
 		response_error();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solution_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 17:11:19 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/16 15:04:53 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/17 00:46:47 by mingkim        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ int	run_push(t_linked_stack *as, t_linked_stack *bs, \
 		response_error();
 	if (cmd == PA)
 	{
-		push(as, bs, PA);
-		info->pa_count++;
+		if (push(as, bs, PA) == TRUE)
+			info->pa_count++;
 		return (TRUE);
 	}
 	else if (cmd == PB)
 	{
-		push(bs, as, PB);
-		info->pb_count++;
+		if (push(bs, as, PB) == TRUE)
+			info->pb_count++;
 		return (TRUE);
 	}
 	return (response_error());

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 13:28:57 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/16 16:08:07 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/17 00:24:18 by mingkim        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,24 +55,17 @@ static int	check_duplicate(char **str)
 void	check_duplicate_elem(t_linked_stack *stack)
 {
 	ssize_t			i;
-	ssize_t			j;
-	long			k;
 	t_stack_node	*node;
 
 	if (!stack || is_linked_stack_empty(stack))
 		response_error();
 	i = 0;
-	while (i++ < stack->element_count)
+	node = stack->top_node.next;
+	while (i++ < stack->element_count - 1)
 	{
-		node = stack->top_node.next;
-		k = node->value;
-		j = 0;
-		while (j++ < stack->element_count - 1)
-		{
-			node = node->next;
-			if (node->value == k)
-				response_error();
-		}
+		if (node->value == node->next->value)
+			response_error();
+		node = node->next;
 	}
 }
 

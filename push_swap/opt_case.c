@@ -39,14 +39,14 @@ void	opt3_case2(t_linked_stack *as, t_linked_stack *bs, long *tmb)
 		response_error();
 	if (tmb[2] < tmb[1] && tmb[1] < tmb[0])
 	{
-		push(bs, as, PB);
 		single_swap(as, SA);
-		push(as, bs, PA);
+		single_rotate(as, RA);
+		single_swap(as, RA);
+		single_reverse_rotate(as, RRA);
 		single_swap(as, SA);
 	}
 	else if (tmb[2] < tmb[0] && tmb[0] < tmb[1])
 	{
-		single_swap(as, SA);
 		push(bs, as, PB);
 		single_swap(as, SA);
 		push(as, bs, PA);

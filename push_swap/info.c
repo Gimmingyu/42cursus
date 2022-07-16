@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-t_info	*create_info(int pivot_a, int pivot_b)
+t_info	*create_info(long pivot_a, long pivot_b)
 {
 	t_info	*info;
 

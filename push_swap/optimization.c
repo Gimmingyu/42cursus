@@ -21,7 +21,7 @@ int	opt_actual3(t_linked_stack *as, t_linked_stack *bs)
 	tmb[0] = as->top_node.next->value;
 	tmb[1] = as->top_node.next->next->value;
 	tmb[2] = as->top_node.prev->value;
-	if (tmb[0] < tmb[1] && tmb[1] < tmb[2])
+	if (is_sorted(as, as->element_count) == TRUE)
 		return (TRUE);
 	else
 	{
@@ -38,8 +38,10 @@ int	opt5(t_linked_stack *as, t_linked_stack *bs)
 
 	if (!as || !bs)
 		response_error();
-	if (is_sorted(as) || as->element_count != 5)
+	if (as->element_count != 5)
 		return (FALSE);
+	if (is_sorted(as, as->element_count) == TRUE)
+		return (TRUE);
 	min_value = find_min_value(as);
 	while (as->element_count > 3)
 	{
@@ -56,7 +58,6 @@ int	opt5(t_linked_stack *as, t_linked_stack *bs)
 		opt_actual3(as, bs);
 	push(as, bs, PA);
 	push(as, bs, PA);
-	opt2(as, bs);
 	return (TRUE);
 }
 
@@ -69,7 +70,7 @@ int	opt3(t_linked_stack *as, t_linked_stack *bs)
 	tmb[0] = as->top_node.next->value;
 	tmb[1] = as->top_node.next->next->value;
 	tmb[2] = as->top_node.next->next->next->value;
-	if (tmb[0] < tmb[1] && tmb[1] < tmb[2])
+	if (is_sorted(as, 3) == TRUE)
 		return (TRUE);
 	else
 	{
@@ -96,9 +97,7 @@ int	a_opt(t_linked_stack *as, t_linked_stack *bs, ssize_t k)
 		return (opt_actual3(as, bs));
 	else if (k == 3 && as->element_count > 3)
 		return (opt3(as, bs));
-	else if (as->element_count == 5)
-		return (opt5(as, bs));
-	else if ((k == 3 && as->element_count <= 2) || (0 <= k && k <= 2))
+	else if ((k == 3 && as->element_count < 2) || (0 <= k && k <= 2))
 		return (opt2(as, bs));
 	return (FALSE);
 }

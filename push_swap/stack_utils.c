@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 15:21:52 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/16 15:04:31 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/17 00:38:43 by mingkim        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	is_linked_stack_empty(t_linked_stack *stack)
 	return (FALSE);
 }
 
-int	is_sorted(t_linked_stack *stack)
+int	is_sorted(t_linked_stack *stack, ssize_t range)
 {
 	ssize_t			idx;
 	t_stack_node	*node;
@@ -30,16 +30,16 @@ int	is_sorted(t_linked_stack *stack)
 		return (TRUE);
 	idx = 0;
 	node = stack->top_node.next;
-	while (idx++ < stack->element_count - 1)
+	while (idx++ < range)
 	{
-		if (is_greater(node->value, node->next->value) == TRUE)
+		if (node->value > node->next->value)
 			return (FALSE);
 		node = node->next;
 	}
 	return (TRUE);
 }
 
-int	is_reverse_sorted(t_linked_stack *stack)
+int	is_reverse_sorted(t_linked_stack *stack, ssize_t range)
 {
 	ssize_t			idx;
 	t_stack_node	*node;
@@ -50,7 +50,7 @@ int	is_reverse_sorted(t_linked_stack *stack)
 		return (TRUE);
 	idx = 0;
 	node = stack->top_node.next;
-	while (idx++ < stack->element_count)
+	while (idx++ < range)
 	{
 		if (is_greater(node->value, node->next->value) == FALSE)
 			return (FALSE);
@@ -63,12 +63,12 @@ int	find_min_value(t_linked_stack *stack)
 {
 	t_stack_node	*node;
 	ssize_t			idx;
-	int				min_value;
+	long			min_value;
 
 	if (!stack)
 		response_error();
 	idx = 0;
-	min_value = 2147483647;
+	min_value = 2147483648;
 	node = stack->top_node.next;
 	while (idx++ < stack->element_count)
 	{
@@ -90,7 +90,7 @@ int	find_max_value(t_linked_stack *stack)
 	idx = 0;
 	max_value = -2147483648;
 	node = stack->top_node.next;
-	while (idx++ < stack->element_count)
+	while (idx++ <= stack->element_count)
 	{
 		if (node->value > max_value)
 			max_value = node->value;

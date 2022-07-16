@@ -16,6 +16,7 @@
 # include "libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h>
 
 typedef enum e_type
 {
@@ -77,7 +78,7 @@ int				delete_all_stack(t_linked_stack *as, \
 int				delete_single_stack(t_linked_stack *stack);
 int				find_min_value(t_linked_stack *stack);
 int				find_max_value(t_linked_stack *stack);
-int				is_reverse_sorted(t_linked_stack *stack);
+int				is_reverse_sorted(t_linked_stack *stack, ssize_t range);
 /* 
 Function : Function for stack action, push
 */
@@ -151,16 +152,16 @@ void			check_duplicate_elem(t_linked_stack *stack);
 /* 
 Function : Function for mapping information
 */
-t_info			*create_info(int pivot_a, int pivot_b);
+t_info			*create_info(long pivot_a, long pivot_b);
 /*
 Function: Function for sort
 */
 int				solution(t_linked_stack *as, t_linked_stack *bs);
-void			divide_groups(t_linked_stack *as, t_info **info_ptr);
-int				select_pivot(t_linked_stack *stack, \
+void			divide_groups(t_linked_stack *as, t_info **info_ptr, ssize_t count);
+int				select_pivot(t_linked_stack *stack, ssize_t range, \
 								long *pivot_a_ptr, long *pivot_b_ptr);
 void			bubble_sort(long **array_ptr, ssize_t size);
-int				is_sorted(t_linked_stack *stack);
+int				is_sorted(t_linked_stack *stack, ssize_t range);
 int				rollback_stacks(t_linked_stack *as, t_linked_stack *bs, \
 								t_info *info);
 int				a_to_b(t_linked_stack *as, t_linked_stack *bs, \

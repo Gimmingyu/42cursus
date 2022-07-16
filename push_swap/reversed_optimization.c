@@ -20,9 +20,17 @@ int	reversed_opt_actual3(t_linked_stack *as, t_linked_stack *bs)
 		response_error();
 	tmb[0] = bs->top_node.next->value;
 	tmb[1] = bs->top_node.next->next->value;
-	tmb[2] = bs->top_node.prev->value;
-	reversed_actual3_case1(as, bs, tmb);
-	reversed_actual3_case2(as, bs, tmb);
+	tmb[2] = bs->top_node.next->next->next->value;
+	if (is_reverse_sorted(bs, bs->element_count) == TRUE)
+	{
+		push(as, bs, PA);
+		push(as, bs, PA);
+	}
+	else
+	{
+		reversed_actual3_case1(as, bs, tmb);
+		reversed_actual3_case2(as, bs, tmb);
+	}
 	return (TRUE);
 }
 
@@ -35,13 +43,16 @@ int	reversed_opt3(t_linked_stack *as, t_linked_stack *bs)
 	tmb[0] = bs->top_node.next->value;
 	tmb[1] = bs->top_node.next->next->value;
 	tmb[2] = bs->top_node.next->next->value;
-	reversed_opt3_case1(as, bs, tmb);
-	reversed_opt3_case2(as, bs, tmb);
 	if (tmb[0] > tmb[1] && tmb[1] > tmb[2])
 	{
 		push(as, bs, PA);
 		push(as, bs, PA);
 		push(as, bs, PA);
+	}
+	else
+	{
+		reversed_opt3_case1(as, bs, tmb);
+		reversed_opt3_case2(as, bs, tmb);
 	}
 	return (TRUE);
 }

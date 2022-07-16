@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:03:10 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/16 15:36:16 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/17 00:51:18 by mingkim        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ t_stack_node	*pop_on_bottom(t_linked_stack *stack)
 		return (NULL);
 	bottom_node = stack->top_node.prev;
 	stack->top_node.prev = bottom_node->prev;
-	stack->top_node.next->prev = bottom_node->prev;
-	bottom_node->prev->next = stack->top_node.next;
+	stack->top_node.next->prev = stack->top_node.prev;
+	stack->top_node.prev->next = stack->top_node.next;
 	stack->element_count--;
 	return (bottom_node);
 }

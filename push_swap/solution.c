@@ -3,21 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   solution.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 16:37:10 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/16 16:23:56 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/17 00:54:35 by mingkim        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	divide_groups(t_linked_stack *stack, t_info **info_ptr)
+void	divide_groups(t_linked_stack *stack, t_info **info_ptr, ssize_t count)
 {
 	long	pivot_a;
 	long	pivot_b;
 
-	if (select_pivot(stack, &pivot_a, &pivot_b) == ERROR)
+	pivot_a = 0;
+	pivot_b = 0;
+	if (select_pivot(stack, count, &pivot_a, &pivot_b) == ERROR)
 		response_error();
 	*info_ptr = create_info(pivot_a, pivot_b);
 	if (!(*info_ptr))
@@ -29,7 +31,6 @@ int	solution(t_linked_stack *as, t_linked_stack *bs)
 	if (!as || !bs || is_linked_stack_empty(as))
 		return (ERROR);
 	a_to_b(as, bs, as->element_count);
-	display_stack(as);
 	return (TRUE);
 }
 
@@ -39,26 +40,29 @@ int	a_to_b(t_linked_stack *as, t_linked_stack *bs, ssize_t count)
 
 	if (!as || !bs || count < 0)
 		response_error();
-	if (opt5(as, bs) == TRUE)
-		return (TRUE);
 	if (count <= 3)
 		return (a_opt(as, bs, count));
-	divide_groups(as, &info);
-	while (count--)
+	if (opt5(as, bs) == TRUE)
+		return (TRUE);
+	divide_groups(as, &info, count);
+	if (is_sorted(as, count) != TRUE)
 	{
-		if (as->top_node.next->value >= info->pivot_a)
-			run_rotate(as, RA, info);
-		else
+		while (count--)
 		{
-			run_push(as, bs, PB, info);
-			if (bs->top_node.next->value >= info->pivot_b)
-				run_rotate(bs, RB, info);
+			if (as->top_node.next->value >= info->pivot_a)
+				run_rotate(as, RA, info);
+			else
+			{
+				run_push(as, bs, PB, info);
+				if (bs->top_node.next->value >= info->pivot_b)
+					run_rotate(bs, RB, info);
+			}
 		}
+		rollback_stacks(as, bs, info);
+		a_to_b(as, bs, info->ra_count);
+		b_to_a(as, bs, info->rb_count);
+		b_to_a(as, bs, info->pb_count - info->rb_count);
 	}
-	rollback_stacks(as, bs, info);
-	a_to_b(as, bs, info->ra_count);
-	b_to_a(as, bs, info->rb_count);
-	b_to_a(as, bs, info->pb_count - info->rb_count);
 	return (free_struct_helper(info, TRUE));
 }
 
@@ -70,7 +74,7 @@ int	b_to_a(t_linked_stack *as, t_linked_stack *bs, ssize_t count)
 		response_error();
 	if (count <= 3)
 		return (b_opt(as, bs, count));
-	divide_groups(bs, &info);
+	divide_groups(bs, &info, count);
 	while (count--)
 	{
 		if (bs->top_node.next->value < info->pivot_b)
@@ -98,7 +102,7 @@ int	rollback_stacks(t_linked_stack *as, t_linked_stack *bs, t_info *info)
 		response_error();
 	ra = 0;
 	rb = 0;
-	while (info->ra_count > ra && info->rb_count > rb)
+	while (info->ra_count > ra || info->rb_count > rb)
 	{
 		if (info->ra_count > ra && info->rb_count > rb)
 			both_reverse_rotate(as, bs);
@@ -106,6 +110,8 @@ int	rollback_stacks(t_linked_stack *as, t_linked_stack *bs, t_info *info)
 			single_reverse_rotate(as, RRA);
 		else if (info->rb_count > rb)
 			single_reverse_rotate(bs, RRB);
+		else
+			break ;
 		ra++;
 		rb++;
 	}
