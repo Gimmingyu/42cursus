@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 15:07:19 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/16 15:56:38 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/17 22:23:10 by kimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 int	main(int ac, char **av)
 {
 	if (ac < 2)
-		response_error();
+		return (response_error());
 	return (push_swap(ac, av));
 }

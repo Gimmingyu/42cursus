@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   swap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 15:17:01 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/16 15:04:53 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/17 21:20:17 by kimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,20 @@ int	single_swap(t_linked_stack *stack, t_command command)
 
 	if (!stack)
 		response_error();
-	if (is_swap_exception(stack) || command == NONE)
+	if (is_swap_exception(stack) != TRUE)
+	{
+		first_node = stack->top_node.next;
+		second_node = first_node->next;
+		temp = first_node->value;
+		first_node->value = second_node->value;
+		second_node->value = temp;
+		if (command == SA)
+			write(1, "sa\n", 3);
+		if (command == SB)
+			write(1, "sb\n", 3);
 		return (TRUE);
-	first_node = stack->top_node.next;
-	second_node = first_node->next;
-	temp = first_node->value;
-	first_node->value = second_node->value;
-	second_node->value = temp;
-	if (command == SA)
-		write(1, "sa\n", 3);
-	if (command == SB)
-		write(1, "sb\n", 3);
-	return (TRUE);
+	}
+	return (FALSE);
 }
 
 int	both_swap(t_linked_stack *a_stack, t_linked_stack *b_stack)

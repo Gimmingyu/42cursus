@@ -18,19 +18,20 @@ int	single_rotate(t_linked_stack *stack, t_command command)
 
 	if (!stack)
 		response_error();
-	if (is_linked_stack_empty(stack) || stack->element_count == 1 \
-			|| command == NONE)
-		return (FALSE);
-	top_node = pop_on_top(stack);
-	if (!top_node)
-		response_error();
-	push_bottom(stack, top_node->value);
-	free(top_node);
-	if (command == RA)
-		write(1, "ra\n", 3);
-	else if (command == RB)
-		write(1, "rb\n", 3);
-	return (TRUE);
+	if (stack->element_count > 1)
+	{
+		top_node = pop_on_top(stack);
+		if (!top_node)
+			response_error();
+		push_bottom(stack, top_node->value);
+		free(top_node);
+		if (command == RA)
+			write(1, "ra\n", 3);
+		else if (command == RB)
+			write(1, "rb\n", 3);
+		return (TRUE);
+	}
+	return (FALSE);
 }
 
 int	both_rotate(t_linked_stack *a_stack, t_linked_stack *b_stack)

@@ -18,14 +18,14 @@ int	run_rotate(t_linked_stack *stack, t_command cmd, t_info *info)
 		response_error();
 	if (cmd == RA)
 	{
-		if (single_rotate(stack, RA) == TRUE)
-			info->ra_count++;
+		single_rotate(stack, RA);
+		info->ra_count++;
 		return (TRUE);
 	}
 	else if (cmd == RB)
 	{
-		if (single_rotate(stack, RB) == TRUE)
-			info->rb_count++;
+		single_rotate(stack, RB);
+		info->rb_count++;
 		return (TRUE);
 	}
 	return (response_error());
@@ -38,14 +38,14 @@ int	run_push(t_linked_stack *as, t_linked_stack *bs, \
 		response_error();
 	if (cmd == PA)
 	{
-		if (push(as, bs, PA) == TRUE)
-			info->pa_count++;
+		push(as, bs, PA);
+		info->pa_count++;
 		return (TRUE);
 	}
 	else if (cmd == PB)
 	{
-		if (push(bs, as, PB) == TRUE)
-			info->pb_count++;
+		push(bs, as, PB);
+		info->pb_count++;
 		return (TRUE);
 	}
 	return (response_error());

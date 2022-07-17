@@ -31,6 +31,10 @@ int	solution(t_linked_stack *as, t_linked_stack *bs)
 	if (!as || !bs || is_linked_stack_empty(as))
 		return (ERROR);
 	a_to_b(as, bs, as->element_count);
+	display_stack(as);
+	display_stack(bs);
+	printf("as->elem= %zu\n", as->element_count);
+	printf("bs->elem= %zu\n", bs->element_count);
 	return (TRUE);
 }
 
@@ -106,9 +110,9 @@ int	rollback_stacks(t_linked_stack *as, t_linked_stack *bs, t_info *info)
 	{
 		if (info->ra_count > ra && info->rb_count > rb)
 			both_reverse_rotate(as, bs);
-		else if (info->ra_count > ra)
+		else if (info->ra_count > ra && info->rb_count <= rb)
 			single_reverse_rotate(as, RRA);
-		else if (info->rb_count > rb)
+		else if (info->rb_count > rb && info->ra_count <= ra)
 			single_reverse_rotate(bs, RRB);
 		else
 			break ;

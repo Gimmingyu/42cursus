@@ -34,6 +34,7 @@ int	opt_actual3(t_linked_stack *as, t_linked_stack *bs)
 int	opt5(t_linked_stack *as, t_linked_stack *bs)
 {
 	long			min_value;
+	long			second_min_value;
 	t_stack_node	*node;
 
 	if (!as || !bs)
@@ -42,15 +43,12 @@ int	opt5(t_linked_stack *as, t_linked_stack *bs)
 		return (FALSE);
 	if (is_sorted(as, as->element_count) == TRUE)
 		return (TRUE);
-	min_value = find_min_value(as);
+	find_minimum_two(as, &min_value, &second_min_value);
 	while (as->element_count > 3)
 	{
 		node = as->top_node.next;
-		if (node->value == min_value)
-		{
+		if (node->value == min_value || node->value == second_min_value)
 			push(bs, as, PB);
-			min_value = find_min_value(as);
-		}
 		else
 			single_rotate(as, RA);
 	}
@@ -58,6 +56,7 @@ int	opt5(t_linked_stack *as, t_linked_stack *bs)
 		opt_actual3(as, bs);
 	push(as, bs, PA);
 	push(as, bs, PA);
+	opt2(as, bs);
 	return (TRUE);
 }
 

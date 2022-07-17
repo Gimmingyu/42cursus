@@ -39,26 +39,6 @@ int	is_sorted(t_linked_stack *stack, ssize_t range)
 	return (TRUE);
 }
 
-int	is_reverse_sorted(t_linked_stack *stack, ssize_t range)
-{
-	ssize_t			idx;
-	t_stack_node	*node;
-
-	if (!stack)
-		response_error();
-	if (stack->element_count == 1)
-		return (TRUE);
-	idx = 0;
-	node = stack->top_node.next;
-	while (idx++ < range)
-	{
-		if (is_greater(node->value, node->next->value) == FALSE)
-			return (FALSE);
-		node = node->next;
-	}
-	return (TRUE);
-}
-
 int	find_min_value(t_linked_stack *stack)
 {
 	t_stack_node	*node;
@@ -79,22 +59,32 @@ int	find_min_value(t_linked_stack *stack)
 	return (min_value);
 }
 
-int	find_max_value(t_linked_stack *stack)
+void	find_minimum_two(t_linked_stack *as, long *min_ptr, long *second_min_ptr)
 {
 	t_stack_node	*node;
 	ssize_t			idx;
-	long			max_value;
+	long			min;
+	long			second_min;
 
-	if (!stack)
+	if (!as)
 		response_error();
 	idx = 0;
-	max_value = -2147483648;
-	node = stack->top_node.next;
-	while (idx++ <= stack->element_count)
+	node = as->top_node.next;
+	min = 2147483648;
+	second_min = 2147483648;
+	while (idx++ < as->element_count)
 	{
-		if (node->value > max_value)
-			max_value = node->value;
+		if (node->value < min)
+			min = node->value;
 		node = node->next;
 	}
-	return (max_value);
+	idx = 0;
+	while (idx++ < as->element_count)
+	{
+		if (node->value > min && node->value < second_min)
+			second_min = node->value;
+		node = node->next;
+	}
+	*min_ptr = min;
+	*second_min_ptr = second_min;
 }

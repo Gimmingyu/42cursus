@@ -20,6 +20,8 @@ int	push_swap(int ac, char **av)
 	create_stacks(&a_stack, &b_stack);
 	validator(ac, av, a_stack, b_stack);
 	check_duplicate_elem(a_stack);
+	if (is_linked_stack_empty(a_stack) == TRUE)
+		response_error();
 	if (is_sorted(a_stack, a_stack->element_count) == TRUE || \
 			is_sorted(a_stack, a_stack->element_count) == ERROR)
 		return (delete_all_stack(a_stack, b_stack));

@@ -28,7 +28,6 @@ typedef enum e_type
 typedef enum e_command
 {
 	INIT = -1,
-	NONE = 0,
 	PA = 1,
 	PB = 2,
 	RA = 3,
@@ -77,7 +76,7 @@ int				delete_all_stack(t_linked_stack *as, \
 									t_linked_stack *bs);
 int				delete_single_stack(t_linked_stack *stack);
 int				find_min_value(t_linked_stack *stack);
-int				find_max_value(t_linked_stack *stack);
+void			find_minimum_two(t_linked_stack *as, long *min_ptr, long *second_min_ptr);
 int				is_reverse_sorted(t_linked_stack *stack, ssize_t range);
 /* 
 Function : Function for stack action, push

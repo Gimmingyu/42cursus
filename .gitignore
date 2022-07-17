@@ -14,3 +14,5 @@ cmake-build-debug/
 */a.out.dSYM/
 *.h.gch
 */test.c
+
+*/push_swap_tester
