@@ -76,7 +76,8 @@ int				delete_all_stack(t_linked_stack *as, \
 									t_linked_stack *bs);
 int				delete_single_stack(t_linked_stack *stack);
 int				find_min_value(t_linked_stack *stack);
-void			find_minimum_two(t_linked_stack *as, long *min_ptr, long *second_min_ptr);
+void			find_minimum_two(t_linked_stack *as, long *min_ptr, \
+									long *second_min_ptr);
 int				is_reverse_sorted(t_linked_stack *stack, ssize_t range);
 /* 
 Function : Function for stack action, push
@@ -135,7 +136,6 @@ int				b_opt(t_linked_stack *as, t_linked_stack *bs, ssize_t k);
 Function : Function for utility
 */
 long long		ft_atol(const char *str);
-int				is_greater(long a, long b);
 int				get_sum_of_stack(t_linked_stack *stack);
 /* 
 Function : Function for response
@@ -156,7 +156,8 @@ t_info			*create_info(long pivot_a, long pivot_b);
 Function: Function for sort
 */
 int				solution(t_linked_stack *as, t_linked_stack *bs);
-void			divide_groups(t_linked_stack *as, t_info **info_ptr, ssize_t count);
+void			divide_groups(t_linked_stack *as, t_info **info_ptr, \
+								ssize_t count);
 int				select_pivot(t_linked_stack *stack, ssize_t range, \
 								long *pivot_a_ptr, long *pivot_b_ptr);
 void			bubble_sort(long **array_ptr, ssize_t size);

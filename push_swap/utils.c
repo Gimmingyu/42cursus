@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 13:27:25 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/16 16:20:24 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/18 14:21:59 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,6 @@ long long	ft_atol(const char *str)
 		i++;
 	}
 	return (sign * nbr);
-}
-
-int	is_greater(long a, long b)
-{
-	if (a < b)
-		return (FALSE);
-	return (TRUE);
 }
 
 void	display_stack(t_linked_stack *stack)

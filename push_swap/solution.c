@@ -28,13 +28,9 @@ void	divide_groups(t_linked_stack *stack, t_info **info_ptr, ssize_t count)
 
 int	solution(t_linked_stack *as, t_linked_stack *bs)
 {
-	if (!as || !bs || is_linked_stack_empty(as))
+	if (!as || !bs || is_linked_stack_empty(as) == TRUE)
 		return (ERROR);
 	a_to_b(as, bs, as->element_count);
-	display_stack(as);
-	display_stack(bs);
-	printf("as->elem= %zu\n", as->element_count);
-	printf("bs->elem= %zu\n", bs->element_count);
 	return (TRUE);
 }
 
@@ -44,29 +40,26 @@ int	a_to_b(t_linked_stack *as, t_linked_stack *bs, ssize_t count)
 
 	if (!as || !bs || count < 0)
 		response_error();
-	if (count <= 3)
+	if (count <= 3 || as->element_count == 5)
 		return (a_opt(as, bs, count));
-	if (opt5(as, bs) == TRUE)
-		return (TRUE);
 	divide_groups(as, &info, count);
-	if (is_sorted(as, count) != TRUE)
+	if (is_sorted(as, count) == TRUE)
+		return (free_struct_helper(info, TRUE));
+	while (count--)
 	{
-		while (count--)
+		if (as->top_node.next->value >= info->pivot_a)
+			run_rotate(as, RA, info);
+		else
 		{
-			if (as->top_node.next->value >= info->pivot_a)
-				run_rotate(as, RA, info);
-			else
-			{
-				run_push(as, bs, PB, info);
-				if (bs->top_node.next->value >= info->pivot_b)
-					run_rotate(bs, RB, info);
-			}
+			run_push(as, bs, PB, info);
+			if (bs->top_node.next->value >= info->pivot_b)
+				run_rotate(bs, RB, info);
 		}
-		rollback_stacks(as, bs, info);
-		a_to_b(as, bs, info->ra_count);
-		b_to_a(as, bs, info->rb_count);
-		b_to_a(as, bs, info->pb_count - info->rb_count);
 	}
+	rollback_stacks(as, bs, info);
+	a_to_b(as, bs, info->ra_count);
+	b_to_a(as, bs, info->rb_count);
+	b_to_a(as, bs, info->pb_count - info->rb_count);
 	return (free_struct_helper(info, TRUE));
 }
 
@@ -109,13 +102,14 @@ int	rollback_stacks(t_linked_stack *as, t_linked_stack *bs, t_info *info)
 	while (info->ra_count > ra || info->rb_count > rb)
 	{
 		if (info->ra_count > ra && info->rb_count > rb)
-			both_reverse_rotate(as, bs);
+		{
+			single_reverse_rotate(as, RRA);
+			single_reverse_rotate(bs, RRB);
+		}
 		else if (info->ra_count > ra && info->rb_count <= rb)
 			single_reverse_rotate(as, RRA);
 		else if (info->rb_count > rb && info->ra_count <= ra)
 			single_reverse_rotate(bs, RRB);
-		else
-			break ;
 		ra++;
 		rb++;
 	}

@@ -15,6 +15,7 @@
 int	single_rotate(t_linked_stack *stack, t_command command)
 {
 	t_stack_node	*top_node;
+	t_type			flag;
 
 	if (!stack)
 		response_error();
@@ -23,11 +24,11 @@ int	single_rotate(t_linked_stack *stack, t_command command)
 		top_node = pop_on_top(stack);
 		if (!top_node)
 			response_error();
-		push_bottom(stack, top_node->value);
+		flag = push_bottom(stack, top_node->value);
 		free(top_node);
-		if (command == RA)
+		if (command == RA && flag == TRUE)
 			write(1, "ra\n", 3);
-		else if (command == RB)
+		else if (command == RB && flag == TRUE)
 			write(1, "rb\n", 3);
 		return (TRUE);
 	}
@@ -36,10 +37,18 @@ int	single_rotate(t_linked_stack *stack, t_command command)
 
 int	both_rotate(t_linked_stack *a_stack, t_linked_stack *b_stack)
 {
+	t_type	ra;
+	t_type	rb;
+
 	if (!a_stack || !b_stack)
 		response_error();
-	single_rotate(a_stack, RR);
-	single_rotate(b_stack, RR);
-	write(1, "rr\n", 3);
+	ra = single_rotate(a_stack, RR);
+	rb = single_rotate(b_stack, RR);
+	if (ra == TRUE && rb == TRUE)
+		write(1, "rr\n", 3);
+	else if (ra == TRUE && rb != TRUE)
+		write(1, "ra\n", 3);
+	else if (rb == TRUE && ra != TRUE)
+		write(1, "ra\n", 3);
 	return (TRUE);
 }

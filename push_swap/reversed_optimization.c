@@ -21,7 +21,7 @@ int	reversed_opt_actual3(t_linked_stack *as, t_linked_stack *bs)
 	tmb[0] = bs->top_node.next->value;
 	tmb[1] = bs->top_node.next->next->value;
 	tmb[2] = bs->top_node.next->next->next->value;
-	if (tmb[0] > tmb[1] && tmb[1] > tmb[2])
+	if (tmb[0] > tmb[1] && tmb[1] > tmb[2] && tmb[0] > tmb[2])
 	{
 		push(as, bs, PA);
 		push(as, bs, PA);
@@ -44,7 +44,7 @@ int	reversed_opt3(t_linked_stack *as, t_linked_stack *bs)
 	tmb[0] = bs->top_node.next->value;
 	tmb[1] = bs->top_node.next->next->value;
 	tmb[2] = bs->top_node.next->next->next->value;
-	if (tmb[0] > tmb[1] && tmb[1] > tmb[2])
+	if (tmb[0] > tmb[1] && tmb[1] > tmb[2] && tmb[0] > tmb[2])
 	{
 		push(as, bs, PA);
 		push(as, bs, PA);
@@ -85,5 +85,5 @@ int	b_opt(t_linked_stack *as, t_linked_stack *bs, ssize_t k)
 		return (reversed_opt2(as, bs));
 	else if (k == 2 || k == 1)
 		return (push(as, bs, PA));
-	return (push(as, bs, PA));
+	return (TRUE);
 }

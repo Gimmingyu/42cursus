@@ -59,15 +59,14 @@ int	find_min_value(t_linked_stack *stack)
 	return (min_value);
 }
 
-void	find_minimum_two(t_linked_stack *as, long *min_ptr, long *second_min_ptr)
+void	find_minimum_two(t_linked_stack *as, long *min_ptr, \
+							long *second_min_ptr)
 {
 	t_stack_node	*node;
 	ssize_t			idx;
 	long			min;
 	long			second_min;
 
-	if (!as)
-		response_error();
 	idx = 0;
 	node = as->top_node.next;
 	min = 2147483648;

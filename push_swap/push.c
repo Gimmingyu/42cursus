@@ -44,7 +44,7 @@ int	push_top(t_linked_stack *stack, long value)
 	node = create_node(value);
 	if (!node || !stack)
 		response_error();
-	if (is_linked_stack_empty(stack))
+	if (is_linked_stack_empty(stack) == TRUE)
 	{
 		node->next = node;
 		node->prev = node;
@@ -68,7 +68,7 @@ t_stack_node	*pop_on_top(t_linked_stack *stack)
 
 	if (!stack)
 		response_error();
-	if (is_linked_stack_empty(stack))
+	if (is_linked_stack_empty(stack) == TRUE)
 		return (NULL);
 	top_node = stack->top_node.next;
 	stack->top_node.next = top_node->next;
@@ -84,7 +84,7 @@ t_stack_node	*pop_on_bottom(t_linked_stack *stack)
 
 	if (!stack)
 		response_error();
-	if (is_linked_stack_empty(stack))
+	if (is_linked_stack_empty(stack) == TRUE)
 		return (NULL);
 	bottom_node = stack->top_node.prev;
 	stack->top_node.prev = bottom_node->prev;
@@ -98,21 +98,18 @@ int	push(t_linked_stack *push_stack, t_linked_stack *pop_stack, \
 			t_command command)
 {
 	t_stack_node	*pop_node;
+	t_type			flag;
 
 	if (!push_stack || !pop_stack)
 		response_error();
-	if (pop_stack->element_count >= 1)
-	{
-		pop_node = pop_on_top(pop_stack);
-		if (!pop_node)
-			response_error();
-		push_top(push_stack, pop_node->value);
-		free(pop_node);
-		if (command == PA)
-			write(1, "pa\n", 3);
-		else if (command == PB)
-			write(1, "pb\n", 3);
-		return (TRUE);
-	}
-	return (FALSE);
+	pop_node = pop_on_top(pop_stack);
+	if (!pop_node)
+		response_error();
+	flag = push_top(push_stack, pop_node->value);
+	free(pop_node);
+	if (command == PA && flag == TRUE)
+		write(1, "pa\n", 3);
+	else if (command == PB && flag == TRUE)
+		write(1, "pb\n", 3);
+	return (TRUE);
 }

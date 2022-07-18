@@ -14,7 +14,7 @@
 
 void	reversed_opt3_case1(t_linked_stack *as, t_linked_stack *bs, long *tmb)
 {
-	if (tmb[0] < tmb[1] && tmb[1] < tmb[2])
+	if (tmb[0] < tmb[1] && tmb[1] < tmb[2] && tmb[0] < tmb[2])
 	{
 		single_rotate(bs, RB);
 		single_swap(bs, SB);
@@ -23,7 +23,7 @@ void	reversed_opt3_case1(t_linked_stack *as, t_linked_stack *bs, long *tmb)
 		single_reverse_rotate(bs, RRB);
 		push(as, bs, PA);
 	}
-	else if (tmb[0] < tmb[2] && tmb[2] < tmb[1])
+	else if (tmb[0] < tmb[2] && tmb[2] < tmb[1] && tmb[0] < tmb[1])
 	{
 		single_swap(bs, SB);
 		push(as, bs, PA);
@@ -31,7 +31,7 @@ void	reversed_opt3_case1(t_linked_stack *as, t_linked_stack *bs, long *tmb)
 		push(as, bs, PA);
 		push(as, bs, PA);
 	}
-	else if (tmb[2] < tmb[0] && tmb[0] < tmb[1])
+	else if (tmb[2] < tmb[0] && tmb[0] < tmb[1] && tmb[2] < tmb[1])
 	{
 		single_swap(bs, SB);
 		push(as, bs, PA);
@@ -42,14 +42,14 @@ void	reversed_opt3_case1(t_linked_stack *as, t_linked_stack *bs, long *tmb)
 
 void	reversed_opt3_case2(t_linked_stack *as, t_linked_stack *bs, long *tmb)
 {
-	if (tmb[1] < tmb[2] && tmb[2] < tmb[0])
+	if (tmb[1] < tmb[2] && tmb[2] < tmb[0] && tmb[1] < tmb[0])
 	{
 		push(as, bs, PA);
 		single_swap(bs, SB);
 		push(as, bs, PA);
 		push(as, bs, PA);
 	}
-	else if (tmb[1] < tmb[0] && tmb[0] < tmb[2])
+	else if (tmb[1] < tmb[0] && tmb[0] < tmb[2] && tmb[1] < tmb[2])
 	{
 		single_rotate(bs, RB);
 		single_swap(bs, SB);
@@ -63,14 +63,14 @@ void	reversed_opt3_case2(t_linked_stack *as, t_linked_stack *bs, long *tmb)
 void	reversed_actual3_case1(t_linked_stack *as, \
 										t_linked_stack *bs, long *tmb)
 {
-	if (tmb[0] < tmb[2] && tmb[2] < tmb[1])
+	if (tmb[0] < tmb[2] && tmb[2] < tmb[1] && tmb[0] < tmb[1])
 	{
 		single_rotate(bs, RB);
 		push(as, bs, PA);
 		push(as, bs, PA);
 		push(as, bs, PA);
 	}
-	else if (tmb[0] < tmb[1] && tmb[1] < tmb[2])
+	else if (tmb[0] < tmb[1] && tmb[1] < tmb[2] && tmb[0] < tmb[2])
 	{
 		single_reverse_rotate(bs, RRB);
 		push(as, bs, PA);
@@ -83,21 +83,21 @@ void	reversed_actual3_case1(t_linked_stack *as, \
 void	reversed_actual3_case2(t_linked_stack *as, \
 										t_linked_stack *bs, long *tmb)
 {
-	if (tmb[1] < tmb[2] && tmb[2] < tmb[0])
+	if (tmb[1] < tmb[2] && tmb[2] < tmb[0] && tmb[1] < tmb[0])
 	{
 		push(as, bs, PA);
 		single_swap(bs, SB);
 		push(as, bs, PA);
 		push(as, bs, PA);
 	}
-	else if (tmb[1] < tmb[0] && tmb[0] < tmb[2])
+	else if (tmb[1] < tmb[0] && tmb[0] < tmb[2] && tmb[1] < tmb[2])
 	{
 		single_reverse_rotate(bs, RRB);
 		push(as, bs, PA);
 		push(as, bs, PA);
 		push(as, bs, PA);
 	}
-	else if (tmb[2] < tmb[0] && tmb[2] < tmb[1])
+	else if (tmb[2] < tmb[0] && tmb[2] < tmb[1] && tmb[2] < tmb[1])
 	{
 		single_swap(bs, SB);
 		push(as, bs, PA);

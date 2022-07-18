@@ -56,30 +56,28 @@ void	check_duplicate_elem(t_linked_stack *stack)
 {
 	long			*array;
 	t_stack_node	*node;
-	ssize_t			i;
 	ssize_t			idx;
 	ssize_t			idx_temp;
 
-	if (!stack || is_linked_stack_empty(stack))
+	if (!stack || is_linked_stack_empty(stack) == TRUE)
 		response_error();
 	array = malloc(sizeof(long) * stack->element_count);
 	if (!array)
 		response_error();
 	node = stack->top_node.next;
-	i = 0;
-	while (i < stack->element_count - 1)
+	idx = 0;
+	while (idx < stack->element_count - 1)
 	{
-		array[i++] = node->value;
+		array[idx++] = node->value;
 		node = node->next;
 	}
-	idx = 0;
-	while (idx < stack->element_count)
+	idx = -1;
+	while (++idx < stack->element_count)
 	{
 		idx_temp = idx + 1;
 		while (idx_temp < stack->element_count)
 			if (array[idx_temp++] == array[idx])
 				response_error();
-		idx++;
 	}
 }
 

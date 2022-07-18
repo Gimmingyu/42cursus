@@ -21,7 +21,7 @@ int	opt_actual3(t_linked_stack *as, t_linked_stack *bs)
 	tmb[0] = as->top_node.next->value;
 	tmb[1] = as->top_node.next->next->value;
 	tmb[2] = as->top_node.prev->value;
-	if (is_sorted(as, as->element_count) == TRUE)
+	if (tmb[0] < tmb[1] && tmb[1] < tmb[2] && tmb[0] < tmb[2])
 		return (TRUE);
 	else
 	{
@@ -39,21 +39,18 @@ int	opt5(t_linked_stack *as, t_linked_stack *bs)
 
 	if (!as || !bs)
 		response_error();
-	if (as->element_count != 5)
-		return (FALSE);
-	if (is_sorted(as, as->element_count) == TRUE)
-		return (TRUE);
 	find_minimum_two(as, &min_value, &second_min_value);
 	while (as->element_count > 3)
 	{
 		node = as->top_node.next;
+		if (as->element_count == 3)
+			break ;
 		if (node->value == min_value || node->value == second_min_value)
 			push(bs, as, PB);
 		else
 			single_rotate(as, RA);
 	}
-	if (as->element_count == 3)
-		opt_actual3(as, bs);
+	opt3(as, bs);
 	push(as, bs, PA);
 	push(as, bs, PA);
 	opt2(as, bs);
@@ -69,7 +66,7 @@ int	opt3(t_linked_stack *as, t_linked_stack *bs)
 	tmb[0] = as->top_node.next->value;
 	tmb[1] = as->top_node.next->next->value;
 	tmb[2] = as->top_node.next->next->next->value;
-	if (is_sorted(as, 3) == TRUE)
+	if (tmb[0] < tmb[1] && tmb[1] < tmb[2] && tmb[0] < tmb[2])
 		return (TRUE);
 	else
 	{
@@ -92,10 +89,12 @@ int	a_opt(t_linked_stack *as, t_linked_stack *bs, ssize_t k)
 {
 	if (!as || !bs)
 		response_error();
-	else if (k == 3 && as->element_count == 3)
-		return (opt_actual3(as, bs));
+	else if (as->element_count == 5)
+		return (opt5(as, bs));
 	else if (k == 3 && as->element_count > 3)
 		return (opt3(as, bs));
+	else if (k == 3 && as->element_count == 3)
+		return (opt_actual3(as, bs));
 	else if ((k == 3 && as->element_count < 2) || (0 <= k && k <= 2))
 		return (opt2(as, bs));
 	return (FALSE);
