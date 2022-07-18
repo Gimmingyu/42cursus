@@ -50,10 +50,10 @@ int	opt5(t_linked_stack *as, t_linked_stack *bs)
 		else
 			single_rotate(as, RA);
 	}
+	single_reverse_rotate(as, RRA);
+	single_reverse_rotate(as, RRA);
 	opt3(as, bs);
-	push(as, bs, PA);
-	push(as, bs, PA);
-	opt2(as, bs);
+	reversed_opt2(as, bs);
 	return (TRUE);
 }
 

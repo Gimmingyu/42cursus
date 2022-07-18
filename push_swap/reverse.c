@@ -37,13 +37,10 @@ int	single_reverse_rotate(t_linked_stack *stack, t_command command)
 
 int	both_reverse_rotate(t_linked_stack *a_stack, t_linked_stack *b_stack)
 {
-	t_type	rra;
-	t_type	rrb;
-
 	if (!a_stack || !b_stack)
 		response_error();
-	rra = single_reverse_rotate(a_stack, RRR);
-	rrb = single_reverse_rotate(b_stack, RRR);
+	single_reverse_rotate(a_stack, RRR);
+	single_reverse_rotate(b_stack, RRR);
 	write(1, "rrr\n", 4);
 	return (TRUE);
 }

@@ -41,7 +41,7 @@ void	opt3_case2(t_linked_stack *as, t_linked_stack *bs, long *tmb)
 	{
 		single_swap(as, SA);
 		single_rotate(as, RA);
-		single_swap(as, RA);
+		single_swap(as, SA);
 		single_reverse_rotate(as, RRA);
 		single_swap(as, SA);
 	}
