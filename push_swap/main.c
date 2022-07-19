@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 15:07:19 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/17 22:23:10 by kimmingyu        ###   ########.fr       */
+/*   Updated: 2022/07/17 22:23:10 by mingkim        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 
 int	main(int ac, char **av)
 {
+	t_type	res;
+
 	if (ac < 2)
 		return (response_error());
-	return (push_swap(ac, av));
+	res = push_swap(ac, av);
+	system("leaks push_swap > leaks_result; cat leaks_result | \
+        grep leaked && rm -rf leaks_result");
 }

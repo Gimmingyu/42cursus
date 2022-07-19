@@ -29,9 +29,8 @@ void	divide_groups(t_linked_stack *stack, t_info **info_ptr, ssize_t count)
 int	solution(t_linked_stack *as, t_linked_stack *bs)
 {
 	if (!as || !bs || is_linked_stack_empty(as) == TRUE)
-		return (ERROR);
-	a_to_b(as, bs, as->element_count);
-	return (TRUE);
+		response_error();
+	return (a_to_b(as, bs, as->element_count));
 }
 
 int	a_to_b(t_linked_stack *as, t_linked_stack *bs, ssize_t count)
@@ -102,10 +101,7 @@ int	rollback_stacks(t_linked_stack *as, t_linked_stack *bs, t_info *info)
 	while (info->ra_count > ra || info->rb_count > rb)
 	{
 		if (info->ra_count > ra && info->rb_count > rb)
-		{
-			single_reverse_rotate(as, RRA);
-			single_reverse_rotate(bs, RRB);
-		}
+			both_reverse_rotate(as, bs);
 		else if (info->ra_count > ra && info->rb_count <= rb)
 			single_reverse_rotate(as, RRA);
 		else if (info->rb_count > rb && info->ra_count <= ra)

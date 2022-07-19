@@ -6,12 +6,11 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 13:27:25 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/18 14:21:59 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/19 13:29:57 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
 
 static int	ft_isspace(char c)
 {
@@ -20,7 +19,7 @@ static int	ft_isspace(char c)
 	return (0);
 }
 
-long long	ft_atol(const char *str)
+long long	a_to_longlong(const char *str)
 {
 	long long	nbr;
 	int			sign;
@@ -45,23 +44,4 @@ long long	ft_atol(const char *str)
 		i++;
 	}
 	return (sign * nbr);
-}
-
-void	display_stack(t_linked_stack *stack)
-{
-	ssize_t			idx;
-	t_stack_node	*node;
-	t_stack_node	*next_node;
-
-	if (!stack)
-		return ;
-	idx = -1;
-	node = stack->top_node.next;
-	while (++idx < stack->element_count)
-	{
-		next_node = node->next;
-		printf("%zu번째 value는 %ld 입니다.\n", idx, node->value);
-		node = next_node;
-	}
-	printf("==============================================================\n");
 }

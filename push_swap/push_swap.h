@@ -16,7 +16,6 @@
 # include "libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
 
 typedef enum e_type
 {
@@ -27,7 +26,6 @@ typedef enum e_type
 
 typedef enum e_command
 {
-	INIT = -1,
 	PA = 1,
 	PB = 2,
 	RA = 3,
@@ -65,96 +63,93 @@ typedef struct s_information
 }	t_info;
 
 int				push_swap(int ac, char **av);
-/* 
+/**************************************************************** 
 Function : Function for stack
-*/
+*****************************************************************/
 t_stack_node	*create_node(long value);
 void			create_stacks(t_linked_stack **a_ptr, t_linked_stack **b_ptr);
-void			display_stack(t_linked_stack *stack);
 int				is_linked_stack_empty(t_linked_stack *stack);
 int				delete_all_stack(t_linked_stack *as, \
 									t_linked_stack *bs);
-int				delete_single_stack(t_linked_stack *stack);
-int				find_min_value(t_linked_stack *stack);
 void			find_minimum_two(t_linked_stack *as, long *min_ptr, \
 									long *second_min_ptr);
-int				is_reverse_sorted(t_linked_stack *stack, ssize_t range);
-/* 
-Function : Function for stack action, push
-*/
+/**************************************************************** 
+Function : Function for stack action
+*****************************************************************/
 t_stack_node	*pop_on_top(t_linked_stack *stack);
 t_stack_node	*pop_on_bottom(t_linked_stack *stack);
 int				push_top(t_linked_stack *stack, long value);
 int				push_bottom(t_linked_stack *stack, long value);
 int				push(t_linked_stack *push_stack, t_linked_stack *pop_stack, \
 						t_command command);
-
-/* 
-Function : Function for stack action, swap
-*/
+/**************************************************************** 
+Function : Function for swap
+*****************************************************************/
 int				single_swap(t_linked_stack *stack, t_command command);
 int				both_swap(t_linked_stack *as, t_linked_stack *bs);
 int				is_swap_exception(t_linked_stack *as);
-/* 
-Function : Function for stack actiom, reverse rotate
-*/
+/**************************************************************** 
+Function : Function for reverse rotate
+*****************************************************************/
 int				single_reverse_rotate(t_linked_stack *stack, t_command command);
 int				both_reverse_rotate(t_linked_stack *as, t_linked_stack *bs);
-/* 
-Function : Function for stack action, rotate
-*/
+/**************************************************************** 
+Function : Function for stack rotate
+*****************************************************************/
 int				single_rotate(t_linked_stack *stack, t_command command);
 int				both_rotate(t_linked_stack *as, t_linked_stack *bs);
-/* 
+/**************************************************************** 
 Function : Function for optimazation
-*/
+*****************************************************************/
 int				opt3(t_linked_stack *as, t_linked_stack *bs);
 void			opt3_case1(t_linked_stack *as, t_linked_stack *bs, long *tmb);
 void			opt3_case2(t_linked_stack *as, t_linked_stack *bs, long *tmb);
-int				opt_actual3(t_linked_stack *as, t_linked_stack *bs);
-void			opt_actual3_case1(t_linked_stack *as, t_linked_stack *bs, \
-									long *tmb);
-void			opt_actual3_case2(t_linked_stack *as, t_linked_stack *bs, \
-									long *tmb);
+
+int				opt_actual3(t_linked_stack *as);
+void			opt_actual3_case1(t_linked_stack *as, long *tmb);
+void			opt_actual3_case2(t_linked_stack *as, long *tmb);
+
 int				reversed_opt3(t_linked_stack *as, t_linked_stack *bs);
 void			reversed_opt3_case1(t_linked_stack *as, \
 										t_linked_stack *bs, long *tmb);
 void			reversed_opt3_case2(t_linked_stack *as, \
 										t_linked_stack *bs, long *tmb);
+
 int				reversed_opt_actual3(t_linked_stack *as, \
 											t_linked_stack *bs);
 void			reversed_actual3_case1(t_linked_stack *as, \
 										t_linked_stack *bs, long *tmb);
 void			reversed_actual3_case2(t_linked_stack *as, \
 										t_linked_stack *bs, long *tmb);
+
 int				opt2(t_linked_stack *as, t_linked_stack *bs);
+
 int				reversed_opt2(t_linked_stack *as, t_linked_stack *bs);
+
 int				opt5(t_linked_stack *as, t_linked_stack *bs);
+
 int				a_opt(t_linked_stack *as, t_linked_stack *bs, ssize_t k);
 int				b_opt(t_linked_stack *as, t_linked_stack *bs, ssize_t k);
-/* 
-Function : Function for utility
-*/
-long long		ft_atol(const char *str);
-int				get_sum_of_stack(t_linked_stack *stack);
-/* 
-Function : Function for response
-*/
+/**************************************************************** 
+Function : Function for handling exception						*
+*****************************************************************/
 int				response_error(void);
-/* 
+/**************************************************************** 
 Function : Function for validation
-*/
+*****************************************************************/
+long long		a_to_longlong(const char *str);
 void			check_is_integer(int ac, char **av);
 void			validator(int ac, char **av, \
 							t_linked_stack *as, t_linked_stack *bs);
 void			check_duplicate_elem(t_linked_stack *stack);
-/* 
+/**************************************************************** 
 Function : Function for mapping information
-*/
+*****************************************************************/
 t_info			*create_info(long pivot_a, long pivot_b);
-/*
-Function: Function for sort
-*/
+int				free_struct_helper(t_info *info, t_type flag);
+/**************************************************************** 
+Function : Function for sort
+*****************************************************************/
 int				solution(t_linked_stack *as, t_linked_stack *bs);
 void			divide_groups(t_linked_stack *as, t_info **info_ptr, \
 								ssize_t count);
@@ -170,8 +165,4 @@ int				b_to_a(t_linked_stack *as, t_linked_stack *bs, ssize_t count);
 int				run_rotate(t_linked_stack *stack, t_command cmd, t_info *info);
 int				run_push(t_linked_stack *as, t_linked_stack *bs, \
 							t_command cmd, t_info *info);
-/*
-Function: Function for free
-*/
-int				free_struct_helper(t_info *info, t_type flag);
 #endif

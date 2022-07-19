@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-int	opt_actual3(t_linked_stack *as, t_linked_stack *bs)
+int	opt_actual3(t_linked_stack *as)
 {
 	long	tmb[3];
 
@@ -21,12 +21,12 @@ int	opt_actual3(t_linked_stack *as, t_linked_stack *bs)
 	tmb[0] = as->top_node.next->value;
 	tmb[1] = as->top_node.next->next->value;
 	tmb[2] = as->top_node.prev->value;
-	if (tmb[0] < tmb[1] && tmb[1] < tmb[2] && tmb[0] < tmb[2])
+	if (is_sorted(as, as->element_count) == TRUE)
 		return (TRUE);
 	else
 	{
-		opt_actual3_case1(as, bs, tmb);
-		opt_actual3_case2(as, bs, tmb);
+		opt_actual3_case1(as, tmb);
+		opt_actual3_case2(as, tmb);
 	}
 	return (TRUE);
 }
@@ -39,21 +39,24 @@ int	opt5(t_linked_stack *as, t_linked_stack *bs)
 
 	if (!as || !bs)
 		response_error();
-	find_minimum_two(as, &min_value, &second_min_value);
-	while (as->element_count > 3)
+	if (is_sorted(as, 5) != TRUE)
 	{
-		node = as->top_node.next;
-		if (as->element_count == 3)
-			break ;
-		if (node->value == min_value || node->value == second_min_value)
-			push(bs, as, PB);
-		else
-			single_rotate(as, RA);
+		find_minimum_two(as, &min_value, &second_min_value);
+		while (as->element_count > 3)
+		{
+			node = as->top_node.next;
+			if (as->element_count == 3)
+				break ;
+			if (node->value == min_value || node->value == second_min_value)
+				push(bs, as, PB);
+			else
+				single_rotate(as, RA);
+		}
+		single_reverse_rotate(as, RRA);
+		single_reverse_rotate(as, RRA);
+		opt3(as, bs);
+		reversed_opt2(as, bs);
 	}
-	single_reverse_rotate(as, RRA);
-	single_reverse_rotate(as, RRA);
-	opt3(as, bs);
-	reversed_opt2(as, bs);
 	return (TRUE);
 }
 
@@ -66,7 +69,7 @@ int	opt3(t_linked_stack *as, t_linked_stack *bs)
 	tmb[0] = as->top_node.next->value;
 	tmb[1] = as->top_node.next->next->value;
 	tmb[2] = as->top_node.next->next->next->value;
-	if (tmb[0] < tmb[1] && tmb[1] < tmb[2] && tmb[0] < tmb[2])
+	if (is_sorted(as, 3) == TRUE)
 		return (TRUE);
 	else
 	{
@@ -94,7 +97,7 @@ int	a_opt(t_linked_stack *as, t_linked_stack *bs, ssize_t k)
 	else if (k == 3 && as->element_count > 3)
 		return (opt3(as, bs));
 	else if (k == 3 && as->element_count == 3)
-		return (opt_actual3(as, bs));
+		return (opt_actual3(as));
 	else if ((k == 3 && as->element_count < 2) || (0 <= k && k <= 2))
 		return (opt2(as, bs));
 	return (FALSE);

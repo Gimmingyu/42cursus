@@ -14,6 +14,8 @@
 
 int	is_linked_stack_empty(t_linked_stack *stack)
 {
+	if (!stack)
+		response_error();
 	if (stack->element_count == 0)
 		return (TRUE);
 	return (FALSE);
@@ -30,33 +32,13 @@ int	is_sorted(t_linked_stack *stack, ssize_t range)
 		return (TRUE);
 	idx = 0;
 	node = stack->top_node.next;
-	while (idx++ < range)
+	while (idx++ < range - 1)
 	{
 		if (node->value > node->next->value)
 			return (FALSE);
 		node = node->next;
 	}
 	return (TRUE);
-}
-
-int	find_min_value(t_linked_stack *stack)
-{
-	t_stack_node	*node;
-	ssize_t			idx;
-	long			min_value;
-
-	if (!stack)
-		response_error();
-	idx = 0;
-	min_value = 2147483648;
-	node = stack->top_node.next;
-	while (idx++ < stack->element_count)
-	{
-		if (node->value < min_value)
-			min_value = node->value;
-		node = node->next;
-	}
-	return (min_value);
 }
 
 void	find_minimum_two(t_linked_stack *as, long *min_ptr, \

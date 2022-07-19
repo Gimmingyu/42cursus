@@ -34,24 +34,6 @@ static int	is_integer(char *str)
 	return (TRUE);
 }
 
-static int	check_duplicate(char **str)
-{
-	ssize_t	idx;
-	ssize_t	sub_idx;
-
-	if (!str)
-		response_error();
-	idx = 0;
-	while (str[++idx])
-	{
-		sub_idx = -1;
-		while (++sub_idx < idx)
-			if (str[sub_idx] == str[idx])
-				response_error();
-	}
-	return (TRUE);
-}
-
 void	check_duplicate_elem(t_linked_stack *stack)
 {
 	long			*array;
@@ -66,7 +48,7 @@ void	check_duplicate_elem(t_linked_stack *stack)
 		response_error();
 	node = stack->top_node.next;
 	idx = 0;
-	while (idx < stack->element_count - 1)
+	while (idx < stack->element_count)
 	{
 		array[idx++] = node->value;
 		node = node->next;
@@ -99,11 +81,11 @@ void	validator(int ac, char **av, \
 			response_error();
 		while (temp[++temp_idx])
 		{
-			if (is_integer(temp[temp_idx]) == ERROR || \
-				check_duplicate(temp) == ERROR)
+			if (is_integer(temp[temp_idx]) == ERROR)
 				response_error();
-			push_bottom(a_stack, ft_atol(temp[temp_idx]));
+			push_bottom(a_stack, a_to_longlong(temp[temp_idx]));
 		}
 		ft_malloc_error(temp);
 	}
+	check_duplicate_elem(a_stack);
 }

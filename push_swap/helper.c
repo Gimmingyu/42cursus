@@ -12,7 +12,8 @@
 
 #include "push_swap.h"
 
-int	select_pivot(t_linked_stack *stack, ssize_t range, long *pivot_a_ptr, long *pivot_b_ptr)
+int	select_pivot(t_linked_stack *stack, ssize_t range, \
+					long *pivot_a_ptr, long *pivot_b_ptr)
 {
 	long			*array;
 	ssize_t			idx;
@@ -62,4 +63,3 @@ void	bubble_sort(long **array_ptr, ssize_t size)
 		i++;
 	}
 }
-	
