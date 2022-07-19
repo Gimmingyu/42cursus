@@ -14,8 +14,6 @@
 # define PUSH_SWAP_H
 
 # include "libft/libft.h"
-# include <unistd.h>
-# include <stdlib.h>
 
 typedef enum e_type
 {
@@ -87,7 +85,6 @@ Function : Function for swap
 *****************************************************************/
 int				single_swap(t_linked_stack *stack, t_command command);
 int				both_swap(t_linked_stack *as, t_linked_stack *bs);
-int				is_swap_exception(t_linked_stack *as);
 /**************************************************************** 
 Function : Function for reverse rotate
 *****************************************************************/
@@ -134,35 +131,32 @@ int				b_opt(t_linked_stack *as, t_linked_stack *bs, ssize_t k);
 Function : Function for handling exception						*
 *****************************************************************/
 int				response_error(void);
+int				is_swap_exception(t_linked_stack *as);
+int				free_struct_helper(t_info *info, t_type flag);
 /**************************************************************** 
 Function : Function for validation
 *****************************************************************/
-long long		a_to_longlong(const char *str);
-void			check_is_integer(int ac, char **av);
 void			validator(int ac, char **av, \
 							t_linked_stack *as, t_linked_stack *bs);
-void			check_duplicate_elem(t_linked_stack *stack);
 /**************************************************************** 
 Function : Function for mapping information
 *****************************************************************/
 t_info			*create_info(long pivot_a, long pivot_b);
-int				free_struct_helper(t_info *info, t_type flag);
 /**************************************************************** 
 Function : Function for sort
 *****************************************************************/
 int				solution(t_linked_stack *as, t_linked_stack *bs);
-void			divide_groups(t_linked_stack *as, t_info **info_ptr, \
-								ssize_t count);
 int				select_pivot(t_linked_stack *stack, ssize_t range, \
 								long *pivot_a_ptr, long *pivot_b_ptr);
-void			bubble_sort(long **array_ptr, ssize_t size);
 int				is_sorted(t_linked_stack *stack, ssize_t range);
 int				rollback_stacks(t_linked_stack *as, t_linked_stack *bs, \
 								t_info *info);
 int				a_to_b(t_linked_stack *as, t_linked_stack *bs, \
-								ssize_t count);
+							ssize_t count);
 int				b_to_a(t_linked_stack *as, t_linked_stack *bs, ssize_t count);
 int				run_rotate(t_linked_stack *stack, t_command cmd, t_info *info);
 int				run_push(t_linked_stack *as, t_linked_stack *bs, \
 							t_command cmd, t_info *info);
+void			divide_groups(t_linked_stack *as, t_info **info_ptr, \
+								ssize_t count);
 #endif

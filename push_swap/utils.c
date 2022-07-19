@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 13:27:25 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/19 13:29:57 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/19 22:01:55 by kimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ static int	ft_isspace(char c)
 	return (0);
 }
 
-long long	a_to_longlong(const char *str)
+long a_to_long(const char *str)
 {
-	long long	nbr;
+	long	nbr;
 	int			sign;
 	ssize_t		i;
 

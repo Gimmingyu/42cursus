@@ -14,11 +14,7 @@
 
 int	main(int ac, char **av)
 {
-	t_type	res;
-
 	if (ac < 2)
-		return (response_error());
-	res = push_swap(ac, av);
-	system("leaks push_swap > leaks_result; cat leaks_result | \
-        grep leaked && rm -rf leaks_result");
+		return (0);
+	return (push_swap(ac, av));
 }

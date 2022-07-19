@@ -12,6 +12,40 @@
 
 #include "push_swap.h"
 
+static int	ft_isspace(char c)
+{
+	if (c == 32 || (9 <= c && 13 >= c))
+		return (1);
+	return (0);
+}
+
+static long a_to_long(const char *str)
+{
+	long	nbr;
+	int			sign;
+	ssize_t		i;
+
+	nbr = 0;
+	sign = 1;
+	i = 0;
+	while (str[i] && ft_isspace(str[i]) == 1)
+		i++;
+	if (str[i] == '-')
+		sign = -1;
+	if (str[i] == '+' || str[i] == '-')
+		i++;
+	while (str[i] && '0' <= str[i] && str[i] <= '9')
+	{
+		nbr = (nbr * 10) + (str[i] - '0');
+		if (nbr > 2147483647 && sign == 1)
+			response_error();
+		else if (nbr > 2147483648 && sign == -1)
+			response_error();
+		i++;
+	}
+	return (sign * nbr);
+}
+
 static int	is_integer(char *str)
 {
 	ssize_t	idx;
@@ -34,7 +68,7 @@ static int	is_integer(char *str)
 	return (TRUE);
 }
 
-void	check_duplicate_elem(t_linked_stack *stack)
+static void	check_duplicate_elem(t_linked_stack *stack)
 {
 	long			*array;
 	t_stack_node	*node;
@@ -83,7 +117,7 @@ void	validator(int ac, char **av, \
 		{
 			if (is_integer(temp[temp_idx]) == ERROR)
 				response_error();
-			push_bottom(a_stack, a_to_longlong(temp[temp_idx]));
+			push_bottom(a_stack, a_to_long(temp[temp_idx]));
 		}
 		ft_malloc_error(temp);
 	}

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+         #
+#    By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/06 13:55:14 by mingkim           #+#    #+#              #
-#    Updated: 2022/07/16 15:53:13 by mingkim          ###   ########.fr        #
+#    Updated: 2022/07/19 22:04:31 by kimmingyu        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,6 @@ SRCS = push_swap.c \
 		rotate.c \
 		solution.c \
 		solution_utils.c \
-		stack_utils.c \
 		stack.c \
 		swap.c \
 		utils.c \
