@@ -16,5 +16,8 @@ int	main(int ac, char **av)
 {
 	if (ac < 2)
 		return (0);
-	return (push_swap(ac, av));
+	push_swap(ac, av);
+	// system("leaks push_swap > leaks_result; cat leaks_result | \
+    // grep leaked && rm -rf leaks_result && rm -rf libft/libft.h.gch && rm -rf push_swap.h.gch");
+	return (0);
 }

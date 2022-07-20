@@ -90,11 +90,12 @@ static void	check_duplicate_elem(t_linked_stack *stack)
 	idx = -1;
 	while (++idx < stack->element_count)
 	{
-		idx_temp = idx + 1;
-		while (idx_temp < stack->element_count)
-			if (array[idx_temp++] == array[idx])
+		idx_temp = -1;
+		while (++idx_temp < stack->element_count)
+			if (array[idx_temp] == array[idx] && idx != idx_temp)
 				response_error();
 	}
+	free(array);
 }
 
 void	validator(int ac, char **av, \
