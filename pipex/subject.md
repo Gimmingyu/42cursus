@@ -41,7 +41,7 @@ Common Instructions
 • If the subject requires it, you must submit a Makefile which will compile your source files to the required output with the flags -Wall, -Wextra and -Werror, and your Makefile must not relink.
 • 서브젝트가 요구할 시 Makefile을 제출하여야 합니다. 여러분이 작성하신 Makefile은 `-Wall -Wextra -Werror` 플래그에 따라 컴파일을 해야하며, 컴파일 이후에 다시 리링크되지 않아야 합니다.
 
-• Your Makefile must at least contain the rules $(NAME), all, clean, fclean and re.
+• Your Makefile must at least contain the rules \$(NAME), all, clean, fclean and re.
 • 여러분이 작성하신 Makefile 에서는 다음의 룰을 정의하고 있어야 합니다. - `$(NAME), all, clean, fclean, re`
 
 • To turn in bonuses to your project, you must include a rule bonus to your Makefile, which will add all the various headers, librairies or functions that are forbidden on the main part of the project. Bonuses must be in a different file \_bonus.{c/h}. Mandatory and bonus part evaluation is done separately.
@@ -82,6 +82,11 @@ Common Instructions
     ◦ perror
     ◦ strerror
     ◦ exit
+    ◦ access
+    ◦ pipe
+    ◦ unlink
+    ◦ wait
+    ◦ waitpid
 
 # page 5
 
