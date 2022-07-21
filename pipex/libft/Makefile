@@ -3,45 +3,45 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+         #
+#    By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/07/06 13:55:14 by mingkim           #+#    #+#              #
-#    Updated: 2022/07/21 22:05:32 by kimmingyu        ###   ########.fr        #
+#    Created: 2022/03/20 19:38:36 by mingkim           #+#    #+#              #
+#    Updated: 2022/07/19 13:46:34 by mingkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = pipex
-LIBFT = libft
-LIBFT_LIB = libft.a
+NAME = libft.a
 
-CC = cc
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror
+AR = ar rcs
 RM = rm -f
 
-INC = ./push_swap.h
+INCLUDES = ./libft.h
 
-SRCS = pipex.c \
-		utils.c \
-
+FILES = ft_split \
+		ft_strlcpy \
+		ft_strlen \
 		
-OBJS = $(SRCS:.c=.o)
+SRCS_DIR = ./
+SRCS = $(addprefix $(SRCS_DIR), $(addsuffix .c, $(FILES)))
 
-.c.o : 
-	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o) -I $(INC)
+OBJS_DIR = ./
+OBJS = $(addprefix $(OBJS_DIR), $(addsuffix .o, $(FILES)))
+
+%.o : %.c
+	$(CC) $(CLFAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	@make all -C $(LIBFT)/
-	$(CC) $(CFLAGS) $(LIBFT)/$(LIBFT_LIB) -o $(NAME) $(OBJS)
+	$(AR) $@ $?
 
 all: $(NAME)
 
-clean: 
-	$(RM) $(OBJS)
-	@make clean -C $(LIBFT)
+clean:
+	$(RM) $(OBJS) $(B_OBJS)
 
 fclean: clean
 	$(RM) $(NAME)
-	@make fclean -C $(LIBFT)
 
 re: clean all
 

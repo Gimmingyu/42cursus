@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/21 14:58:37 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/21 22:10:11 by kimmingyu        ###   ########.fr       */
+/*   Created: 2022/03/20 19:38:22 by mingkim           #+#    #+#             */
+/*   Updated: 2022/07/21 22:06:27 by kimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#ifndef LIBFT_H
+# define LIBFT_H
 
-int	main(int ac, char **av, char **env)
-{
-	int		fd[2];
-	pid_t	child;
+# include	<unistd.h>
+# include	<stdlib.h>
 
-	if (ac != 5 || pipe(fd) == -1)
-		response_error("Error\n", 1);
-	child = fork();
-	if (child == 0)
-		printf("child process");
-	else
-		response_error("Error\n", 1);
-	waitpid(child, NULL, WNOHANG);
-	return (0);
-}
+size_t	ft_strlen(const char *c);
+size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize);
+
+char	**ft_split(char const *s, char c);
+char	**ft_malloc_error(char **arr);
+#endif

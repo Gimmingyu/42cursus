@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/21 14:59:35 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/21 22:07:02 by kimmingyu        ###   ########.fr       */
+/*   Created: 2022/03/20 19:37:30 by mingkim           #+#    #+#             */
+/*   Updated: 2022/03/20 19:37:31 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <fcntl.h>
-# include <sys/wait.h>
-# include <libft/libft.h>
-
-typedef enum e_flag
+size_t	ft_strlen(const char *c)
 {
-	TRUE = 1,
-	FALSE = 0,
-	ERR = -1,
-}	t_flag;
+	size_t	ans;
 
-void	response_error(char *msg, int flag);
-
-#endif
+	ans = 0;
+	while (*(c + ans))
+		ans++;
+	return (ans);
+}
