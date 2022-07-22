@@ -16,7 +16,13 @@ void	pipex(char *cmd, char **env)
 {
 	size_t	idx;
 	char	**line;
+	char	*command;
 
 	line = ft_split(cmd, ' ');
 	// access, execve, parsing, 
+	if (!access(line[0], X_OK))
+	{
+
+	}
+	command = ft_str
 }
