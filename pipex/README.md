@@ -208,4 +208,201 @@ wait() 함수는 아래와 같이 동작한다.
 
 자식프로세스의 종료 상태를 statloc에 담는다.
 
+```c
+#include <sys/wait.h>
+
+pit_t	waitpid(pid_t pid, int *stat_loc, int options);
+```
+
+waitpid 함수는 wait 함수처럼 자식 프로세스를 기다릴 때 사용한다.
+
+하지만 waitpid는 자식 프로세스가 종료될 때 까지 차단되는 것을 원하지 않을 경우 옵션을 사용하여 차단을 방지할 수 있다.
+
+또한 기다릴 자식 프로세스를 지정이 가능하다.
+
+wait은 하나의 자식 프로세스가 종료되면 바로 리턴을 받아왔으나, waitpid는 지정이 가능하다는 점이 가장 큰 차이점이다.
+
+pid 인자를 통해서 기다릴 자식 프로세스를 지정할 수 있는데, 상세하게는 다음과 같다.
+
 ---
+
+#### pid_t pid
+
+> pid == -1
+
+임의의 자식 프로세스 기다림.
+
+> pid == 0
+
+waitpid를 호출한 프로세스의 그룹 pid와 같은 프로세스 그룹 id를 가진 프로세스를 기다림.
+
+> pid < -1
+
+프로세스 그룹 id가 pid의 절댓값과 같은 자식 프로세스를 기다림.
+
+> pid > 0
+
+프로세스 id가 pid인 자식 프로세스를 기다림.
+
+#### waitpid 함수의 오류(-1)은 지정한 pid의 프로세스 또는 프로세스 그룹이 없는 경우에 발생하며,
+
+#### pid가 자식 프로세스가 아닐 때 발생한다.
+
+---
+
+#### int \*stat_loc
+
+> 자식 프로세스가 정상적으로 종료
+
+return : 프로세스 id
+
+statloc : 하위 8비트를 참조하여 자식 프로세스 exit에 넘겨준 인자값을 얻을 수 있다.
+
+> 자식 프로세스가 비정상적으로 종료
+
+return : 프로세스 id
+
+statloc : 비정상 종료 이유를 WTERMSIG 매크로를 사용하여 구할 수 있다.  
+\*\* WIFSIGNALED(statloc) 매크로가 true를 반환.
+
+> waitpid 함수 오류
+
+return : -1
+
+statloc
+
+1. ECHILD : 호출자의 자식 프로세스가 없는 경우.
+2. EINTR : 시스템 콜이 인터럽트 되었을 때.
+
+---
+
+#### int options
+
+options로 사용가능한 상수
+
+1. WCONTINUED : 중단되었다가 재개된 자식 프로세스의 상태를 받음
+2. WNOHANG :
+
+기다리는 PID가 종료되지 않아서 즉시 종료 상태를 회수 할 수 없는 상황에서 호출자는 차단되지 않고 반환값 0을 받음.
+
+3. WUNTRACED : 중단된 자식 프로세스의 상태를 받음.
+
+---
+
+```c
+
+int	main(int ac, char **av, char **env)
+{
+	int		fd[2];
+	int		stat_loc;
+	pid_t	pid;
+	pid_t	child_pid;
+
+	pid = fork();
+	if (pid == -1)
+		response_error("Error\n", 1);
+	if (pipe(fd) == -1)
+		response_error("Error\n", 1);
+	if (pid == 0)
+	{
+		printf("I am child process\n");
+		printf("In child process, pid is %d\n", pid);
+		for (int i = 0; i < 10; i++)
+			printf("child, %d\n", i);
+	}
+	else if (pid == -1)
+		printf("fork error\n");
+	else
+	{
+		child_pid = wait(&stat_loc);
+		printf("I am parent process\n");
+		printf("In parent process, pid is %d\n", pid);
+		printf("Executed child process id is %d\n", child_pid);
+		for (int i = 10; i < 20; i++)
+			printf("parent, %d\n", i);
+	}
+	return (0);
+}
+
+```
+
+---
+
+```c
+int	main(int ac, char **av, char **env)
+{
+	int		fd[2];
+	int		stat_loc;
+	pid_t	pid;
+	pid_t	child_pid;
+
+	pid = fork();
+	if (pid == -1)
+		response_error("Error\n", 1);
+	if (pipe(fd) == -1)
+		response_error("Error\n", 1);
+	if (pid == 0)
+	{
+		printf("I am child process\n");
+		printf("In child process, pid is %d\n", pid);
+		for (int i = 0; i < 10; i++)
+			printf("child, %d\n", i);
+	}
+	else if (pid == -1)
+		printf("fork error\n");
+	else
+	{
+		printf("I am parent process\n");
+		printf("In parent process, pid is %d\n", pid);
+		child_pid = waitpid(pid, &stat_loc, WCONTINUED);
+		// child_pid = waitpid(pid, &stat_loc, WNOHANG);
+		// child_pid = wait(&stat_loc);
+		for (int i = 10; i < 20; i++)
+			printf("parent, %d\n", i);
+		printf("Executed child process id is %d\n", child_pid);
+	}
+	return (0);
+}
+```
+
+### access
+
+```c
+#include <unistd.h>
+
+int access(const char *pathname, int mode);
+```
+
+프로세스가 지정한 파일이 존재하는지, 읽거나 쓰거나 실행이 가능한 지 확인하는 함수.
+만일 지정한 파일이 심볼릭 링크라면 링크의 원본을 체크한다.
+
+#### Param
+
+pathname : 파일이나 디렉토리 전체 이름
+
+mode : 검사할 내용
+
+\*\*mode로 들어갈 수 있는 mask 값
+
+- R_OK : 파일 존재 여부, 읽기 권한 여부
+- W_OK : 파일 존재 여부, 쓰기 권한 여부
+- X_OK : 파일 존재 여부, 실행 권한 여부
+- F_OK : 파일 존재 여부
+
+#### Return
+
+- 0 : 파일이 존재한다.
+- -1: mode 에 대해 하나 이상 거절되었거나 에러가 있음
+
+```c
+int	main(int ac, char **av, char **env)
+{
+	char	*pathname = "./infile";
+	int		mode = R_OK | W_OK;
+	if (access(pathname, mode) == 0)
+		printf("READ && WRITE POSSIBLE\n");
+	else
+		printf("READ || WRITE IMPOSSIBLE\n");
+	return (0);
+}
+```

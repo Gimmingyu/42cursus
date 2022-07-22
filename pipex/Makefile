@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+         #
+#    By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/06 13:55:14 by mingkim           #+#    #+#              #
-#    Updated: 2022/07/21 22:05:32 by kimmingyu        ###   ########.fr        #
+#    Updated: 2022/07/22 16:15:27 by mingkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,20 +18,21 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
-INC = ./push_swap.h
+INC = ./pipex.h
 
 SRCS = pipex.c \
-		utils.c \
+		helper.c \
+		utils.c
 
 		
 OBJS = $(SRCS:.c=.o)
 
 .c.o : 
-	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o) -I $(INC)
+	$(CC) -c $< -o $(<:.c=.o) -I $(INC)
 
 $(NAME): $(OBJS)
 	@make all -C $(LIBFT)/
-	$(CC) $(CFLAGS) $(LIBFT)/$(LIBFT_LIB) -o $(NAME) $(OBJS)
+	$(CC) $(LIBFT)/$(LIBFT_LIB) -o $(NAME) $(OBJS)
 
 all: $(NAME)
 

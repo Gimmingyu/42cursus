@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/21 21:50:59 by mingkim         #+#    #+#             */
-/*   Updated: 2022/07/21 22:07:14 by mingkim        ###   ########.fr       */
+/*   Created: 2022/07/22 16:06:51 by mingkim           #+#    #+#             */
+/*   Updated: 2022/07/22 16:47:48 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	response_error(char *msg, int signal)
+void	pipex(char *cmd, char **env)
 {
-	write(2, msg, ft_strlen(msg));
-	exit(signal);
+	size_t	idx;
+	char	**line;
+
+	line = ft_split(cmd, ' ');
+	// access, execve, parsing, 
 }
