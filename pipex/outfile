@@ -1,4 +1,0 @@
-line[0] = ls
-line[1] = -l
-line[0] = wc
-line[1] = -l

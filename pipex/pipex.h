@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 14:59:35 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/22 16:10:44 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/23 12:00:40 by kimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ typedef enum e_flag
 }	t_flag;
 
 void	response_error(char *msg, int flag);
-void	pipex(char *cmd, char **env);
+void	solution(char *cmd, char **env);
 
 #endif

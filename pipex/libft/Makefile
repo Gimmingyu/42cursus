@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+         #
+#    By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 19:38:36 by mingkim           #+#    #+#              #
-#    Updated: 2022/07/19 13:46:34 by mingkim          ###   ########.fr        #
+#    Updated: 2022/07/23 12:12:56 by kimmingyu        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,11 @@ INCLUDES = ./libft.h
 FILES = ft_split \
 		ft_strlcpy \
 		ft_strlen \
+		ft_strlcat \
+		ft_strncmp \
+		ft_strjoin \
+		ft_strdup \
+		
 		
 SRCS_DIR = ./
 SRCS = $(addprefix $(SRCS_DIR), $(addsuffix .c, $(FILES)))
