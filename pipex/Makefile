@@ -6,7 +6,7 @@
 #    By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/06 13:55:14 by mingkim           #+#    #+#              #
-#    Updated: 2022/07/22 16:15:27 by mingkim          ###   ########.fr        #
+#    Updated: 2022/07/25 13:05:15 by mingkim          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,6 @@ INC = ./pipex.h
 
 SRCS = pipex.c \
 		helper.c \
-		utils.c
 
 		
 OBJS = $(SRCS:.c=.o)

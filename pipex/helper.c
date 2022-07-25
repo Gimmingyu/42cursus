@@ -3,16 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kimmingyu <kimmingyu@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 16:06:51 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/24 21:36:24 by kimmingyu        ###   ########.fr       */
+/*   Updated: 2022/07/25 13:51:55 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static char	*find_path(char *cmd, char **env)
+void	response_error(char *msg, int signal)
+{
+	write(2, msg, ft_strlen(msg));
+	exit(signal);
+}
+
+char	*find_path(char *cmd, char **env)
 {
 	size_t	i;
 	size_t	j;
@@ -37,10 +43,10 @@ static char	*find_path(char *cmd, char **env)
 	return (temp);
 }
 
-static void	execve_runner(char *cmd, char **full_command, char **env)
+void	execve_runner(char *cmd, char **full_command, char **env)
 {
 	if (execve(cmd, full_command, env) == -1)
-		response_error("execute error\n", 126);
+		response_error("Error\n", 1);
 }
 
 void	solution(char *cmd, char **env)
@@ -59,7 +65,7 @@ void	solution(char *cmd, char **env)
 	if (!path)
 	{
 		ft_malloc_error(line);
-		response_error("command not found\n", 127);
+		response_error("Error\n", 1);
 	}
 	execve_runner(path, line, env);
 	ft_malloc_error(line);
