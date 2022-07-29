@@ -6,15 +6,15 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 16:17:39 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/29 15:47:34 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/29 16:25:28 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	init(t_ptrs **set_ptr)
+void	init(t_pointer_set **set_ptr)
 {
-	(*set_ptr) = malloc(sizeof(t_ptrs));
+	(*set_ptr) = malloc(sizeof(t_pointer_set));
 	if (!(*set_ptr))
 		exit_on_error();
 	(*set_ptr)->mlx_ptr = mlx_init();
@@ -26,7 +26,7 @@ void	init(t_ptrs **set_ptr)
 		exit_on_error();
 }
 
-int	destroy(int keydown, t_ptrs *pSet)
+int	destroy(int keydown, t_pointer_set *pSet)
 {
 	if (!pSet || !pSet->mlx_ptr || !(pSet->win_ptr))
 		exit_on_error();
@@ -37,16 +37,10 @@ int	destroy(int keydown, t_ptrs *pSet)
 
 int	main(int ac, char **av)
 {
-	t_ptrs	*p_set;
-	t_info	info;
+	t_pointer_set	*set;
 
-	init(&p_set);
-	mlx_hook(p_set->win_ptr, X_EVENT_KEY_PRESS, 0, &destroy, p_set);
-	info.width = 300;
-	info.height = 300;
-	info.img = mlx_xpm_file_to_image(p_set->mlx_ptr, SONIC_RIGHT1, \
-								&info.width, &info.height);
-	mlx_put_image_to_window(p_set->mlx_ptr, p_set->win_ptr, \
-								info.img, info.width, info.height);
-	mlx_loop(p_set->mlx_ptr);
+	validator(ac, av);
+	set = init_pointer_set();
+	mlx_loop(set->mlx_ptr);
+	return (0);
 }

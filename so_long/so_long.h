@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 16:24:13 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/29 15:47:52 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/07/29 16:29:49 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 # define SO_LONG_H
 
 # include "mlx/mlx.h"
+# include "get_next_line/get_next_line.h"
+# include "libft/libft.h"
 # include "stdio.h"
 # include "fcntl.h"
-# include "stdlib.h"
-# include "unistd.h"
 
 # define X_EVENT_KEY_PRESS 2
 # define X_EVENT_KEY_RELEASE 3
@@ -29,6 +29,12 @@
 # define S_KEY 1
 # define D_KEY 2
 
+# define ENTRY 'P'
+# define EXIT 'E'
+# define COLLECTIBLE 'C'
+# define EMPTY '0'
+# define WALL '1'
+
 # define SONIC_RIGHT1 "img/sonic_run_ahead_right1.xpm"
 # define SONIC_RIGHT2 "img/sonic_run_ahead_right2.xpm"
 # define SONIC_RIGHT3 "img/sonic_run_ahead_right3.xpm"
@@ -38,11 +44,11 @@
 # define SONIC_LEFT3 "img/sonic_run_ahead_left3.xpm"
 # define SONIC_LEFT4 "img/sonic_run_ahead_left4.xpm"
 
-typedef struct s_ptr_var_set
+typedef struct s_pointer
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
-}	t_ptrs;
+}	t_pointer_set;
 
 typedef struct s_map
 {
@@ -64,6 +70,18 @@ typedef struct s_information
 	int		endian;
 }	t_info;
 
-int	exit_on_error(void);
+/*********************************************************
+***********    Functions for init structure    ***********
+*********************************************************/
+t_pointer_set	*init_pointer_set(void);
+
+/*********************************************************
+***********    Functions for validate data    ************
+*********************************************************/
+int				validator(int ac, char **av);
+/*********************************************************
+***********    Functions for exit progress    ************
+*********************************************************/
+int				exit_on_error(void);
 
 #endif
