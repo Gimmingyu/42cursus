@@ -6,7 +6,9 @@ LIBFT_A = libft.a
 
 SRCS	= so_long.c \
 			validator.c \
+			verify_map.c \
 			init_struct.c \
+			render.c \
 			exception_handler.c \
 			event_handler.c \
 			utils.c \
