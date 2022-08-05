@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 15:53:05 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/30 16:32:53 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/08/05 13:18:10 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,8 @@ t_info	*init_information(t_img *img, t_pointer_set *set, t_map *map)
 	info->img = img;
 	info->set = set;
 	info->map = map;
+	info->mv_count = 0;
+	info->p_count = 0;
+	collectible_counter(info);
 	return (info);
 }

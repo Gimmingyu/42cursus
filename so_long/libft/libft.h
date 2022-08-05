@@ -24,6 +24,7 @@ size_t	ft_strlcat(char *dest, const char *src, size_t dstsize);
 
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strdup(const char *s1);
+char	*ft_itoa(int n);
 
 char	**ft_split(char const *s, char c);
 char	**ft_malloc_error(char **arr);

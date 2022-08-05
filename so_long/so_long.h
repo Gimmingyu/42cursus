@@ -6,21 +6,20 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 16:24:13 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/30 16:43:08 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/08/05 13:23:23 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include "mlx/mlx.h"
+# include "./mlx/mlx.h"
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
 # include "stdio.h"
 # include "fcntl.h"
 
 # define X_EVENT_KEY_PRESS 2
-# define X_EVENT_KEY_RELEASE 3
 # define X_EVENT_KEY_EXIT 17
 
 # define ESC_KEY 53
@@ -81,8 +80,8 @@ typedef struct s_game_information
 	t_img			*img;
 	t_map			*map;
 	t_pointer_set	*set;
-	int				walk_count;
-	int				point_count;
+	int				mv_count;
+	int				p_count;
 }	t_info;
 
 /*********************************************************
@@ -109,6 +108,17 @@ void			render_map(t_map *map, void *mlx, void *win, t_img *img);
 /*********************************************************
 ***********    Functions for game progress    ************
 *********************************************************/
+int				game_clear_exit(t_info *info);
 int				keypress_in_game(int keycode, t_info *info);
-int				keypress_exit_game(int keycode, t_info *info);
+int				keypress_exit_game(t_info *info);
+
+int				keypress_right(t_info *info);
+int				keypress_up(t_info *info);
+int				keypress_down(t_info *info);
+int				keypress_left(t_info *info);
+/*********************************************************
+***********    Functions for utilities    	**************
+*********************************************************/
+void			collectible_counter(t_info *info);
+
 #endif

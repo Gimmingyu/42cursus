@@ -9,8 +9,8 @@ SRCS	= so_long.c \
 			verify_map.c \
 			init_struct.c \
 			render.c \
-			exception_handler.c \
 			event_handler.c \
+			event_helper.c \
 			utils.c \
 			get_next_line/get_next_line_bonus.c \
 			get_next_line/get_next_line_utils_bonus.c \
@@ -23,7 +23,7 @@ $(NAME)	: $(OBJS)
 			@make all -C $(LIBFT)/
 			$(CC) $(LIBFT)/$(LIBFT_A) -o $(NAME) $(OBJS) -L./ -lmlx -framework OpenGL -framework Appkit
 
-.c.o	:
+%.o	:	%.c
 			$(CC) $(CFLAG) -c $< -I./so_long.h -o $@
 
 clean	: 

@@ -26,6 +26,7 @@ FILES = ft_split \
 		ft_strncmp \
 		ft_strjoin \
 		ft_strdup \
+		ft_itoa \
 		
 		
 SRCS_DIR = ./
