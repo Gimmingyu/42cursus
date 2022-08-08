@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gimmingyu <gimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 11:57:39 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/05 13:16:59 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/08/08 16:38:32 by gimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	exit_on_error(void)
+int	exit_on_error(char *str)
 {
-	write(2, "Error\n", 6);
+	write(2, str, ft_strlen(str));
 	exit(1);
 }
 

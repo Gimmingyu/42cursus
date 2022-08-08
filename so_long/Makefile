@@ -21,7 +21,7 @@ all 	: $(NAME)
 
 $(NAME)	: $(OBJS)
 			@make all -C $(LIBFT)/
-			$(CC) $(LIBFT)/$(LIBFT_A) -o $(NAME) $(OBJS) -L./ -lmlx -framework OpenGL -framework Appkit
+			$(CC) $(LIBFT)/$(LIBFT_A) -o $(NAME) $(OBJS) -L./mlx -lmlx -framework OpenGL -framework Appkit
 
 %.o	:	%.c
 			$(CC) $(CFLAG) -c $< -I./so_long.h -o $@

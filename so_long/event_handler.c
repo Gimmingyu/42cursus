@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gimmingyu <gimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 16:44:24 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/05 13:23:00 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/08/08 16:34:12 by gimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	total_move_logger(t_info *info)
 	info->mv_count++;
 	sentence = ft_strjoin("total move count : ", ft_itoa(info->mv_count));
 	if (!sentence)
-		exit_on_error();
+		exit_on_error("memory allocate error...\n");
 	write(1, sentence, ft_strlen(sentence));
 	write(1, "\n", 1);
 }
@@ -31,7 +31,7 @@ int	game_clear_exit(t_info *info)
 	info->mv_count++;
 	sentence = ft_strjoin("Total move count : ", ft_itoa(info->mv_count));
 	if (!sentence)
-		exit_on_error();
+		exit_on_error("memory allocate error...\n");
 	write(1, "Game Clear !!\n", 14);
 	write(1, sentence, ft_strlen(sentence));
 	write(1, "\n", 1);

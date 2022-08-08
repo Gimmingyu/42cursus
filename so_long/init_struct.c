@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gimmingyu <gimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 15:53:05 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/05 13:18:10 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/08/08 16:34:18 by gimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_pointer_set	*init_pointer_set(t_map *map)
 
 	set = malloc(sizeof(t_pointer_set));
 	if (!set)
-		exit_on_error();
+		exit_on_error("memory allocate error...\n");
 	set->mlx_ptr = mlx_init();
 	set->win_ptr = mlx_new_window(set->mlx_ptr, 64 * map->width, \
 									64 * map->height, "mingkim mlx");
@@ -32,7 +32,7 @@ t_map	*init_map(char *line)
 
 	map = malloc(sizeof(t_map));
 	if (!map)
-		exit_on_error();
+		exit_on_error("memory allocate error...\n");
 	initial_width = ft_strlen(line);
 	map->width = initial_width;
 	map->height = 0;
@@ -50,7 +50,7 @@ t_img	*init_img(void *mlx)
 
 	img = malloc(sizeof(t_img));
 	if (!img)
-		exit_on_error();
+		exit_on_error("memory allocate error...\n");
 	img->wall = mlx_xpm_file_to_image(mlx, IMG_WALL, &width, &height);
 	img->empty = mlx_xpm_file_to_image(mlx, IMG_EMPTY, &width, &height);
 	img->coin = mlx_xpm_file_to_image(mlx, IMG_COIN, &width, &height);
@@ -66,7 +66,7 @@ t_info	*init_information(t_img *img, t_pointer_set *set, t_map *map)
 
 	info = malloc(sizeof(t_info));
 	if (!info)
-		exit_on_error();
+		exit_on_error("memory allocate error...\n");
 	info->img = img;
 	info->set = set;
 	info->map = map;
