@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 16:45:26 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/05 13:43:33 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/08/10 11:13:37 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,12 +116,12 @@ int	keypress_left(t_info *info)
 		return (0);
 	if (table[r][c - 1] == COLLECTIBLE)
 		info->p_count--;
-	else if (table[r][c - 1] == EXIT && info->p_count == 0)
+	if (table[r][c - 1] == EXIT && info->p_count == 0)
 		game_clear_exit(info);
-	else if (table[r][c - 1] == EMPTY || table[r][c - 1] == COLLECTIBLE)
+	if (table[r][c - 1] == EMPTY || table[r][c - 1] == COLLECTIBLE)
 	{
-		table[r][c] = EMPTY;
 		table[r][c - 1] = PLAYER;
+		table[r][c] = EMPTY;
 	}
 	render_map(info->map, info->set->mlx_ptr, info->set->win_ptr, info->img);
 	return (1);

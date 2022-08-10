@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 12:30:00 by mingkim           #+#    #+#             */
-/*   Updated: 2022/07/30 16:43:14 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/08/10 11:19:01 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	switch_case_about_map(t_map *map)
 				map->collectible_count++;
 			else if (map->table[r][c] != EMPTY && \
 						map->table[r][c] != WALL)
-				exit_on_error();
+				exit_on_error("Got invalid map\n");
 		}
 		c = -1;
 	}
@@ -58,10 +58,10 @@ void	verify_border(t_map *map)
 		{
 			while (++c < width)
 				if (map->table[r][c] != WALL)
-					exit_on_error();
+					exit_on_error("Got invalid map\n");
 			c = 0;
 		}
 		else if (map->table[r][0] != WALL || map->table[r][width - 1] != WALL)
-			exit_on_error();
+			exit_on_error("Got invalid map\n");
 	}
 }
