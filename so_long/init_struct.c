@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gimmingyu <gimmingyu@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 15:53:05 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/08 16:34:18 by gimmingyu        ###   ########.fr       */
+/*   Updated: 2022/08/10 11:40:01 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@ t_pointer_set	*init_pointer_set(t_map *map)
 
 	set = malloc(sizeof(t_pointer_set));
 	if (!set)
-		exit_on_error("memory allocate error...\n");
+		exit_on_error("Memory allocate error...\n");
 	set->mlx_ptr = mlx_init();
 	set->win_ptr = mlx_new_window(set->mlx_ptr, 64 * map->width, \
 									64 * map->height, "mingkim mlx");
+	if (!set->mlx_ptr || !set->win_ptr)
+		exit_on_error("MLX error\n");
 	return (set);
 }
 
@@ -32,7 +34,7 @@ t_map	*init_map(char *line)
 
 	map = malloc(sizeof(t_map));
 	if (!map)
-		exit_on_error("memory allocate error...\n");
+		exit_on_error("Memory allocate error...\n");
 	initial_width = ft_strlen(line);
 	map->width = initial_width;
 	map->height = 0;
@@ -50,13 +52,13 @@ t_img	*init_img(void *mlx)
 
 	img = malloc(sizeof(t_img));
 	if (!img)
-		exit_on_error("memory allocate error...\n");
+		exit_on_error("Memory allocate error...\n");
 	img->wall = mlx_xpm_file_to_image(mlx, IMG_WALL, &width, &height);
 	img->empty = mlx_xpm_file_to_image(mlx, IMG_EMPTY, &width, &height);
 	img->coin = mlx_xpm_file_to_image(mlx, IMG_COIN, &width, &height);
 	img->exit = mlx_xpm_file_to_image(mlx, IMG_EXIT, &width, &height);
 	img->entry = mlx_xpm_file_to_image(mlx, IMG_ENTRY, &width, &height);
-	img->sonic = mlx_xpm_file_to_image(mlx, SONIC_RIGHT1, &width, &height);
+	img->sonic = mlx_xpm_file_to_image(mlx, SONIC, &width, &height);
 	return (img);
 }
 
@@ -66,7 +68,7 @@ t_info	*init_information(t_img *img, t_pointer_set *set, t_map *map)
 
 	info = malloc(sizeof(t_info));
 	if (!info)
-		exit_on_error("memory allocate error...\n");
+		exit_on_error("Memory allocate error...\n");
 	info->img = img;
 	info->set = set;
 	info->map = map;

@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 16:02:14 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/10 11:20:04 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/08/12 17:10:17 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static int	compare_line_length(t_map *map)
 	return (1);
 }
 
-// Function that verify lines in a file are all the same length
 static t_map	*check_map_size(int fd)
 {
 	t_map	*map;
@@ -48,16 +47,14 @@ static t_map	*check_map_size(int fd)
 		temp = get_next_line(fd);
 		if (!temp)
 			break ;
-		line = ft_strjoin(line, temp);
-		if (!line)
-			exit_on_error("Function got NULL pointer\n");
+		line = string_join(line, temp);
 	}
 	map->table = ft_split(line, '\n');
+	free(line);
 	compare_line_length(map);
 	return (map);
 }
 
-// Function that file name has .ber at the end.
 static int	check_map_name(char *str)
 {
 	size_t	len;
@@ -70,7 +67,6 @@ static int	check_map_name(char *str)
 	return (1);
 }
 
-// Function that check if the map has a single exit and entry point.
 static void	verify_map(t_map *map)
 {
 	if (!map)
@@ -94,7 +90,7 @@ t_map	*validator(int ac, char **av)
 	close(fd);
 	verify_map(map);
 	if (map->exit_count < 1 || map->entry_count < 1 \
-			|| map->collectible_count < 1)
+			|| map->collectible_count < 1 || map->entry_count > 1)
 		exit_on_error("Got invalid map\n");
 	return (map);
 }

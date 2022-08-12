@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gimmingyu <gimmingyu@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 16:24:13 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/08 16:32:54 by gimmingyu        ###   ########.fr       */
+/*   Updated: 2022/08/12 17:03:07 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "./mlx/mlx.h"
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
-# include "stdio.h"
 # include "fcntl.h"
 
 # define X_EVENT_KEY_PRESS 2
@@ -34,15 +33,7 @@
 # define EMPTY '0'
 # define WALL '1'
 
-# define SONIC_RIGHT1 "img/sonic_run_ahead_right1.xpm"
-# define SONIC_RIGHT2 "img/sonic_run_ahead_right2.xpm"
-# define SONIC_RIGHT3 "img/sonic_run_ahead_right3.xpm"
-# define SONIC_RIGHT4 "img/sonic_run_ahead_right4.xpm"
-# define SONIC_LEFT1 "img/sonic_run_ahead_left1.xpm"
-# define SONIC_LEFT2 "img/sonic_run_ahead_left2.xpm"
-# define SONIC_LEFT3 "img/sonic_run_ahead_left3.xpm"
-# define SONIC_LEFT4 "img/sonic_run_ahead_left4.xpm"
-
+# define SONIC "img/sonic_run_ahead_right1.xpm"
 # define IMG_WALL "img/wall.xpm"
 # define IMG_EMPTY "img/empty.xpm"
 # define IMG_COIN "img/coin.xpm"
@@ -110,7 +101,7 @@ void			render_map(t_map *map, void *mlx, void *win, t_img *img);
 *********************************************************/
 int				game_clear_exit(t_info *info);
 int				keypress_in_game(int keycode, t_info *info);
-int				keypress_exit_game(t_info *info);
+int				esc_game_exit(t_info *info);
 
 int				keypress_right(t_info *info);
 int				keypress_up(t_info *info);
@@ -120,5 +111,7 @@ int				keypress_left(t_info *info);
 ***********    Functions for utilities    	**************
 *********************************************************/
 void			collectible_counter(t_info *info);
+char			*string_join(char *s1, char *s2);
+void			free_all_information(t_info *info);
 
 #endif
