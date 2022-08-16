@@ -3,25 +3,80 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gimmingyu <gimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:52:58 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/16 15:54:31 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/08/16 22:48:38 by gimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-t_timeset	*init_timeset(int ttd, int tte, int tts, int nop)
+static unsigned long	get_time(void)
 {
-	t_timeset	*set;
+	struct timeval	now;
 
-	set = malloc(sizeof(t_timeset));
-	if (!set)
+	gettimeofday(&now, NULL);
+	return (now.tv_sec * 1000 + now.tv_usec / 1000);
+}
+
+t_condition	*init_condition(int ttd, int tte, int tts, int nop)
+{
+	t_condition	*condition;
+	size_t		idx;
+
+	condition = malloc(sizeof(t_condition));
+	if (!condition)
 		exit_error("Memory allocate error\n");
-	set->time_to_die = ttd;
-	set->time_to_eat = tte;
-	set->time_to_sleep = tts;
-	set->number_of_philos = nop;
-	return (set);
+	condition->time_to_die = ttd;
+	condition->time_to_eat = tte;
+	condition->time_to_sleep = tts;
+	condition->number_of_philos = nop;
+	condition->fork = malloc(sizeof(pthread_mutex_t) * condition->number_of_philos);
+	if (!condition->fork)
+		exit_error("Memory allocate error\n");
+	idx -1;
+	while (++idx < condition->number_of_philos)
+		if (pthread_mutex_init(&condition->fork[idx], NULL))
+			exit_error("Mutex init Failed\n");
+	if (pthread_mutex_init(&condition->print, NULL))
+		exit_error("Mutex init Failed\n");
+	return (condition);
+}
+
+t_checker	*init_checker()
+{
+	t_checker	*checker;
+
+	checker = malloc(sizeof(t_checker));
+	if (!checker)
+		exit_error("Memory allocate error\n");
+	checker->start_time = 0;
+	checker->eat_time = 0;
+	checker->cnt = 0;
+	checker->finish = 0;
+	checker->finished_eat_cnt = 0;
+	return (checker);
+}
+
+
+// Where is pthread_t ???
+t_philo	*init_philo(t_condition *condition, t_checker *checker)
+{
+	t_philo	*philo;
+	size_t	idx;
+
+	philo = malloc(sizeof(t_philo) * condition->number_of_philos);
+	if (!philo)
+		exit_error("Memory allocate error\n");
+	idx = -1;
+	while (++idx < condition->number_of_philos)
+	{
+		philo[idx].id = idx;
+		philo[idx].left = idx;
+		philo[idx].right = (idx + 1) % condition->number_of_philos;
+		philo[idx].checker = checker;
+		philo[idx].condition = condition;
+	}
+	return (philo);
 }

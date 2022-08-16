@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gimmingyu <gimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:34:48 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/16 15:44:31 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/08/16 22:24:34 by gimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	ft_isspace(char c)
 	return (0);
 }
 
-int	int_conversion(char *str)
+static int	int_conversion(char *str)
 {
 	size_t		idx;
 	long long	nbr;
@@ -52,4 +52,24 @@ int	int_conversion(char *str)
 		idx++;
 	}
 	return (sign * nbr);
+}
+
+t_condition	*validator(int ac, char **av)
+{
+	int			nop;
+	int			ttd;
+	int			tts;
+	int			tte;
+	t_condition	*set;
+
+	if (ac != 5 && ac != 6)
+		exit_error("Check number of arguments\n");
+	nop = int_conversion(av[1]);
+	ttd = int_conversion(av[2]);
+	tts = int_conversion(av[3]);
+	tte = int_conversion(av[4]);
+	set = init_condition(ttd, tte, tts, nop);
+	if (ac == 6)
+		set->must_eat = int_conversion(av[5]);
+	return (set);
 }
