@@ -6,7 +6,7 @@
 /*   By: gimmingyu <gimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:34:48 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/16 22:24:34 by gimmingyu        ###   ########.fr       */
+/*   Updated: 2022/08/17 19:54:56 by gimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,13 @@ static int	int_conversion(char *str)
 	while (str[idx] && '0' <= str[idx] && str[idx] <= '9')
 	{
 		nbr = (nbr * 10) + (str[idx] - '0');
-		if (nbr > 2147483647 && sign == 1)
-			exit_error("Not in range of integer\n");
-		else if (nbr > 2147483648 && sign == -1)
+		if ((nbr > 2147483647 && sign == 1) || \
+				(nbr > 2147483648 && sign == -1))
 			exit_error("Not in range of integer\n");
 		idx++;
 	}
+	if (str[idx] && (str[idx] < '0' || str[idx] > '9'))
+		exit_error("Not a number\n");
 	return (sign * nbr);
 }
 

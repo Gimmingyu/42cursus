@@ -6,7 +6,7 @@
 /*   By: gimmingyu <gimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 11:26:47 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/16 22:47:10 by gimmingyu        ###   ########.fr       */
+/*   Updated: 2022/08/17 19:47:17 by gimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ t_philo		*init_philo(t_condition *condition, t_checker *checker);
 /*****************************************
  ********* Functions for utility *********
 ******************************************/
-void		exit_error(char *str);
+void			exit_error(char *str);
+unsigned long	get_time(void);
 
 /**********************************************
  ********* Functions for print status *********

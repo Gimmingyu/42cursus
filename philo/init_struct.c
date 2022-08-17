@@ -6,13 +6,13 @@
 /*   By: gimmingyu <gimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:52:58 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/16 22:48:38 by gimmingyu        ###   ########.fr       */
+/*   Updated: 2022/08/17 19:47:05 by gimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static unsigned long	get_time(void)
+unsigned long	get_time(void)
 {
 	struct timeval	now;
 
