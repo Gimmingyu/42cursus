@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+         #
+#    By: mingkim <mingkim@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/08/16 16:14:53 by mingkim           #+#    #+#              #
-#    Updated: 2022/08/16 16:36:18 by mingkim          ###   ########.fr        #
+#    Created: 2022/07/06 13:55:14 by mingkim           #+#    #+#              #
+#    Updated: 2022/07/19 22:04:31 by mingkim        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,19 +19,18 @@ RM = rm -f
 INC = ./philo.h
 
 SRCS = philo.c \
-		utils.c \
-		validator.c \
 		init_struct.c \
-		status.c \ 
+		utils.c \
+		status.c \
+		act.c \
 
-		
 OBJS = $(SRCS:.c=.o)
 
 .c.o : 
-	$(CC) -c $< -o $(<:.c=.o) -I $(INC)
+	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o) -I $(INC)
 
 $(NAME): $(OBJS)
-	$(CC) -o $(NAME) $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 
 all: $(NAME)
 
