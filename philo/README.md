@@ -356,3 +356,265 @@ OS가 스케줄링의 알고리즘에 따라 적당한 프로세스에게 CPU를
 3. Balance : Keeping all parts of the system busy
 
 <br />
+
+---
+
+## Allowed Functions
+
+<br />
+
+### pthread_create
+
+<br />
+
+```c
+int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(start_routine)(void *), void *arg);
+```
+
+<br />
+
+스레드는 프로세스 내에서 고유한 스레드 id로 구분하게 되는데, 이 스레드 id를 나타내는 데이터 아입이 `pthread_t`이다. 
+
+`pthread_t`는 운영체제마다 다르게 구현되어 있기 때문에 다양한 데이터 타입으로 구현할 수 있도록 허용된다. 
+
+### @Params
+
+<br />
+
+#### thread
+
+pthread_create 성공시 생성된 스레드의 스레드 id가 `thread`가 가리키는 버퍼에 담긴다.
+
+<br />
+
+#### attr
+
+스레드의 속성을 설정하는 매개변수, NULL을 넣으면 디폴트 속성값이 들어간다. (NULL이 아닌 경우=UserMode/KernelMode, StackSize...)
+
+<br />
+
+#### start_routine, arg
+
+pthread_create에 의해 새로 생성된 스레드가 수행할 함수. 매개변수로 arg를 받을 수 있다.
+
+<br />
+
+---
+
+### pthread_join
+
+<br />
+
+```c
+int pthread_join(pthread_t thread, void **value_ptr);
+
+// 성공시 0, 그 외에는 오류를 나타내는 오류 번호를 반환
+```
+
+<br />
+
+특정 스레드가 종료될 때까지 기다렸다가 그 스레드의 반환값 포인터를 받는 함수. 
+
+종료된 스레드의 자원도 해제해주는 역할을 하므로 pthread_detach와 동시에 쓰일 수 없다. 
+
+실패할 경우 좀비 스레드가 되고, 이 좀비스레드는 자원을 소모해서 더 이상 스레드를 생성할 수 없게 된다.
+
+<br />
+
+### @Params
+
+<br />
+
+#### thread
+
+종료를 기다릴 스레드의 id
+
+<br />
+
+#### value_ptr
+
+인자가 NULL인 경우를 제외하면 종료를 기다린 스레드의 반환 값, 즉 start_routine의 반환값을 받을 수 있다.
+
+<br />
+
+---
+
+### pthread_detach
+
+<br />
+
+```c
+int pthread_detach(pthread_t thread);
+```
+
+<br />
+
+`pthread_create()`로 생성한 스레드가 종료될 때 스레드 자원을 회수해주는 함수.
+
+특정 스레드를 분리한다. 스레드가 독립적으로 동작하기를 원할 때 사용한다. 
+
+`pthread_detach()`를 사용하지 않아도 `pthread_create()`에 attr 옵션을 주면 스레드 종료시에 자원회수가 가능하다.
+
+때에 따라 `pthread_detach()` 함수가 실행되기 전에 스레드가 종료될 수 있어서 attr을 통해 자원을 해제하는 방법이 좀 더 안전할 수 있다.
+
+attr을 사용하지않고 `pthread_create()`만 사용하면 스레드가 끝나도 자원이 자동으로 해제되지 않는다. 
+
+`pthread_join()`을 같이 사용해야 자원이 해제된다. 
+
+그러나 `pthread_detach()`는 `pthread_join()`를 사용하지 않아도 **자동으로 자원을 해제한다**.
+
+`pthread_detach()`와 `pthread_join()`를 동시에 사용할 수는 없다. 
+
+<br />
+
+---
+
+### usleep
+
+<br />
+
+```c
+int usleep(unsigned int microseconds);
+// 성공시 0, 그 외에는 -1
+```
+
+<br />
+
+`usleep`함수는 인자로 받은 마이크로초가 경과하거나 프로세스에 신호가 전달될 때 까지 프로세스의 실행을 일시 중단한다. 
+
+sleep함수는 프로세스를 중지하는 단위가 마이크로초가 아닌 초 단위라는 점만 다르고 이외는 동일하다.
+
+<br />
+
+> Microsecond : 100만분의 1초
+
+<br />
+
+---
+
+### gettimeofday
+
+<br />
+
+```c
+int gettimeofday(struct timeval *tp, struct timezone *tzp);
+// 성공시 0, 그 외에는 -1
+
+struct timeval 
+{
+    long    tv_sec;     // 1970년 1월 1일부터의 초수
+    long    tv_usec;    // 및 마이크로 세컨드 수
+}
+
+struct timezone
+{
+    int tz_minuteswest; // 그리니지로부터 서방향에의 편차 (?)
+    int tz_dsttime;     // 서머타임 보정의 타입
+}
+
+```
+
+<br />
+
+`gettimeofday`는 `time(2)`와 매우 비슷하지만 마이크로초 단위의 시간까지 되돌려준다. 
+
+첫번째 인자 `timeval tp`는 현재 시스템 시간을 저장하기 위한 구조체이다.
+
+두 번째 인자 `timezone tzp`는 타임존을 설정하기 위해서 사용된다. 
+
+현재 timezone 구조체는 사용되지 않고 있으며 앞으로도 지원되지 않는다고 한다. 
+
+복잡하게 할 필요없이 NULL로 설정하면 된다. 
+
+<br />
+
+---
+
+### pthread_mutex_init
+
+<br />
+
+지정된 속성으로 뮤텍스를 초기화한다. 뮤텍스는 fast, recursive, error checking의 세 가지중 하나를 선택할 수 있으며, 
+
+기본값은 fast이다. 성공하면 0, 실패하면 에러값을 리턴한다. 
+
+<br />
+
+```c
+int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *attr);
+```
+
+<br />
+
+### @Params
+
+<br />
+
+#### mutex
+
+<br />
+
+초기화할 뮤텍스 객체이다. 
+
+<br />
+
+#### attr
+
+<br />
+
+초기화할 뮤텍스의 속성을 지정할 수 있다. NULL을 주면 기본 속성을 사용 가능.
+
+<br />
+
+---
+
+### pthread_mutex_destroy
+
+<br />
+
+뮤텍스를 제거한다. 뮤텍스는 `pthread_mutex_init()`으로 생성된 뮤텍스이다.
+
+뮤텍스를 제거하려면 그 뮤텍스는 반드시 `unlock` 상태여야한다. 성공하면 0, 실패하면 에러값을 리턴.
+
+<br />
+
+```c
+int pthread_mutex_destroy(pthread_mutex_t *mutex);
+```
+
+<br />
+
+---
+
+### pthread_mutex_lock, pthread_mutex_unlock
+
+<br />
+
+뮤텍스를 잠그고 사용할 수 있을 때까지 차단한다. (unlock은 잠금을 해제)
+
+만약 이미 뮤텍스가 잠겨있다면, 잠금이 풀릴 때까지 대기했다가 뮤텍스를 획득한다. 
+
+두 함수 모두 성공하면 0을 리턴하고 실패하면 에러값을 리턴한다. 
+
+<br />
+
+```c
+int pthread_mutex_lock(pthread_mutex_t *mutex);
+int pthread_mutex_unlock(pthread_mutex_t *mutex);
+```
+
+<br />
+
+---
+
+## Source 
+
+[참고링크](https://velog.io/@jwoo/Philosophers-%ED%97%88%EC%9A%A9%ED%95%A8%EC%88%98)
+
+[참고링크](https://velog.io/@jwoo/Philosophers-%ED%97%88%EC%9A%A9%ED%95%A8%EC%88%98-pthread)
+
+[참고링크](https://www.joinc.co.kr/w/Site/Thread/Beginning/Mutex)
+
+[참고링크](https://fmyson.tistory.com/394)
+
+[참고링크](https://velog.io/@jongeun/Philosophers-Day-01)

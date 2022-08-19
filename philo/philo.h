@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 11:26:47 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/18 16:36:39 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/08/19 14:08:02 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,13 @@ typedef enum e_status
 // 문제의 조건을 설정하는 구조체
 typedef struct s_condition
 {
-	int	tte;
-	int	tts;
-	int	nop;
-	int	lifetime;
-	int	must_eat;
+	int				tte;
+	int				tts;
+	int				nop;
+	int				lifetime;
+	int				must_eat;
+	pthread_mutex_t	*mutex;
+	pthread_mutex_t	*print;
 }	t_condition;
 
 // 각 철학자의 현 상태를 담는다.
@@ -60,6 +62,7 @@ typedef struct s_philo
 	pthread_t	thread;
 	int			left;
 	int			right;
+	int			id;
 }	t_philo;
 
 void		exit_error(char *str);
