@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 16:00:10 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/18 16:36:32 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/08/19 15:42:55 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,11 @@ void	validator(int ac, char **av, t_condition **ptr)
 	*ptr = init_condition(arr);
 }
 
-void	free_structs(t_philo *philo)
+unsigned long	get_current_time(void)
 {
-	free(philo->checker);
-	free(philo->condition);
-	free(philo);
+	struct timeval	tp;
+	unsigned long	res;
+
+	res = gettimeofday(&tp, NULL);
+	return (res);
 }

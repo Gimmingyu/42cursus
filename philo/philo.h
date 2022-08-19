@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 11:26:47 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/19 14:08:02 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/08/19 15:43:12 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,10 @@ typedef struct s_condition
 // 각 철학자의 현 상태를 담는다.
 typedef struct s_checker
 {
+	int				personal_eat_cnt;
 	unsigned long	started_at;
 	unsigned long	ate_at;
 	unsigned long	died_at;
-	int				total_eat_cnt;
-	int				is_finished;
 }	t_checker;
 
 // condition, checker 및 각 철학자의 현 상태와 thread 정보를 담는 구조체
@@ -60,16 +59,20 @@ typedef struct s_philo
 	t_condition	*condition;
 	t_checker	*checker;
 	pthread_t	thread;
+	int			is_finished;
+	int			total_eat_cnt;
 	int			left;
 	int			right;
 	int			id;
 }	t_philo;
 
-void		exit_error(char *str);
-void		validator(int ac, char **av, t_condition **ptr);
-void		free_structs(t_philo *philo);
+void			exit_error(char *str);
+void			validator(int ac, char **av, t_condition **ptr);
+unsigned long	get_current_time(void);
 
-t_condition	*init_condition(int *array);
-t_checker	*init_checker(int nop);
-t_philo		*init_philosopher(t_condition *condition, t_checker *checker);
+t_condition		*init_condition(int *array);
+t_checker		*init_checker(int nop);
+t_philo			*init_philosopher(t_condition *condition, t_checker *checker);
+
+void			*start_routine(void *arg);
 #endif

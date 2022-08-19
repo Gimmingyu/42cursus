@@ -23,6 +23,7 @@ SRCS = philo.c \
 		utils.c \
 		status.c \
 		act.c \
+		routine.c \
 
 OBJS = $(SRCS:.c=.o)
 
