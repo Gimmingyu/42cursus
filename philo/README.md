@@ -2,14 +2,6 @@
 
 <br />
 
-Source...
-
-[<참고 출처 링크>](https://heeonii.tistory.com/14)
-[<참고 출처 링크>](http://www.tcpschool.com/java/java_thread_concept)
-[<참고 출처 링크>](https://liltdevs.tistory.com)
-
-<br />
-
 ## Necessary Concept
 
 <br />
@@ -618,3 +610,9 @@ int pthread_mutex_unlock(pthread_mutex_t *mutex);
 [참고링크](https://fmyson.tistory.com/394)
 
 [참고링크](https://velog.io/@jongeun/Philosophers-Day-01)
+
+[참고링크](https://heeonii.tistory.com/14)
+
+[참고링크](http://www.tcpschool.com/java/java_thread_concept)
+
+[참고링크](https://liltdevs.tistory.com)
