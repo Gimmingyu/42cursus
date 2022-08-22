@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gimmingyu <gimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 16:00:10 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/19 15:42:55 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/08/22 19:58:29 by gimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	validator(int ac, char **av, t_condition **ptr)
 	arr[1] = int_conversion(av[2]);
 	arr[2] = int_conversion(av[3]);
 	arr[3] = int_conversion(av[4]);
+	arr[4] = 0;
 	if (ac == 6)
 		arr[4] = int_conversion(av[5]);
 	*ptr = init_condition(arr);
@@ -68,8 +69,7 @@ void	validator(int ac, char **av, t_condition **ptr)
 unsigned long	get_current_time(void)
 {
 	struct timeval	tp;
-	unsigned long	res;
 
-	res = gettimeofday(&tp, NULL);
-	return (res);
+	gettimeofday(&tp, NULL);
+	return (tp.tv_sec * 1000 + tp.tv_usec / 1000);
 }

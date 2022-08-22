@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gimmingyu <gimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 15:59:54 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/19 15:52:29 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/08/22 20:12:21 by gimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,9 @@ t_philo	*init_philosopher(t_condition *condition, t_checker *checker)
 	{
 		philos[idx].condition = condition;
 		philos[idx].checker = &checker[idx];
-		philos[idx].left = 0;
-		philos[idx].right = 0;
+		philos[idx].left = idx;
+		philos[idx].right = (idx + 1) % condition->nop;
 		philos[idx].id = idx;
-		philos[idx].is_finished = FALSE;
 	}
 	return (philos);
 }
@@ -44,9 +43,9 @@ t_checker	*init_checker(int nop)
 	idx = -1;
 	while (++idx < nop)
 	{
+		checker[idx].started_at = 0;
 		checker[idx].ate_at = 0;
 		checker[idx].died_at = 0;
-		checker[idx].ate_at = 0;
 		checker[idx].personal_eat_cnt = 0;
 	}
 	return (checker);
@@ -65,15 +64,16 @@ t_condition	*init_condition(int *array)
 		exit_error("Memory allocate error");
 	idx = -1;
 	while (++idx < array[0])
-	{
 		if (pthread_mutex_init(&(condition->mutex[idx]), NULL))
 			exit_error("Mutex init error");
-	}
+	if (pthread_mutex_init(&(condition->print), NULL))
+		exit_error("Mutex init error");
 	condition->nop = array[0];
 	condition->lifetime = array[1];
 	condition->tte = array[2];
 	condition->tts = array[3];
-	if (array[0] == 6)
-		condition->must_eat = array[4];
+	condition->must_eat = array[4];
+	condition->is_finished = FALSE;
+	condition->finished_philo_cnt = 0;
 	return (condition);
 }

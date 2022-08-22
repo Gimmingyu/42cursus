@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gimmingyu <gimmingyu@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 11:26:47 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/19 15:43:12 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/08/22 19:02:50 by gimmingyu        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ typedef struct s_condition
 	int				nop;
 	int				lifetime;
 	int				must_eat;
+	int				is_finished;
+	int				finished_philo_cnt;
 	pthread_mutex_t	*mutex;
-	pthread_mutex_t	*print;
+	pthread_mutex_t	print;
 }	t_condition;
 
 // 각 철학자의 현 상태를 담는다.
@@ -59,8 +61,6 @@ typedef struct s_philo
 	t_condition	*condition;
 	t_checker	*checker;
 	pthread_t	thread;
-	int			is_finished;
-	int			total_eat_cnt;
 	int			left;
 	int			right;
 	int			id;
@@ -75,4 +75,11 @@ t_checker		*init_checker(int nop);
 t_philo			*init_philosopher(t_condition *condition, t_checker *checker);
 
 void			*start_routine(void *arg);
+
+void    		philo_eat(t_philo *philo);
+void    		philo_sleep(t_philo *philo);
+void    		philo_think(t_philo *philo);
+
+void			logger(t_philo *philo, int id, const char *str);
+void			timer(unsigned long wait_time);
 #endif
