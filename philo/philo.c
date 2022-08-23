@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gimmingyu <gimmingyu@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 16:00:00 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/22 20:13:43 by gimmingyu        ###   ########.fr       */
+/*   Updated: 2022/08/23 16:38:42 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	create_thread(t_philo *philo)
 	idx = -1;
 	while (++idx < philo->condition->nop)
 	{
-		flag = pthread_create(&philo[idx].thread, NULL, start_routine, &philo[idx]);
+		flag = pthread_create(&philo[idx].thread, NULL, \
+				start_routine, &philo[idx]);
 		if (flag)
 			exit_error("pthread_create failed");
 		usleep(100);

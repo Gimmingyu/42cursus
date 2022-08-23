@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gimmingyu <gimmingyu@student.42.fr>        +#+  +:+       +#+        */
+/*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 11:26:47 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/22 19:02:50 by gimmingyu        ###   ########.fr       */
+/*   Updated: 2022/08/23 16:26:23 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ t_philo			*init_philosopher(t_condition *condition, t_checker *checker);
 
 void			*start_routine(void *arg);
 
-void    		philo_eat(t_philo *philo);
-void    		philo_sleep(t_philo *philo);
-void    		philo_think(t_philo *philo);
+void			philo_eat(t_philo *philo);
+void			philo_sleep(t_philo *philo);
+void			philo_think(t_philo *philo);
 
 void			logger(t_philo *philo, int id, const char *str);
 void			timer(unsigned long wait_time);
