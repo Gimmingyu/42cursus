@@ -21,7 +21,6 @@ INC = ./philo.h
 SRCS = philo.c \
 		init_struct.c \
 		utils.c \
-		status.c \
 		act.c \
 		routine.c \
 

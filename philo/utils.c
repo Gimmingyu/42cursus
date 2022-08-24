@@ -5,71 +5,69 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/18 16:00:10 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/23 17:04:56 by mingkim          ###   ########.fr       */
+/*   Created: 2022/08/24 13:12:23 by mingkim           #+#    #+#             */
+/*   Updated: 2022/08/24 16:30:42 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	exit_error(char *str)
+void	exit_error(const char *str)
 {
 	printf("%s\n", str);
 	exit(1);
 }
 
-static int	ft_isspace(char c)
-{
-	if (c == 32 || (9 <= c && 13 >= c))
-		return (1);
-	return (0);
-}
-
 static int	int_conversion(char *str)
 {
-	long		nbr;
-	int			sign;
-	ssize_t		i;
+	size_t	idx;
+	long	nbr;
+	int		sign;
 
-	if (!str)
-		exit_error("Found NULL pointer");
+	idx = 0;
 	nbr = 0;
 	sign = 1;
-	i = 0;
-	while (str[i] && ft_isspace(str[i]) == 1)
-		i++;
-	if (str[i] == '-')
+	while (str[idx] && (str[idx] == 32 || (9 <= str[idx] && str[idx] <= 13)))
+		idx++;
+	if (str[idx] && (str[idx] == '-'))
 		sign = -1;
-	if (str[i] == '+' || str[i] == '-')
-		i++;
-	while (str[i] && '0' <= str[i] && str[i] <= '9')
+	if (str[idx] && (str[idx] == '+' || str[idx] == '-'))
+		idx++;
+	while (str[idx])
 	{
-		nbr = (nbr * 10) + (str[i] - '0');
+		if (str[idx] && (str[idx] < '0' || '9' < str[idx]))
+			exit_error("Not a numeric argument");
+		nbr = (nbr * 10) + (str[idx] - '0');
 		if ((nbr > 2147483647 && sign == 1) || (nbr > 2147483648 && sign == -1))
 			exit_error("Not in range of integer");
-		i++;
+		idx++;
 	}
-	return (sign * nbr);
+	return (nbr * sign);
 }
 
-void	validator(int ac, char **av, t_condition **ptr)
+void	validator(int ac, char **av, t_info *info)
 {
-	int	arr[5];
-
-	arr[0] = int_conversion(av[1]);
-	arr[1] = int_conversion(av[2]) * 1000;
-	arr[2] = int_conversion(av[3]) * 1000;
-	arr[3] = int_conversion(av[4]) * 1000;
-	arr[4] = 0;
+	if (ac != 5 && ac != 6)
+		exit_error("Invalid number of args");
+	info->num_of_philos = int_conversion(av[1]);
+	info->time_to_die = int_conversion(av[2]);
+	info->time_to_eat = int_conversion(av[3]);
+	info->time_to_sleep = int_conversion(av[4]);
+	info->must_eat = 0;
 	if (ac == 6)
-		arr[4] = int_conversion(av[5]);
-	*ptr = init_condition(arr);
+		info->must_eat = int_conversion(av[5]);
+	info->sem = sem_open("forks", O_CREAT | O_EXCL, 0644, \
+								info->num_of_philos);
+	if (info->sem == SEM_FAILED)
+		exit_error("SEM FAILED");
 }
 
-unsigned long	get_current_time(void)
+void	free_structs(t_philo *philo)
 {
-	struct timeval	tp;
-
-	gettimeofday(&tp, NULL);
-	return (tp.tv_sec * 1000 * 1000 + tp.tv_usec);
+	free(philo->info);
+	free(philo->checker);
+	free(philo);
+	sem_close(philo->info->sem);
+	sem_unlink("forks");
+	exit(0);
 }

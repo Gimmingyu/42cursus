@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/19 15:32:29 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/23 17:06:11 by mingkim          ###   ########.fr       */
+/*   Created: 2022/08/24 15:27:10 by mingkim           #+#    #+#             */
+/*   Updated: 2022/08/24 16:39:22 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,13 @@
 void	*start_routine(void *arg)
 {
 	t_philo	*philo;
+	int		fork;
 
 	philo = (t_philo *)arg;
-	philo->checker->ate_at = get_current_time();
-	philo->checker->started_at = get_current_time();
-	if (philo->id % 2)
-		usleep(philo->condition->tte);
-	while (philo->condition->is_finished == FALSE)
-	{
+	fork = 0;
+	if (philo->checker->id % 2)
+		usleep(philo->info->time_to_eat * 1000);
+	while (philo->checker->is_finished == FALSE)
 		philo_eat(philo);
-		philo_sleep(philo);
-		philo_think(philo);
-	}
 	return (NULL);
 }
