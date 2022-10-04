@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:06:38 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/24 16:40:34 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/08/26 17:47:06 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_checker
 	int				eat_count;
 	int				is_finished;
 	int				id;
+	pid_t			pid;
 }	t_checker;
 
 typedef struct philosophers

@@ -6,7 +6,7 @@
 /*   By: mingkim <mingkim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 13:07:01 by mingkim           #+#    #+#             */
-/*   Updated: 2022/08/24 16:09:59 by mingkim          ###   ########.fr       */
+/*   Updated: 2022/08/26 17:58:27 by mingkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,26 @@
 
 static void	create_thread(t_philo *philo)
 {
-	int	idx;
+	int		idx;
+	pid_t	pid;
 
 	idx = -1;
 	while (++idx < philo->info->num_of_philos)
-		if (pthread_create(&(philo[idx].thread), NULL, \
-							start_routine, &(philo[idx])))
-			exit_error("pthread_create error");
+	{
+		pid = fork();
+		if (pid == -1)
+			exit_error("Fork Failed Error");
+		else if (pid == 0)
+			continue ;
+		else
+		{
+			philo[idx].checker->pid = pid;
+			if (pthread_create(&(philo[idx].thread), NULL, \
+								start_routine, &(philo[idx])))
+				exit_error("pthread_create error");
+			break ;
+		}
+	}
 	idx = -1;
 	while (++idx < philo->info->num_of_philos)
 		pthread_join(philo[idx].thread, NULL);
