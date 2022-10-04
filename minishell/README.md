@@ -573,21 +573,82 @@ int tgetent(char *bp, const char *name);
 
 함수 수행에 성공하면 1, DB가 발견되었지만 TERM을 위한 개체가 없는 경우 0, 그 외에는 -1을 반환.
 
-> What is `TermCap` ?
+> What is `TermCap` ?  
 > Termcap은 Unix 계열 컴퓨터에서 사용되는 소프트웨어 라이브러리 및 데이터베이스이다.
-> 
+> minishell에서 반드시 한 번쯤은 공부하고 넘어가야 하는 개념!
 
 ---
 
 ### tgetflag
 
+```c
+#include <termios.h>
+
+int tgetflag(char *id);
+```
+
+쿼리로 사용할 이름을 인자로 받는다. 플래그를 얻을 수 있는 쿼리의 경우 1, 그렇지 않은 경우 0을 반환한다. 
+
+---
+
 ### tgetnum
+
+```c
+#include <termios.h>
+
+int tgetnum(char *id);
+```
+
+쿼리로 사용할 이름을 인자로 받는다. 
+
+함수 수행에 성공하면 그 값을 반환하고 그렇지 않으면 -1을 반환한다. 
+
+---
 
 ### tgetstr
 
+```c
+#include <termios.h>
+
+char *tgetstr(char *id, char **area);
+```
+
+쿼리로 사용할 이름을 인자로 받는다. 
+
+쿼리에 해당하는 `Escape Sequence`를 얻을 수 있다면 그 값을 반환하고 그렇지 않은 경우 NULL을 반환한다. 
+
+---
+
 ### tgoto
 
+```c
+#include <termios.h>
+
+char *tgoto(const char *cap, int col, int row);
+```
+
+매개변수를 지정된 기능으로 인스턴스화한다. 출력은 `tputs`로 전달된다. 
+
+`col`과 `row`를 고려한 `Cursor Motion`의 `Escape Sequence`를 반환한다. 함수 수행에 실패하면 NULL을 반환한다.
+
+---
+
 ### tputs
+
+```c
+#include <termios.h>
+
+int tputs(const char *str, int affcnt, int (*putc)(int));
+```
+
+
+`Escape Sequence`에 대한 터미널 출력 결과를 내는 루틴이다. 
+
+`tgetstr` 또는 `tgoto`를 통해 얻은 값을 `str`인자로 받는다. 
+
+`affcnt`의 경우 영향을 끼칠 줄의 수를 나타나는데, 1로 주는 것이 일반적. 
+
+`putc`는 ASCII 문자 값을 인자로 받아 표준 출력의 쓰기 작업으로 터미널에 ASCII 문자 값을 출력해주는 함수.
 
 ---
 
@@ -613,7 +674,13 @@ buf에 NULL을 인자로 할 경우 size만큼의 크기로 malloc 후 해당 �
 
 ### chdir
 
+```c
+#include <unistd.h>
 
+int chdir(const char * path);
+```
+
+현재 작업 디렉토리를 변경한다.
 
 ---
 
